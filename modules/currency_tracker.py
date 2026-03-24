@@ -70,7 +70,7 @@ class CurrencyTracker:
         if not rates:
             return {"rates": {}, "chaos_rates": {}, "total_chaos_per_hr": 0, "elapsed_minutes": 0}
 
-        start = self._state._profile.get("currency_session_start")
+        start = self._state.currency_session_start
         elapsed = (time.time() - start) / 60 if start else 0
 
         chaos_rates = {}

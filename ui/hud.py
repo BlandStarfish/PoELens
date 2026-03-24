@@ -153,7 +153,7 @@ class HUD(QMainWindow):
 
     def show_crafting(self):
         self.show()
-        self._tabs.setCurrentIndex(3)
+        self._tabs.setCurrentIndex(4)  # Quests=0, Tree=1, Price=2, Currency=3, Crafting=4
 
     def show_map(self):
         # Map overlay is a future module; placeholder

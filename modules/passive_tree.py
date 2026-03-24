@@ -139,7 +139,7 @@ class PassiveTree:
     @classmethod
     def _parse(cls, raw: dict) -> "PassiveTree":
         nodes: dict[str, TreeNode] = {}
-        edges: list[tuple[str, str]] = set()
+        edges: set[tuple[str, str]] = set()
 
         raw_nodes = raw.get("nodes", {})
 

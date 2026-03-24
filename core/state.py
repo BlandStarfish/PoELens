@@ -71,6 +71,13 @@ class AppState:
             self._save_profile()
             self._notify("completed_quests", self._profile["completed_quests"])
 
+    def uncomplete_quest(self, quest_id: str):
+        completed = self._profile["completed_quests"]
+        if quest_id in completed:
+            completed.remove(quest_id)
+            self._save_profile()
+            self._notify("completed_quests", self._profile["completed_quests"])
+
     @property
     def completed_quests(self) -> list:
         return list(self._profile["completed_quests"])
@@ -114,6 +121,10 @@ class AppState:
     # ------------------------------------------------------------------
     # Currency tracking
     # ------------------------------------------------------------------
+
+    @property
+    def currency_session_start(self) -> float | None:
+        return self._profile.get("currency_session_start")
 
     def start_currency_session(self, baseline: dict):
         self._profile["currency_session_start"] = time.time()

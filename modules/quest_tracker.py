@@ -86,12 +86,8 @@ class QuestTracker:
 
     def manually_uncomplete(self, quest_id: str):
         """Allow user to manually unmark — useful for new characters."""
-        completed = list(self._state.completed_quests)
-        if quest_id in completed:
-            completed.remove(quest_id)
-            self._state._profile["completed_quests"] = completed
-            self._state._save_profile()
-            self._fire_update()
+        self._state.uncomplete_quest(quest_id)
+        self._fire_update()
 
     def _fire_update(self):
         for cb in self._on_update:

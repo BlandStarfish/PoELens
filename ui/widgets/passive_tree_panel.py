@@ -139,6 +139,9 @@ class PassiveTreePanel(QWidget):
         self._pinned_node = None
         self._build_ui()
         self._start_loading()
+        if quest_tracker:
+            quest_tracker.on_update(lambda _: self._refresh_quest_summary())
+            self._refresh_quest_summary()
 
     # ------------------------------------------------------------------
     # UI layout
@@ -148,6 +151,14 @@ class PassiveTreePanel(QWidget):
         layout = QVBoxLayout(self)
         layout.setContentsMargins(4, 4, 4, 4)
         layout.setSpacing(4)
+
+        # ── Quest point summary ──
+        self._quest_summary = QLabel("Quest passive points: —")
+        self._quest_summary.setStyleSheet(
+            "color: #4ae8c8; font-size: 11px; font-weight: bold;"
+            " background: #0a1a1a; border-radius: 3px; padding: 3px 6px;"
+        )
+        layout.addWidget(self._quest_summary)
 
         # ── Top bar ──
         top = QHBoxLayout()
@@ -267,9 +278,35 @@ class PassiveTreePanel(QWidget):
 
         self._reset_view()
 
+    def _refresh_quest_summary(self):
+        """Update the quest passive points banner from live quest tracker data."""
+        if not self._quest_tracker:
+            return
+        totals = self._quest_tracker.get_point_totals()
+        earned   = totals["earned"]
+        total    = totals["total_available"]
+        net      = totals["net"]
+        remaining = totals["remaining"]
+        deducted = totals["deducted"]
+
+        if deducted:
+            self._quest_summary.setText(
+                f"Quest passive points: {net} net  "
+                f"({earned} earned − {deducted} deducted)  |  {remaining} still available"
+            )
+        else:
+            self._quest_summary.setText(
+                f"Quest passive points: {earned} / {total} collected  |  {remaining} still available"
+            )
+
     def _get_quest_node_ids(self) -> set:
-        """Returns node IDs associated with quest passive point rewards (future: link by node name)."""
-        return set()  # Placeholder — extend when quest→node mapping is added
+        """
+        In PoE, quest passive point rewards give freely-allocatable unspent points —
+        they do not unlock specific named nodes on the tree. There is therefore no
+        node-to-quest mapping to highlight. The quest summary banner above the tree
+        is the correct integration point.
+        """
+        return set()
 
     def _reset_view(self):
         if not self._tree:

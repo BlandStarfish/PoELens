@@ -75,13 +75,16 @@ class ClientLogWatcher:
             print(f"[ClientLog] log not found: {self._path}")
             return
 
-        f.seek(0, 2)  # seek to end — only process new lines
-        while self._running:
-            line = f.readline()
-            if not line:
-                time.sleep(0.1)
-                continue
-            self._parse(line.rstrip())
+        try:
+            f.seek(0, 2)  # seek to end — only process new lines
+            while self._running:
+                line = f.readline()
+                if not line:
+                    time.sleep(0.1)
+                    continue
+                self._parse(line.rstrip())
+        finally:
+            f.close()
 
     def _parse(self, line: str):
         if m := _ZONE_RE.search(line):

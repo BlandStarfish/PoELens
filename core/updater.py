@@ -17,6 +17,8 @@ import threading
 import urllib.request
 import zipfile
 
+from PyQt6.QtCore import QObject, pyqtSignal
+
 GITHUB_OWNER  = "BlandStarfish"
 GITHUB_REPO   = "ExileHUD"
 GITHUB_BRANCH = "master"
@@ -143,12 +145,24 @@ def _restart():
 # PyQt6 update dialog — called from main.py after QApplication exists
 # ─────────────────────────────────────────────────────────────────────────────
 
+class _Signaler(QObject):
+    """Lives on the main thread; its signal safely bridges background→Qt."""
+    update_ready = pyqtSignal(str)   # emits remote SHA
+
+
+_signaler: "_Signaler | None" = None
+
+
 def check_and_prompt(parent=None):
     """
     Check for updates in a background thread.
     If one is found, show a confirmation dialog on the main thread.
     Call this once at startup after QApplication is created.
     """
+    global _signaler
+    _signaler = _Signaler()
+    _signaler.update_ready.connect(lambda sha: show_update_dialog(sha, parent))
+
     def _check():
         installed = get_installed_sha()
         if not installed:
@@ -156,14 +170,7 @@ def check_and_prompt(parent=None):
         remote = get_remote_sha()
         if not remote or remote == installed:
             return   # up to date or offline
-        # Schedule dialog on main thread
-        from PyQt6.QtCore import QMetaObject, Qt
-        from PyQt6.QtWidgets import QApplication
-        app = QApplication.instance()
-        if app:
-            app.update_sha = remote   # type: ignore[attr-defined]
-            QMetaObject.invokeMethod(app, "_show_update_dialog",
-                                     Qt.ConnectionType.QueuedConnection)
+        _signaler.update_ready.emit(remote)  # type: ignore[union-attr]
 
     threading.Thread(target=_check, daemon=True).start()
 
