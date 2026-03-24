@@ -1,4 +1,4 @@
-# ExileHUD — Technical Reference
+# PoELens — Technical Reference
 
 ## Architecture
 
@@ -264,45 +264,6 @@ SEARCH_COLOR (green).
 Optional — pressing Enter skips it. Can always be added later to `state/config.json`.
 Surfaces the feature to new users without breaking non-interactive environments.
 
-## Open Questions
-
-1. **Stash tab API -- OAuth implementation** (IMPLEMENTED Session 6):
-   core/oauth.py + core/stash_api.py are complete. User needs to register a client_id
-   with GGG by emailing oauth@grindinggear.com and adding it to state/config.json.
-
-   Original research notes preserved below for reference:
-   **IMPLEMENTED as of Session 6 -- details above in Technical Notes section**
-
-1b. **Original research notes -- Stash tab API OAuth** (UNBLOCKED as of Session 5):
-   TOS research confirmed: OAuth is the correct, fully TOS-compliant approach.
-   POESESSID is technically prohibited (credential-sharing clause) and uses
-   undocumented endpoints. The 2020 POE Overlay incident showed POESESSID is
-   detectable and actionable.
-
-   **To register**: Email oauth@grindinggear.com for a public OAuth client registration.
-   **Required disclaimer in-app**: "This product isn't affiliated with or endorsed
-   by Grinding Gear Games in any way."
-
-   **Implementation details**:
-   - OAuth 2.1 flow; desktop tools register as public clients (no client_secret)
-   - Scope needed: `account:stashes`
-   - Endpoint: GET /api/stash/{league} (list tabs) + GET /api/stash/{league}/{stash_id}
-   - User authenticates once in-browser; token stored in state/ (never committed)
-   - Access token refresh handled via standard OAuth refresh flow
-   - Official docs: https://www.pathofexile.com/developer/docs/authorization
-
-   **TOS verdict**: Fully compliant when using OAuth. POESESSID = do NOT use.
-   Known compliant tools using stash API: Exilence Next, Sidekick, poe-ninja, trade sites.
-
-2. **Map overlay data source** — poedb.tw? Static JSON? Need to decide format and
-   update strategy for map mods.
-3. **Character API** — Could auto-import allocated passive nodes for tree highlighting.
-   Uses undocumented but community-known endpoint. Requires OAuth (same flow as stash).
-   TOS status: likely compliant if read-only and non-competitive, but needs confirmation
-   before implementing. Could reuse the OAuth infrastructure built for stash access.
-4. **PoE 2 support** — Config has `poe_version: poe1/poe2` field but no conditional logic
-   exists. Passive tree data format differs. Future concern.
-
 ### currency_panel.py: Per-currency historical breakdown (Session 9)
 `_refresh_historical()` now shows a "Top: ..." second line on the `_hist_label`
 when all-time historical data exists. Displays top-3 positive earners by chaos/hr.
@@ -311,7 +272,7 @@ Uses `alltime["chaos_rates"]` dict already computed in the same method call.
 `_hist_label.setWordWrap(True)` (set since Session 5) renders the newline correctly.
 
 ### GitHub repo visibility (Session 9)
-Repo BlandStarfish/ExileHUD was made public by the user during Session 9.
+Repo BlandStarfish/ExileHUD (now BlandStarfish/PoELens) was made public by the user during Session 9.
 GITHUB_TOKEN = "" in both installer_gui.py and updater.py is correct for public repos.
 If the repo is made private again, a fine-grained read-only PAT must be set in:
   - installer_gui.py line 30: GITHUB_TOKEN = "your_pat_here"
@@ -347,3 +308,86 @@ The fossil_crafting entry has a "fossil_guide" dict with 13 fossil types and
 their effects. CraftingPanel._on_method_selected() renders only steps/materials/notes
 fields and ignores fossil_guide. Data is correct -- display is deferred.
 Next session: detect fossil_guide field and render as extra section in method detail.
+
+### Project rebranding: ExileHUD → PoELens (Session 11)
+All source files updated: app name, User-Agent strings, window title, dialog titles,
+VISION.md/TECHNICAL.md headers, zones.json comment, analytics _APP_NAME,
+GitHub repo references (BlandStarfish/PoELens). GitHub repo was renamed from
+ExileHUD to PoELens by the user.
+
+### oauth.py / stash_api.py / character_api.py: GGG User-Agent compliance (Session 11)
+GGG requires OAuth apps to use User-Agent format:
+  OAuth {clientId}/{version} (contact: {contact})
+oauth.py previously used a stale `"PoELens/1.0"` literal in _exchange_code and
+_do_refresh. Fixed by adding module-level _CONTACT constant and _ua(client_id) helper:
+  def _ua(client_id: str) -> str:
+      return f"OAuth {client_id}/1.0 (contact: {_CONTACT})"
+Applied to both methods. stash_api.py and character_api.py already use _ua() correctly.
+
+### updater.py / installer_gui.py: GitHub zipball extraction path fix (Session 11)
+GitHub's /zipball/ API endpoint names the extracted root directory
+{owner}-{repo}-{sha}, NOT {repo}-{branch} as previously hardcoded.
+For repo BlandStarfish/PoELens on master, the extracted dir is named e.g.
+"BlandStarfish-PoELens-abc1234" -- never predictable at compile time.
+Fixed in both files with dynamic discovery:
+  subdirs = [d for d in os.listdir(tmp) if os.path.isdir(os.path.join(tmp, d))]
+  if not subdirs:
+      raise RuntimeError("Update archive has unexpected structure — no directory found.")
+  extracted = os.path.join(tmp, subdirs[0])
+
+### zones.json: atlas endgame maps (Session 11)
+Added ~100 atlas map entries, Tiers 1-17 (area levels 68-84). Format:
+  "MapName": {"act": null, "tier": N, "area_level": N+67, "waypoint": true,
+              "boss": "Name", "type": "atlas"}
+  Optional: "notes": "..." for Pinnacle Guardians and unique map encounters
+Names match exact Client.txt log strings (no "Map" suffix in zone name).
+All atlas maps have waypoint=true (waypoints unlock after first clear).
+Tier 16 Pinnacle Guardians (Phoenix/Hydra/Minotaur/Chimera) have notes
+showing which Shaper key fragment they drop.
+Tier 17 maps: Abomination, Citadel, Fortress (area_level 84).
+
+### map_panel.py: atlas zone display (Session 11)
+_show_current(): atlas type now shows "Tier N Map  •  Area level N  •  ✓ Waypoint"
+instead of "Act None  •  ..." which was broken for atlas maps.
+_refresh_history(): now shows T{tier} prefix for atlas maps: "HH:MM  MapName  (T14, lvl 81)"
+instead of the old "Act None" which would show for maps.
+Notes fallback guard: `(zone_type != "atlas" and _act_resist_note(act))` prevents
+_act_resist_note(None) call for atlas zones.
+
+### core/character_api.py: Character API (added Session 10/11)
+CharacterAPI wraps GGG OAuth character endpoints:
+  GET /character           → list_characters() → list of {name, class, league, level, ...}
+  GET /character/{name}    → get_passive_hashes(name) → set of node_id strings
+  get_best_character(league) → highest-level char in league (fallback: any league)
+Passive hashes from API map directly to PassiveTree.nodes keys (same namespace
+as parse_tree_url output). Character name is URL-encoded for the path segment.
+Scope required: account:characters. 403 → logged with re-auth instructions.
+
+### core/screen_reader.py: OCR screen reader (added Session 10/11)
+User-triggered only (button click). Uses:
+  mss       — cross-platform screen capture
+  Pillow    — image format conversion
+  winrt     — Windows 10+ built-in OCR (winrt.windows.media.ocr)
+All three are optional; is_available() returns False if any is missing.
+ScreenReader.scan() → background thread → on_result callbacks → {"text", "error"} dict.
+WinRT OCR requires an absolute backslash path to a temp PNG file.
+currency_panel.py shows "Scan Stash Tab (experimental)" button only when winrt available.
+TOS: user-triggered screen capture is Tier 2 / passive reading (same as Lailloken UI).
+
+### price_check.py: Clipboard currency detection (added Session 10/11)
+parse_item_clipboard() now extracts stack_size from "Stack Size: N/M" line.
+on_currency_detected(callback) registers callbacks fired when a currency stack
+is Ctrl+C'd. update_from_clipboard_scan() accepts OCR text for bulk currency parsing.
+main.py wires: price_checker.on_currency_detected(lambda name, count: hud.on_currency_clipboard(name, count))
+currency_panel.py handles the signal to update spinboxes.
+
+## Open Questions
+
+1. **Stash tab API -- OAuth implementation** ✅ IMPLEMENTED (Session 6)
+2. **Character API sync** ✅ IMPLEMENTED (Sessions 10-11)
+3. **Map overlay data source** ✅ RESOLVED (Session 11) — zones.json now covers all atlas
+   Tier 1-17 maps. Map mod display (affixes/mods on rolled maps) remains unimplemented.
+4. **PoE 2 support** — Config has `poe_version: poe1/poe2` field but no conditional logic
+   exists. Passive tree data format differs. Future concern.
+5. **fossil_guide rendering** — methods.json has fossil_guide data; CraftingPanel doesn't
+   render it. Deferred from Session 10. Render as extra collapsible section in method detail.

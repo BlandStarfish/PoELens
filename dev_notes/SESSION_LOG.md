@@ -1577,3 +1577,154 @@ All 6 features polished. Crafting now has 9 methods including recombinator.
 Currency historical display shows full context (snapshots + hours + top earners).
 Main remaining gap: atlas map data (external data source research needed).
 ===============================================================
+
+
+═══════════════════════════════════════════════════════════════
+SESSION 11: 2026-03-24  (PoELens rebranding + atlas maps)
+═══════════════════════════════════════════════════════════════
+
+## ORIENTATION SUMMARY
+
+Resumed mid-session from interrupted context (Session 10 had just completed; atlas map
+work was in progress when context was exhausted). User had applied a substantial set of
+changes between Session 10 and this session:
+
+- Full project rebranding: ExileHUD → PoELens (all source files, User-Agents, titles)
+- GitHub repo renamed: BlandStarfish/ExileHUD → BlandStarfish/PoELens
+- New file: core/character_api.py (CharacterAPI — list_characters, get_passive_hashes)
+- New file: core/screen_reader.py (Windows OCR via winrt/mss/Pillow, user-triggered only)
+- price_check.py: clipboard currency detection (on_currency_detected callback + stack size)
+- currency_panel.py: clipboard currency integration + experimental OCR scan button
+- passive_tree_panel.py: character API sync UI already implemented by user
+- Session 11 resumed with atlas map data insertion in-flight
+
+## ASSESSMENT GRADES
+
+| Module               | Completeness | Quality | Vision Alignment |
+|----------------------|-------------|---------|-----------------|
+| Quest Tracker        |    10/10     |  9/10   |     10/10       |
+| Passive Tree Viewer  |    10/10     |  9/10   |     10/10       |
+| Price Checker        |    10/10     |  9/10   |     10/10       |
+| Currency Tracker     |    10/10     |  9/10   |     10/10       |
+| Crafting System      |     9/10     |  9/10   |      9/10       |
+| Core Infrastructure  |    10/10     |  9/10   |     10/10       |
+| Map Overlay          |     9/10     |  9/10   |      9/10       |
+| Screen OCR (new)     |     7/10     |  8/10   |      8/10       |
+
+Map Overlay now 9/10 (was 6/10 last session). Atlas maps complete.
+Crafting -1: fossil_guide field still not rendered in UI (data exists).
+
+## SMOKE TEST FINDINGS
+
+No regressions found. All previously reported bugs remain fixed.
+
+New observations:
+1. map_panel.py _refresh_history() was showing "Act None" for atlas zones — FIXED this session.
+2. zones.json had stale "ExileHUD" in _comment — FIXED this session.
+3. oauth.py _exchange_code/_do_refresh used non-compliant "PoELens/1.0" User-Agent instead of
+   the GGG-required "OAuth {clientId}/1.0 (contact: ...)" format — FIXED this session.
+4. updater.py + installer_gui.py hardcoded "{repo}-{branch}" for zipball extraction path;
+   GitHub actually names the directory "{owner}-{repo}-{sha}" — FIXED this session.
+
+## MAINTENANCE LOG
+
+1. **oauth.py — GGG User-Agent compliance fix**
+   _exchange_code() and _do_refresh() were sending `User-Agent: PoELens/1.0` which is
+   not the GGG-required OAuth format. Added `_CONTACT` module constant and `_ua(client_id)`
+   helper; updated both methods to use it. Now sends:
+   `OAuth {client_id}/1.0 (contact: github.com/BlandStarfish/PoELens)`
+
+2. **updater.py + installer_gui.py — GitHub zipball path bug**
+   Both files hardcoded `{GITHUB_REPO}-{GITHUB_BRANCH}` as the extracted subdirectory name.
+   GitHub's zipball API actually names it `{owner}-{repo}-{sha}`. Fixed in both files with:
+   ```python
+   subdirs = [d for d in os.listdir(tmp) if os.path.isdir(os.path.join(tmp, d))]
+   extracted = os.path.join(tmp, subdirs[0])
+   ```
+
+3. **zones.json + dev_notes — stale "ExileHUD" references**
+   zones.json `_comment` field updated. VISION.md fully rewritten as PoELens.
+   TECHNICAL.md header + Session 9 GitHub note updated.
+
+4. **map_panel.py — atlas history display bug**
+   `_refresh_history()` was using `info.get("act", "?")` unconditionally, producing
+   "Act None" for atlas zones. Fixed to check `zone_type == "atlas"` and show `T{tier}`.
+
+## DEVELOPMENT LOG
+
+### Feature: Atlas endgame maps in zones.json (~100 entries, Tiers 1–17)
+
+**Problem**: Map Overlay only covered Acts 1–10 campaign zones. Endgame atlas maps
+would show "(zone not in database)" for any map entered.
+
+**Data source**: GGG wiki (poewiki.net/wiki/Maps) — RePoE had no maps.json,
+poedb.tw returned 400 errors. Wiki returned structured tier/boss data for all maps.
+
+**Format added**:
+```json
+"MapName": {
+  "act": null, "tier": 14, "area_level": 81,
+  "waypoint": true, "boss": "Boss Name", "type": "atlas"
+}
+```
+Special entries: Tier 16 Pinnacle Guardians have `"notes"` listing their Shaper key
+fragment drop. Unique maps (Poorjoy's Asylum, Doryani's Machinarium, Infused Beachhead)
+have notes describing their special mechanics. Tier 17: Abomination, Citadel, Fortress.
+
+**map_panel.py changes**:
+- `_show_current()`: atlas → "Tier N Map  •  Area level N  •  ✓ Waypoint"
+- `_refresh_history()`: atlas → "HH:MM  MapName  (T14, lvl 81)"
+- Notes guard: `(zone_type != "atlas" and _act_resist_note(act))` prevents None call
+
+**Coverage**: Tiers 1–17 complete. ~100 maps added. formula: area_level = tier + 67.
+
+## TECHNICAL NOTES
+
+### GGG OAuth User-Agent requirement
+GGG requires: `OAuth {clientId}/{version} (contact: {contact})`
+oauth.py, stash_api.py, character_api.py all now use `_ua(client_id)` helper.
+Non-compliance risks: rate limiting, app revocation in future policy enforcement.
+
+### GitHub zipball extraction
+GitHub `/archive/refs/heads/{branch}.zip` and `/zipball/{branch}` both extract to
+`{owner}-{repo}-{sha}` — the SHA is the current HEAD at download time and is NOT
+predictable. Dynamic os.listdir() discovery is the only correct approach.
+
+### Screen OCR — optional feature
+core/screen_reader.py requires: mss, Pillow, winrt (all optional). WinRT is
+Windows 10+ built-in. currency_panel.py only shows scan button when winrt available.
+TOS: user-triggered screen reads are Tier 2 / passive reading — explicitly permitted
+by GGG's tool policy (same tier as Lailloken UI and Path of Building).
+
+### character_api.py — passive hashes namespace
+PassiveTree.nodes keys (str) match exactly the hashes from `/character/{name}`.
+Both use the same GGG node ID namespace. No translation needed between APIs.
+
+## SUGGESTIONS FOR NEXT SESSION
+
+1. **Fossil guide UI in CraftingPanel** (LOW effort): methods.json has "fossil_guide"
+   dict with 13 fossil types. Detect field in _on_method_selected() and render as
+   extra section. ~30 lines of code. Pure UI, no data changes.
+
+2. **Map mod display** (MEDIUM): Show affix info for rolled maps (magic/rare).
+   Would require either poedb.tw integration or trade API mod lookup.
+   Raises Map Overlay to full 10/10 for endgame completeness.
+
+3. **Settings panel tab** (MEDIUM): Expose Client.txt path, league name, overlay
+   opacity, and hotkey config in a UI Settings tab. Currently requires manual
+   state/config.json editing. High user-friendliness impact.
+
+4. **PoE 2 support** (LOW priority): config.py has `poe_version` field but zero
+   conditional logic exists. Passive tree format differs substantially.
+
+## PROJECT HEALTH
+
+Overall grade: 9.5/10 (up from 9.1)
+% complete toward vision: ~99%
+
+All 6 features fully implemented and polished. Atlas maps close the last major data gap.
+Character API sync enables build-aware passive tree usage.
+Clipboard + OCR currency detection adds a smooth QoL path beyond manual spinboxes.
+Remaining: fossil_guide rendering (minor UI), map mod display (research needed),
+settings panel (polish), PoE 2 (future).
+===============================================================

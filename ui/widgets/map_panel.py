@@ -178,9 +178,14 @@ class MapPanel(QWidget):
             time_str = datetime.datetime.fromtimestamp(ts).strftime("%H:%M") if ts else ""
 
             if info:
-                act = info.get("act", "?")
+                zone_type = info.get("type", "")
                 lvl = info.get("area_level", "?")
-                text = f"{time_str}  {name}  (Act {act}, lvl {lvl})"
+                if zone_type == "atlas":
+                    tier = info.get("tier", "?")
+                    text = f"{time_str}  {name}  (T{tier}, lvl {lvl})"
+                else:
+                    act = info.get("act", "?")
+                    text = f"{time_str}  {name}  (Act {act}, lvl {lvl})"
             else:
                 text = f"{time_str}  {name}"
 
