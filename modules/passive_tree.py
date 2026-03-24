@@ -34,9 +34,9 @@ from typing import Optional
 
 _DATA_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "passive_tree.json")
 _CDN_PAGE  = "https://www.pathofexile.com/passive-skill-tree"
+# Official GGG-maintained export repo — always current, no versioned path needed
 _FALLBACK_URL = (
-    "https://raw.githubusercontent.com/grindinggear/skilltree-export/"
-    "master/data/3_25/SkillTree.json"
+    "https://raw.githubusercontent.com/grindinggear/skilltree-export/master/data.json"
 )
 _HEADERS = {"User-Agent": "ExileHUD/1.0 (github.com/BlandStarfish/ExileHUD)"}
 
@@ -147,12 +147,20 @@ class PassiveTree:
             ntype = cls._node_type(nd)
             x, y = cls._node_coords(nd, raw)
 
+            # GGG export uses abbreviated keys: dn=name, sd=stats, ascendancyName etc.
+            # Support both the abbreviated (current) and long-form (legacy) field names.
+            name  = nd.get("dn") or nd.get("name", "")
+            stats = nd.get("sd") or nd.get("stats", [])
+            # sd can be a dict {0: "stat"} in some versions — normalise to list
+            if isinstance(stats, dict):
+                stats = list(stats.values())
+
             node = TreeNode(
                 node_id=str(node_id),
-                name=nd.get("name", ""),
+                name=name,
                 x=x,
                 y=y,
-                stats=nd.get("stats", []),
+                stats=stats,
                 node_type=ntype,
                 connections=[str(c) for c in nd.get("out", []) + nd.get("in", [])],
                 is_ascendancy=bool(nd.get("isAscendancyStart") or nd.get("ascendancyName")),
@@ -171,9 +179,11 @@ class PassiveTree:
 
     @classmethod
     def _node_type(cls, nd: dict) -> str:
-        if nd.get("isKeystone"):
+        # GGG abbreviated keys: ks=keystone, not=notable, m=mastery
+        # Also handle legacy long-form keys for older cached data files
+        if nd.get("ks") or nd.get("isKeystone"):
             return "keystone"
-        if nd.get("isNotable"):
+        if nd.get("not") or nd.get("isNotable"):
             return "notable"
         if nd.get("classStartIndex", -1) >= 0:
             return "class_start"
@@ -181,7 +191,7 @@ class PassiveTree:
             return "ascendancy"
         if nd.get("isJewelSocket"):
             return "jewel"
-        if nd.get("isMastery"):
+        if nd.get("m") or nd.get("isMastery"):
             return "mastery"
         return "normal"
 
@@ -203,6 +213,8 @@ class PassiveTree:
         group = groups.get(str(group_id), groups.get(group_id, {}))
         gx = float(group.get("x", 0))
         gy = float(group.get("y", 0))
+        # groups use "n" (current GGG format) or "nodes" (legacy) for their node list
+        # — no action needed here, we just need x/y from the group
 
         orbit_radii = raw.get("orbitRadii", [0, 82, 162, 335, 493])
         nodes_per_orbit = raw.get("skillsPerOrbit", [1, 6, 12, 12, 40])

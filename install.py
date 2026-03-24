@@ -158,11 +158,14 @@ def download_tree_data():
         with urllib.request.urlopen(req_obj, timeout=15) as resp:
             html = resp.read().decode("utf-8", errors="replace")
 
-        # The page embeds a URL like: "https://web.poecdn.com/.../.../data/SkillTree.json"
-        match = re.search(r'"(https://[^"]+/data/SkillTree\.json[^"]*)"', html)
+        # Page embeds something like: "https://web.poecdn.com/.../data/SkillTree.json"
+        # or the GGG export repo URL pattern
+        match = (
+            re.search(r'"(https://[^"]+/data/SkillTree\.json[^"]*)"', html) or
+            re.search(r'"(https://[^"]+SkillTree\.json[^"]*)"', html)
+        )
         if not match:
-            # Fallback: try known version pattern
-            print("[WARN] Could not find tree data URL in page — trying fallback download")
+            print("[WARN] Could not find tree data URL in page — using official GGG export repo")
             _download_tree_fallback(tree_path)
             return
 
@@ -187,11 +190,10 @@ def download_tree_data():
 
 
 def _download_tree_fallback(tree_path: str):
-    """Try a known CDN URL as fallback."""
+    """Use the official GGG-maintained export repo as fallback."""
     import urllib.request
-    # Community mirror as last resort
     fallback = (
-        "https://raw.githubusercontent.com/grindinggear/skilltree-export/master/data/3_25/SkillTree.json"
+        "https://raw.githubusercontent.com/grindinggear/skilltree-export/master/data.json"
     )
     try:
         req = urllib.request.Request(fallback, headers={"User-Agent": "ExileHUD/1.0"})
