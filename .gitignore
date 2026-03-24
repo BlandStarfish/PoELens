@@ -8,8 +8,11 @@ dist/
 build/
 *.spec
 .env
+state/config.json
 state/profile.json
 state/currency_log.json
+state/version.json
+state/crash_log.jsonl
 assets/minimap_cache/
 *.log
 # password file — NEVER commit this

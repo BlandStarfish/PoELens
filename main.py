@@ -15,6 +15,9 @@ import argparse
 from core.crash_reporter import install as install_crash_reporter
 install_crash_reporter()
 
+from core.analytics import track as _track
+_track("launch")
+
 # Bootstrap check
 try:
     from PyQt6.QtWidgets import QApplication
