@@ -1,10 +1,9 @@
 """
 Currency per hour panel.
 
-User manually enters current currency counts and takes snapshots.
-Optionally: if an OAuthManager + StashAPI are provided (requires a registered
-client_id), an "Auto-fill from Stash" button reads counts directly from the
-official PoE stash tab API via OAuth.
+Primary workflow: connect PoE account via OAuth (requires a registered client_id),
+click "Auto-fill from Stash" to populate counts, then use Start Session / Snapshot
+to track currency/hr. Manual spinbox entry is a fallback for users without OAuth.
 """
 
 import datetime
@@ -284,11 +283,24 @@ class CurrencyPanel(QWidget):
         if all_total == 0:
             self._hist_label.setText("")
             return
+
         parts = []
         if week_total > 0:
             parts.append(f"7-day avg: {week_total:.1f}c/hr")
         parts.append(f"All-time avg: {all_total:.1f}c/hr")
-        self._hist_label.setText("  |  ".join(parts))
+        summary = "  |  ".join(parts)
+
+        # Top-3 currencies by all-time chaos/hr (positive earners only)
+        chaos_rates = alltime.get("chaos_rates", {})
+        top = sorted(
+            [(k, v) for k, v in chaos_rates.items() if v > 0.01],
+            key=lambda x: -x[1],
+        )[:3]
+        if top:
+            top_str = "  ·  ".join(f"{k}: +{v:.1f}c/hr" for k, v in top)
+            summary += f"\nTop: {top_str}"
+
+        self._hist_label.setText(summary)
 
     def refresh(self):
         self._on_update(self._tracker.get_display_data())

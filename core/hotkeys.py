@@ -11,7 +11,7 @@ class HotkeyManager:
     def __init__(self, hotkeys: dict):
         """
         hotkeys: dict mapping action name -> key combo string
-        e.g. {"price_check": "ctrl+d", "toggle_hud": "ctrl+shift+h"}
+        e.g. {"price_check": "ctrl+c", "toggle_hud": "ctrl+shift+h"}
         """
         self._hotkeys = hotkeys
         self._registered: list[str] = []

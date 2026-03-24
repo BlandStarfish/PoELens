@@ -1,9 +1,10 @@
 """
 Currency per hour tracker.
 
-User manually inputs their current stash/inventory currency totals
-(or we can add stash tab API support later). Tracks delta over session time
-and reports currency/hr.
+Tracks currency delta over a session and reports currency/hr rates.
+Currency counts can be entered manually via spinboxes, or auto-filled
+from the official GGG stash tab API via OAuth (requires a registered client_id).
+See core/oauth.py and core/stash_api.py for OAuth details.
 """
 
 import time

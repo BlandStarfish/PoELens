@@ -145,7 +145,7 @@ def _send_analytics(event: str):
     if not ANALYTICS_WEBHOOK_URL:
         return
     try:
-        anon_id = __import__("hashlib").sha256(
+        anon_id = hashlib.sha256(
             socket.gethostname().encode("utf-8")
         ).hexdigest()[:16]
         os_info = f"{platform.system()} {platform.release()}"

@@ -302,3 +302,18 @@ Surfaces the feature to new users without breaking non-interactive environments.
    before implementing. Could reuse the OAuth infrastructure built for stash access.
 4. **PoE 2 support** — Config has `poe_version: poe1/poe2` field but no conditional logic
    exists. Passive tree data format differs. Future concern.
+
+### currency_panel.py: Per-currency historical breakdown (Session 9)
+`_refresh_historical()` now shows a "Top: ..." second line on the `_hist_label`
+when all-time historical data exists. Displays top-3 positive earners by chaos/hr.
+Threshold: 0.01c/hr (consistent with current session display threshold).
+Uses `alltime["chaos_rates"]` dict already computed in the same method call.
+`_hist_label.setWordWrap(True)` (set since Session 5) renders the newline correctly.
+
+### GitHub repo visibility (Session 9)
+Repo BlandStarfish/ExileHUD was made public by the user during Session 9.
+GITHUB_TOKEN = "" in both installer_gui.py and updater.py is correct for public repos.
+If the repo is made private again, a fine-grained read-only PAT must be set in:
+  - installer_gui.py line 30: GITHUB_TOKEN = "your_pat_here"
+  - core/updater.py line 25: GITHUB_TOKEN = "your_pat_here"
+The PAT only needs: Actions=read, Contents=read for the repo.

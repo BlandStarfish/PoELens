@@ -1257,3 +1257,161 @@ league and OAuth client_id at setup time. Ctrl+C is the single price check
 action (copies item AND triggers check). Currency workflow requires OAuth
 (no spinbox-only path promoted).
 ═══════════════════════════════════════════════════════════════
+
+═══════════════════════════════════════════════════════════════
+SESSION: 2026-03-24  (Session 9)
+═══════════════════════════════════════════════════════════════
+
+## ORIENTATION SUMMARY
+Session 9. Read all prior session notes (8 sessions). Session 8 was a user-directed
+session with specific fixes (Ctrl+C price check, Mirage league, installer prompts).
+Session 8 left with one known remaining issue: GITHUB_TOKEN empty / repo private.
+
+Session 9 primary targets from Session 7's queue (Session 8 was user-directed):
+- Per-currency historical breakdown (LOW, no external data needed) ← implemented
+- Crafting method review, atlas map zones (deferred — data source research needed)
+
+USER NOTE during this session: Repo is now public. The GITHUB_TOKEN issue from
+Session 8 is resolved — installer can download sources without a PAT.
+
+## ASSESSMENT GRADES
+
+| Module               | Completeness | Quality | Vision Alignment |
+|----------------------|-------------|---------|-----------------|
+| Quest Tracker        |     8/10     |  9/10   |      9/10       |
+| Passive Tree Viewer  |     8/10     |  9/10   |      9/10       |
+| Price Checker        |     9/10     |  9/10   |      9/10       |
+| Currency Tracker     |     9/10     |  9/10   |      9/10       |
+| Crafting System      |     7/10     |  9/10   |      8/10       |
+| Core Infrastructure  |     9/10     |  9/10   |      9/10       |
+| Map Overlay          |     6/10     |  9/10   |      8/10       |
+| OAuth/Stash API      |     8/10     |  9/10   |      9/10       |
+| Analytics            |     8/10     |  9/10   |      7/10       |
+| Installer            |     9/10     |  8/10   |      9/10       |
+
+Currency Tracker raised from 8 to 9 (per-currency historical breakdown added).
+Installer raised from 8 to 9 (repo public — no more GITHUB_TOKEN blocker).
+No modules below 6 on any axis.
+
+## SMOKE TEST FINDINGS
+
+### Phase 1B -- Logic & Structure Issues
+
+1. modules/currency_tracker.py:1-7 -- STALE DOCSTRING: "User manually inputs...
+   (or we can add stash tab API support later)" — OAuth was added in Session 6.
+   Fixed: updated to reflect current dual-mode workflow.
+
+2. ui/widgets/currency_panel.py:4 -- STALE DOCSTRING: framed manual entry as
+   primary workflow — per Session 8, OAuth is primary. Fixed.
+
+3. installer_gui.py:148 -- UNNECESSARY __import__: `__import__("hashlib").sha256()`
+   used inside _send_analytics() despite hashlib already imported at line 18.
+   Fixed: replaced with direct hashlib.sha256() call.
+
+4. core/hotkeys.py:13 -- STALE DOCSTRING EXAMPLE: example showed `"price_check":
+   "ctrl+d"` but default was changed to "ctrl+c" in Session 8. Fixed.
+
+### Phase 1C -- Redundancy & Counter-Vision Issues
+
+No counter-vision issues found. Codebase consistent and clean.
+
+## MAINTENANCE LOG
+
+### Fix 1 -- currency_tracker.py: Stale docstring
+- File: modules/currency_tracker.py
+- Issue: Module docstring mentioned manual input as only method, "stash tab API later"
+- Fix: Updated to reflect current dual-mode workflow (OAuth auto-fill + manual fallback)
+- Why it matters: Documentation should match implementation
+
+### Fix 2 -- currency_panel.py: Stale docstring framing
+- File: ui/widgets/currency_panel.py
+- Issue: "User manually enters current currency counts" framed manual as primary
+- Fix: Updated to correctly describe OAuth as primary workflow, manual as fallback
+- Why it matters: Reflects Session 8's design intent
+
+### Fix 3 -- installer_gui.py: Unnecessary __import__ for hashlib
+- File: installer_gui.py:148
+- Issue: `__import__("hashlib").sha256(...)` used when hashlib already imported on line 18
+- Fix: Replaced with direct `hashlib.sha256(...)` call
+- Why it matters: Anti-pattern; hashlib is already in scope
+
+### Fix 4 -- hotkeys.py: Stale docstring example
+- File: core/hotkeys.py:13
+- Issue: Docstring example showed `"price_check": "ctrl+d"` (old default)
+- Fix: Updated to `"ctrl+c"` to match current default set in Session 8
+- Why it matters: Documentation accuracy
+
+## DEVELOPMENT LOG
+
+### Currency Panel -- Per-Currency Historical Breakdown
+
+**Goal**: Show top-earning currencies in the historical averages section, giving
+the user more actionable insight into which currencies drove their historical rates.
+
+**Approach**: Extend `_refresh_historical()` to append a second line to the
+existing `_hist_label` when historical data exists. No new widgets required.
+
+**Files modified**: ui/widgets/currency_panel.py
+
+**Change**:
+- `_refresh_historical()` now computes top-3 currencies from `alltime["chaos_rates"]`
+- Filters to positive earners only (> 0.01c/hr threshold)
+- Sorts descending by chaos/hr
+- Appends `"\nTop: {k}: +{v:.1f}c/hr  ·  ..."` to the summary string
+- `_hist_label` already has `wordWrap=True` so the newline renders correctly
+- Guard: top-3 line only added when positive earners exist
+
+**UX result**:
+Before (old):
+  "7-day avg: 310.5c/hr  |  All-time avg: 250.3c/hr"
+
+After (new):
+  "7-day avg: 310.5c/hr  |  All-time avg: 250.3c/hr
+   Top: Chaos Orb: +80.0c/hr  ·  Divine Orb: +45.0c/hr  ·  Exalted Orb: +12.0c/hr"
+
+**Post-implementation review**: Simple, no technical debt. Uses data already computed.
+No new widgets or state. Consistent with existing display patterns.
+
+## TECHNICAL NOTES
+
+- **Repo now public**: BlandStarfish/ExileHUD is now a public repo. GITHUB_TOKEN = ""
+  is correct and correct behavior for public repos. No changes needed to updater.py
+  or installer_gui.py — they already handle empty token gracefully.
+
+- **_hist_label wordWrap**: The label has setWordWrap(True) set since Session 5.
+  Adding a newline to setText() renders the second line correctly in the overlay.
+
+- **Historical breakdown threshold**: Uses 0.01c/hr (same as current session display).
+  Consistent with existing pattern in _on_update()'s `if abs(chaos_hr) > 0.01`.
+
+## SUGGESTIONS FOR NEXT SESSION
+
+1. **Crafting methods review** (LOW): methods.json has 8 methods. Audit them for
+   accuracy against current PoE version (e.g. recombinator, metacraft validity).
+   Pure data update, no architectural changes needed.
+
+2. **Map overlay -- atlas map zones** (LOW, needs data source): Campaign zones done.
+   Atlas endgame maps need community data. Research poedb.tw or GGG datamining
+   exports before implementing. Would bring map overlay from 6/10 to 8/10.
+
+3. **Passive tree -- character API** (MEDIUM): Account:characters scope would let
+   the app auto-sync the player's allocated nodes from GGG. OAuth infrastructure
+   is in place. TOS research still required before implementing.
+
+4. **Session count / total hours in historical label** (LOW): Could augment the
+   "All-time avg" line with "(N sessions, X hours tracked)" for context. Simple
+   state.py + currency_tracker.py addition.
+
+## PROJECT HEALTH
+
+Overall grade: 9.0/10 (up from 8.9 last session)
+% complete toward vision: ~95% (up from ~93%)
+
+All 6 features fully implemented and polished. Historical breakdown now visible.
+Repo is public -- installer works end-to-end. All known technical issues resolved.
+Codebase quality high throughout.
+
+Remaining gaps: (1) atlas map data (data source research), (2) passive tree
+character API sync (TOS research), (3) crafting methods accuracy audit.
+═══════════════════════════════════════════════════════════════
+
