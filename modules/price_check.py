@@ -101,6 +101,8 @@ class PriceChecker:
         threading.Thread(target=self._do_check, daemon=True).start()
 
     def _do_check(self):
+        import time
+        time.sleep(0.15)  # give PoE time to populate clipboard after Ctrl+C
         text = _get_clipboard()
         if not text or "Rarity:" not in text:
             self._emit({"error": "No item in clipboard. Copy an item first (Ctrl+C in PoE)."})

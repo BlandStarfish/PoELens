@@ -83,6 +83,16 @@ def setup_state():
     else:
         print("[WARN] Could not auto-detect Client.txt — edit state/config.json manually")
 
+    # Prompt for league name
+    print(f"\n[Setup] Current league name (used for prices and trade search).")
+    print(f"  Default: {cfg['league']}")
+    league = input("  League name (or press Enter to keep default): ").strip()
+    if league:
+        cfg["league"] = league
+        print(f"[OK]  League set to: {league}")
+    else:
+        print(f"[OK]  League kept as: {cfg['league']}")
+
     # Optional: OAuth client_id for stash tab auto-fill
     print("\n[Optional] GGG OAuth client_id for currency stash tab auto-fill.")
     print("  Register by emailing oauth@grindinggear.com (leave blank to skip).")

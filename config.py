@@ -14,7 +14,7 @@ DEFAULTS = {
     "client_log_path": r"C:\Program Files (x86)\Grinding Gear Games\Path of Exile\logs\Client.txt",
 
     # League name (used for poe.ninja lookups)
-    "league": "Standard",
+    "league": "Mirage",
 
     # Screen the overlay renders on (0 = primary)
     "overlay_screen": 0,
@@ -24,7 +24,7 @@ DEFAULTS = {
 
     # Global hotkeys
     "hotkeys": {
-        "price_check": "ctrl+d",
+        "price_check": "ctrl+c",
         "toggle_hud": "ctrl+shift+h",
         "passive_tree": "ctrl+shift+p",
         "crafting_queue": "ctrl+shift+c",

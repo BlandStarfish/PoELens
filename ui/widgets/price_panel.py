@@ -21,7 +21,7 @@ class PricePanel(QWidget):
         layout.setContentsMargins(8, 8, 8, 8)
         layout.setSpacing(6)
 
-        hint = QLabel(f"Press hotkey (default: Ctrl+D) while hovering an item in PoE.\nCtrl+C the item first if clipboard is empty.")
+        hint = QLabel("Press Ctrl+C while hovering an item in PoE to copy and price check simultaneously.")
         hint.setWordWrap(True)
         hint.setStyleSheet(f"color: {DIM}; font-size: 11px;")
         layout.addWidget(hint)

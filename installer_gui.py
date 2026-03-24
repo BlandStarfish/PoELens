@@ -162,7 +162,7 @@ class Installer(tk.Tk):
         self.title(f"{APP_NAME} Setup")
         self.resizable(False, False)
         self.configure(bg=BG)
-        self._center(560, 450)
+        self._center(560, 520)
         self._install_dest = None
         self._build()
 
@@ -195,12 +195,30 @@ class Installer(tk.Tk):
                   fg=TEXT, relief="flat", activebackground="#3a3a5a",
                   cursor="hand2").grid(row=0, column=2)
 
+        tk.Label(body, text="League:", bg=BG, fg=TEXT,
+                 font=("Segoe UI", 10)).grid(row=1, column=0, sticky="w", pady=4)
+        self._league = tk.StringVar(value="Mirage")
+        tk.Entry(body, textvariable=self._league, width=24, bg=PANEL, fg=TEXT,
+                 insertbackground=TEXT, relief="flat",
+                 font=("Segoe UI", 10)).grid(row=1, column=1, padx=8, sticky="w")
+        tk.Label(body, text="(current league name)", bg=BG, fg=DIM,
+                 font=("Segoe UI", 9)).grid(row=1, column=2, sticky="w")
+
+        tk.Label(body, text="OAuth client_id:", bg=BG, fg=TEXT,
+                 font=("Segoe UI", 10)).grid(row=2, column=0, sticky="w", pady=4)
+        self._oauth_client_id = tk.StringVar(value="")
+        tk.Entry(body, textvariable=self._oauth_client_id, width=32, bg=PANEL, fg=TEXT,
+                 insertbackground=TEXT, relief="flat",
+                 font=("Segoe UI", 10)).grid(row=2, column=1, padx=8, sticky="ew")
+        tk.Label(body, text="(optional, for stash auto-fill)", bg=BG, fg=DIM,
+                 font=("Segoe UI", 9)).grid(row=2, column=2, sticky="w")
+
         self._shortcut  = tk.BooleanVar(value=True)
         self._startmenu = tk.BooleanVar(value=True)
         for i, (var, label) in enumerate([
             (self._shortcut,  "Create Desktop shortcut"),
             (self._startmenu, "Add to Start Menu"),
-        ], 1):
+        ], 3):
             tk.Checkbutton(body, text=label, variable=var, bg=BG, fg=TEXT,
                            selectcolor=PANEL, activebackground=BG,
                            activeforeground=GOLD, font=("Segoe UI", 10)
@@ -442,22 +460,26 @@ class Installer(tk.Tk):
             os.path.expanduser(r"~\AppData\Local\Path of Exile\Client.txt"),
         ]
         log_path = next((p for p in candidates if os.path.exists(p)), candidates[0])
+        config_data = {
+            "poe_version": "poe1",
+            "client_log_path": log_path,
+            "league": self._league.get().strip() or "Mirage",
+            "overlay_screen": 0,
+            "overlay_opacity": 0.92,
+            "hotkeys": {
+                "price_check":    "ctrl+c",
+                "toggle_hud":     "ctrl+shift+h",
+                "passive_tree":   "ctrl+shift+p",
+                "crafting_queue": "ctrl+shift+c",
+                "map_overlay":    "ctrl+shift+m",
+            },
+            "price_refresh_interval": 300,
+        }
+        client_id = self._oauth_client_id.get().strip()
+        if client_id:
+            config_data["oauth_client_id"] = client_id
         with open(cfg, "w") as f:
-            json.dump({
-                "poe_version": "poe1",
-                "client_log_path": log_path,
-                "league": "Standard",
-                "overlay_screen": 0,
-                "overlay_opacity": 0.92,
-                "hotkeys": {
-                    "price_check":    "ctrl+d",
-                    "toggle_hud":     "ctrl+shift+h",
-                    "passive_tree":   "ctrl+shift+p",
-                    "crafting_queue": "ctrl+shift+c",
-                    "map_overlay":    "ctrl+shift+m",
-                },
-                "price_refresh_interval": 300,
-            }, f, indent=2)
+            json.dump(config_data, f, indent=2)
         self.after(0, lambda: self._log(f"Config written (PoE log: {log_path})"))
 
     def _write_version(self, dest):

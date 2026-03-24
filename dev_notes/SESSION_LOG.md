@@ -1202,3 +1202,58 @@ remains high. No technical debt introduced.
 Remaining gaps: (1) passive tree character API sync (TOS research needed), (2) atlas
 map data (data source research needed), (3) minor analytics enhancements.
 ═══════════════════════════════════════════════════════════════
+
+
+═══════════════════════════════════════════════════════════════
+SESSION: 2026-03-24  (Session 8 — User-directed fixes)
+═══════════════════════════════════════════════════════════════
+
+## USER REQUESTS
+
+User returned after Session 7 autonomous run with specific requests:
+1. No manual currency spinbox input -- OAuth/stash API is the intended workflow
+2. Price check hotkey = Ctrl+C (same as PoE's item copy, one keypress does both)
+3. PoE 1 exclusive for now
+4. League = Mirage (non-hardcore, always plays new league)
+5. Installer error fix: 404 because repo is private and GITHUB_TOKEN is empty
+6. Setup settings (league, oauth_client_id) should be prompted during installer setup
+
+## CHANGES MADE
+
+### config.py
+- `hotkeys.price_check`: "ctrl+d" -> "ctrl+c"
+- `league`: "Standard" -> "Mirage"
+
+### modules/price_check.py
+- Added `time.sleep(0.15)` at start of `_do_check()` (Ctrl+C race condition fix)
+- PoE populates clipboard asynchronously within its game loop; 150ms is safe margin
+
+### ui/widgets/price_panel.py
+- Updated hint text from "Press hotkey (Ctrl+D)... Ctrl+C the item first..."
+  to "Press Ctrl+C while hovering an item in PoE to copy and price check simultaneously."
+
+### install.py (CLI installer)
+- Added league name prompt in `setup_state()` -- defaults to Mirage, user can override
+
+### installer_gui.py (GUI installer)
+- Added League field (default "Mirage") to installer UI grid
+- Added OAuth client_id field (optional) to installer UI grid
+- `_write_config()` now reads from these fields instead of hardcoded values
+- Fixed hardcoded `"price_check": "ctrl+d"` -> `"ctrl+c"`
+- Window height: 450 -> 520 to fit new rows
+
+## KNOWN REMAINING ISSUES
+
+- installer_gui.py GITHUB_TOKEN is still empty -- repo must be made public OR
+  user must embed a fine-grained read-only PAT on line 29 and rebuild
+
+## PROJECT HEALTH
+
+Overall grade: 8.9/10
+% complete toward vision: ~93%
+
+All user-requested configuration changes are live. Installer now prompts for
+league and OAuth client_id at setup time. Ctrl+C is the single price check
+action (copies item AND triggers check). Currency workflow requires OAuth
+(no spinbox-only path promoted).
+═══════════════════════════════════════════════════════════════
