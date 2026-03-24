@@ -11,6 +11,10 @@ Usage:
 import sys
 import argparse
 
+# Crash reporter goes in before anything else so all errors are caught
+from core.crash_reporter import install as install_crash_reporter
+install_crash_reporter()
+
 # Bootstrap check
 try:
     from PyQt6.QtWidgets import QApplication
@@ -22,6 +26,7 @@ import config as cfg
 from core.client_log import ClientLogWatcher
 from core.state import AppState
 from core.hotkeys import HotkeyManager
+from core.updater import check_and_prompt as check_for_updates
 from api.poe_ninja import PoeNinja
 from api.poe_trade import build_price_check_query, search_item, fetch_listings, extract_prices
 from modules.quest_tracker import QuestTracker
@@ -44,6 +49,9 @@ def main():
     app = QApplication(sys.argv)
     app.setApplicationName("ExileHUD")
     app.setQuitOnLastWindowClosed(False)
+
+    # Check for updates in background (shows dialog on main thread if found)
+    check_for_updates()
 
     # Core services
     state = AppState()
