@@ -159,16 +159,47 @@ class AppState:
         """Last manually entered currency amounts (from most recent snapshot)."""
         return dict(self._profile.get("currency_last_amounts", {}))
 
+    def get_historical_rate(self, days: int | None = None) -> dict:
+        """
+        Compute average currency/hr across historical snapshots.
+        days=7  — last 7 days only.
+        days=None — all-time average.
+        Returns {} if no qualifying data.
+        """
+        sessions = self._currency_log.get("sessions", [])
+        if not sessions:
+            return {}
+        cutoff = (time.time() - days * 86400) if days is not None else 0
+        filtered = [s for s in sessions if s.get("timestamp", 0) >= cutoff]
+        if not filtered:
+            return {}
+        total_hours = sum(s.get("elapsed_hours", 0) for s in filtered)
+        if total_hours < 0.001:
+            return {}
+        combined: dict[str, float] = {}
+        for s in filtered:
+            for currency, delta in s.get("delta", {}).items():
+                combined[currency] = combined.get(currency, 0) + delta
+        return {k: round(v / total_hours, 2) for k, v in combined.items()}
+
     def get_currency_rate(self) -> dict:
         """
         Returns currency/hr rates based on the most recent snapshot.
         Uses the snapshot's own elapsed time so the rate stays accurate
         rather than diluting as time passes between snapshots.
+        Only returns rates from the current session — snapshots from
+        previous sessions are ignored so starting a new session clears
+        the displayed rates.
         """
         sessions = self._currency_log.get("sessions", [])
         if not sessions:
             return {}
         last = sessions[-1]
+        # Guard: if the last snapshot predates the current session start,
+        # it belongs to a previous session — return empty to signal "no data yet".
+        session_start = self._profile.get("currency_session_start")
+        if session_start and last.get("timestamp", 0) < session_start:
+            return {}
         elapsed = last.get("elapsed_hours", 0)
         if elapsed < 0.001:
             return {}

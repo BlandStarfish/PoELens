@@ -100,6 +100,27 @@ class CurrencyTracker:
             "elapsed_minutes": round(elapsed, 1),
         }
 
+    def get_historical_display_data(self, days: int | None = None) -> dict:
+        """
+        Returns average chaos/hr computed across all historical snapshots
+        (or the last `days` days). Useful for 7-day and all-time summaries.
+        Returns {"total_chaos_per_hr": 0, "chaos_rates": {}} if no data.
+        """
+        rates = self._state.get_historical_rate(days=days)
+        if not rates:
+            return {"total_chaos_per_hr": 0.0, "chaos_rates": {}}
+        chaos_rates = {}
+        total_chaos = 0.0
+        for currency, rate in rates.items():
+            chaos_val = self._ninja.get_price(currency, "Currency") or 1.0
+            chaos_per_hr = rate * chaos_val
+            chaos_rates[currency] = round(chaos_per_hr, 2)
+            total_chaos += chaos_per_hr
+        return {
+            "total_chaos_per_hr": round(total_chaos, 2),
+            "chaos_rates": chaos_rates,
+        }
+
     def _fire_update(self):
         data = self.get_display_data()
         for cb in self._on_update:

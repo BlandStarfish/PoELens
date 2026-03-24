@@ -50,7 +50,6 @@ except ImportError:
 
 # PoE item tooltip header pattern (Ctrl+C from in-game)
 _RARITY_RE = re.compile(r"Rarity: (\w+)")
-_NAME_RE = re.compile(r"^(.+)$", re.MULTILINE)
 _ITEM_CLASS_RE = re.compile(r"Item Class: (.+)")
 
 

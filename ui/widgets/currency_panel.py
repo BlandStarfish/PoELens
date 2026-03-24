@@ -55,6 +55,12 @@ class CurrencyPanel(QWidget):
         self._elapsed_label.setStyleSheet(f"color: {DIM}; font-size: 11px;")
         layout.addWidget(self._elapsed_label)
 
+        # Historical averages (7-day and all-time)
+        self._hist_label = QLabel("")
+        self._hist_label.setStyleSheet(f"color: {DIM}; font-size: 11px;")
+        self._hist_label.setWordWrap(True)
+        layout.addWidget(self._hist_label)
+
         sep = QFrame()
         sep.setFrameShape(QFrame.Shape.HLine)
         sep.setStyleSheet("color: #2a2a4a;")
@@ -97,6 +103,7 @@ class CurrencyPanel(QWidget):
     def _start_session(self):
         self._tracker.start_session(self._get_amounts())
         self._rate_label.setText("Session started — take snapshots as you play.")
+        self._elapsed_label.setText("")
         # Show session start time immediately (before first snapshot)
         self._on_update(self._tracker.get_display_data())
 
@@ -112,6 +119,7 @@ class CurrencyPanel(QWidget):
             self._session_label.setText("")
 
         if not data.get("rates"):
+            self._refresh_historical()
             return
 
         lines = []
@@ -122,6 +130,22 @@ class CurrencyPanel(QWidget):
         total = data.get("total_chaos_per_hr", 0)
         elapsed = data.get("elapsed_minutes", 0)
         self._elapsed_label.setText(f"Total: {total:.1f}c/hr  |  {elapsed:.0f} min elapsed")
+        self._refresh_historical()
+
+    def _refresh_historical(self):
+        """Update the 7-day and all-time average labels from the session log."""
+        week = self._tracker.get_historical_display_data(days=7)
+        alltime = self._tracker.get_historical_display_data(days=None)
+        week_total = week.get("total_chaos_per_hr", 0)
+        all_total = alltime.get("total_chaos_per_hr", 0)
+        if all_total == 0:
+            self._hist_label.setText("")
+            return
+        parts = []
+        if week_total > 0:
+            parts.append(f"7-day avg: {week_total:.1f}c/hr")
+        parts.append(f"All-time avg: {all_total:.1f}c/hr")
+        self._hist_label.setText("  |  ".join(parts))
 
     def refresh(self):
         self._on_update(self._tracker.get_display_data())

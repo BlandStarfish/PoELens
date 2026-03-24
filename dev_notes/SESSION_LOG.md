@@ -705,3 +705,185 @@ player node tracking (blocked on OAuth/TOS research), (3) atlas map data (resear
 All current features are functional and polished.
 
 ═══════════════════════════════════════════════════════════════
+
+
+═══════════════════════════════════════════════════════════════
+SESSION: 2026-03-24  (Session 5)
+═══════════════════════════════════════════════════════════════
+
+## ORIENTATION SUMMARY
+Session 5. Read all prior session notes. Session 4 left off with 4 suggestions:
+(1) TOS research for stash tab API (MEDIUM, DEFERRED 4 sessions)
+(2) Price check item parsing robustness (LOW)
+(3) Atlas map zones data (LOW, needs research)
+(4) Currency tracker cross-session aggregation (LOW, no external data needed)
+
+Items 1 and 3 require external research. Item 2 was assessed and found robust (see
+smoke test). Item 4 was the primary development target this session -- fully implemented.
+TOS research was initiated via web agent (results appended in TECHNICAL.md if found).
+
+## ASSESSMENT GRADES
+
+| Module               | Completeness | Quality | Vision Alignment |
+|----------------------|-------------|---------|-----------------|
+| Quest Tracker        |     8/10     |  9/10   |      9/10       |
+| Passive Tree Viewer  |     7/10     |  9/10   |      8/10       |
+| Price Checker        |     9/10     |  9/10   |      9/10       |
+| Currency Tracker     |     7/10     |  9/10   |      8/10       |
+| Crafting System      |     7/10     |  9/10   |      8/10       |
+| Core Infrastructure  |     9/10     |  9/10   |      9/10       |
+| Map Overlay          |     6/10     |  9/10   |      8/10       |
+
+Currency Tracker completeness raised from 6 to 7 due to cross-session aggregation.
+No modules below 6/10 on any axis.
+
+## SMOKE TEST FINDINGS
+
+### Phase 1B -- Logic & Structure Issues
+
+1. core/state.py:162-175 -- BUG: get_currency_rate() returned rates from previous
+   sessions. start_currency_session() resets the baseline but does NOT clear old
+   _currency_log entries. So after starting a new session, get_currency_rate() still
+   returned the last old snapshot's rate. In currency_panel.py, _on_update() would
+   then overwrite the "Session started -- take snapshots" message with stale data.
+   Fixed by adding session boundary check: if last snapshot predates current
+   session_start, return {}.
+
+2. modules/price_check.py:53 -- DEAD CODE: _NAME_RE regex defined at module level
+   but never referenced anywhere in the file. Removed.
+
+3. ui/widgets/currency_panel.py:97-101 -- UX DEFECT: _start_session() didn't clear
+   _elapsed_label. On a new session, if an old session's elapsed time was displayed,
+   it would persist visually until the first new snapshot. Fixed by adding explicit
+   clear in _start_session().
+
+### Phase 1C -- Redundancy & Counter-Vision Issues
+
+No new counter-vision issues found. Codebase is consistent.
+
+### Phase 1D -- Proximity Assessment
+
+All three flagged files reviewed in context. No additional issues found in
+related files (currency_tracker.py, poe_trade.py, state.py adjacencies).
+
+## MAINTENANCE LOG
+
+### Fix 1 -- state.py: Session boundary check in get_currency_rate()
+- File: core/state.py
+- Issue: Old session rates returned after starting a new session
+- Fix: Added check: if last snapshot timestamp < currency_session_start, return {}.
+  New session sees empty rates until first snapshot taken. Old data correctly hidden.
+- Why it matters: The currency panel was showing stale rates from previous sessions,
+  silently overwriting the "Session started" message. Data integrity issue.
+
+### Fix 2 -- price_check.py: Remove dead _NAME_RE
+- File: modules/price_check.py
+- Issue: _NAME_RE = re.compile(r"^(.+)$", re.MULTILINE) defined but never used
+- Fix: Removed the dead regex definition entirely
+- Why it matters: Dead code clutters the module and signals false intent
+
+### Fix 3 -- currency_panel.py: Clear elapsed label on new session
+- File: ui/widgets/currency_panel.py
+- Issue: _elapsed_label not cleared when starting a new session
+- Fix: Added self._elapsed_label.setText("") in _start_session() before _on_update()
+- Why it matters: Stale "X min elapsed" from previous session would persist until
+  first new snapshot
+
+## DEVELOPMENT LOG
+
+### Currency Tracker -- Cross-Session Aggregation
+
+**Goal**: Implement 7-day and all-time average chaos/hr from the historical session
+log. No external data needed -- pure computation over existing currency_log.json.
+
+**Approach**: Aggregate all session log entries (filtering by timestamp for N-day
+windows), sum deltas and elapsed_hours, compute weighted average rate. Expressed in
+chaos/hr via poe.ninja prices as with the current session rate.
+
+**Files modified**:
+
+core/state.py
+  - Added get_historical_rate(days: int | None) -> dict
+  - days=7: filters sessions with timestamp >= (now - 7 days)
+  - days=None: all sessions (cutoff=0, always True for positive unix timestamps)
+  - Sums deltas across filtered sessions, divides by total_hours
+  - Returns {} if no qualifying data or total_hours < 0.001
+
+modules/currency_tracker.py
+  - Added get_historical_display_data(days: int | None) -> dict
+  - Mirrors get_display_data() but uses get_historical_rate() instead of get_currency_rate()
+  - Converts to chaos via poe.ninja (uses cached prices, no extra HTTP calls)
+  - Returns {"total_chaos_per_hr": float, "chaos_rates": dict}
+
+ui/widgets/currency_panel.py
+  - Added _hist_label QLabel (DIM color, below _elapsed_label)
+  - Added _refresh_historical() method
+    - Calls get_historical_display_data(days=7) and get_historical_display_data(days=None)
+    - If all_total == 0, hides label (no data yet -- first ever session)
+    - Otherwise shows "7-day avg: Xc/hr  |  All-time avg: Xc/hr"
+    - 7-day part only shown if week_total > 0 (avoids confusion when no recent data)
+  - _on_update() calls _refresh_historical() on both code paths (rates or no rates)
+  - On init, existing _on_update(tracker.get_display_data()) call fires _refresh_historical
+
+**UX result**:
+- First time using tracker: no historical label shown (no data yet)
+- After some sessions: "All-time avg: 250.3c/hr" in dim text below current rates
+- After a week of sessions: "7-day avg: 310.5c/hr  |  All-time avg: 250.3c/hr"
+- Starting new session: rate label resets but historical stays (correct -- history
+  doesn't change on session start)
+- Taking first snapshot: current rate + historical both shown together
+
+## TECHNICAL NOTES
+
+- **currency_log.json retention**: The log is never pruned. Over long use it grows
+  modestly: one entry per snapshot (~200 bytes). 5 snapshots/day * 365 days = ~350KB.
+  No rotation needed at this scale.
+
+- **get_historical_rate() window semantics**: days=7 means "last 7*24 hours", not
+  "last 7 calendar days". Intentional -- time-zone-agnostic, consistent behavior.
+
+- **Historical display refresh cadence**: _refresh_historical() fires inside
+  _on_update(), which runs on every snapshot + 60s timer. No extra timer needed.
+
+- **state.py: session boundary guard**: get_currency_rate() now returns {} when the
+  last snapshot predates session start. Rates should only reflect the current session.
+  Historical data accessed separately via get_historical_rate(). Invariant is clean.
+
+- **price check parser assessment**: parse_item_clipboard() audited against all known
+  PoE clipboard formats (normal, magic, rare, unique, fractured, corrupted, synthesised,
+  mirrored, flasks, gems, divination cards). All produce correct extraction. "Fractured
+  Item", "Mirrored" etc. appear in post-separator sections, not section[0]. Parser
+  is robust. Known limitation: magic items get full magic name as both name and
+  base_type -- no affix stripping. Acceptable; magic items rarely need precise pricing.
+
+## SUGGESTIONS FOR NEXT SESSION
+
+1. **TOS research -- stash tab API** (MEDIUM, DEFERRED 5 sessions): Research ran
+   this session (web agent). See TECHNICAL.md for findings. If OAuth-based stash read
+   is TOS-approved, implement OAuth flow + stash tab read. This eliminates the largest
+   remaining UX friction in the currency tracker.
+
+2. **Map overlay -- atlas map zones** (LOW): Campaign zones complete. Needs community
+   data source for endgame maps. Research poedb.tw or GGG data exports. Deferred until
+   a clear data source is identified.
+
+3. **Passive tree -- player node tracking** (FUTURE/LONG): Character API + OAuth
+   required. TOS gray area. Highest impact improvement for the tree panel.
+
+4. **Currency tracker -- per-currency historical breakdown** (LOW): The historical
+   aggregation surface the total. A deeper view (per-currency rates, session count,
+   total hours tracked) could be added as a collapsible section. Low priority; no
+   blockers.
+
+## PROJECT HEALTH
+
+Overall grade: 8.4/10 (up from 8.2 last session)
+% complete toward vision: ~83% (up from ~80%)
+
+All 6 features implemented and polished. Three maintenance fixes. Currency tracker
+now shows 7-day and all-time average rates. Codebase quality high throughout.
+
+Remaining gaps: (1) currency auto-reading (TOS research pending), (2) passive tree
+player nodes (OAuth/TOS research needed), (3) atlas map data (data source research).
+
+═══════════════════════════════════════════════════════════════

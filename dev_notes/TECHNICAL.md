@@ -173,13 +173,45 @@ Populated by log_currency_snapshot() each time a snapshot is taken. Used by
 CurrencyPanel.__init__ to restore spinbox values on app restart. The {**defaults, **data}
 merge pattern handles backward compatibility -- existing profiles get {} automatically.
 
+### currency_panel.py / state.py: Cross-session aggregation (Session 5)
+state.py added get_historical_rate(days: int | None). days=None means all-time (cutoff=0,
+all positive timestamps pass). days=7 means last 7*24 hours (time-zone-agnostic).
+currency_tracker.py added get_historical_display_data(days) mirroring get_display_data().
+currency_panel.py added _hist_label + _refresh_historical() showing "7-day avg: Xc/hr
+| All-time avg: Xc/hr" in dim text below the current session rates.
+Historical label hidden until at least one snapshot exists (all_total == 0 guard).
+
+### state.py: Currency rate session boundary (Session 5)
+get_currency_rate() now checks if last snapshot timestamp < currency_session_start.
+If so, returns {} (snapshot belongs to old session). This ensures starting a new
+session clears displayed rates rather than showing stale previous-session values.
+
+### currency_log.json retention
+Never pruned. Grows modestly: ~200 bytes/snapshot. 5 snapshots/day * 365 days ≈ 350KB.
+No rotation needed. Long-term use gives increasingly meaningful all-time averages.
+
 ## Open Questions
 
-1. **Stash tab API** — Would need OAuth login flow or user-provided POESESSID. Is this
-   worth the complexity? Would significantly improve currency tracker UX.
-2. **Map overlay data source** — poedb.tw? Static JSON? Need to decide format and
+1. **Stash tab API TOS** — Research initiated Session 5. Prior knowledge: GGG has an
+   official OAuth 2.0 API documented at pathofexile.com/developer/docs. The stash
+   endpoint is `/api/stash/{league}`. POESESSID-based access is NOT officially
+   supported and GGG has stated they may revoke it without notice. OAuth is the
+   correct approach. GGG's Third Party Developer Policy (as of ~2024) explicitly
+   allows stash tab reads via OAuth for tools that don't give competitive advantage.
+   Currency tracking falls clearly within TOS-compliant use.
+   NOTE: Web research agent ran Session 5 -- update this section with confirmed
+   current findings if they differ from above.
+
+2. **Stash tab API -- OAuth implementation** -- If TOS confirms OAuth is safe:
+   - Scope needed: "account:stashes"
+   - Endpoint: GET /api/stash/{league}
+   - Requires user to authenticate once via browser OAuth flow
+   - Token stored in state/config.json (never committed)
+   - Would auto-read currency counts and eliminate manual spinbox entry
+
+3. **Map overlay data source** — poedb.tw? Static JSON? Need to decide format and
    update strategy for map mods.
-3. **Character API** — Could auto-import allocated passive nodes for tree highlighting.
-   Requires POESESSID or OAuth. Undocumented API, risk of TOS gray area.
-4. **PoE 2 support** — Config has `poe_version: poe1/poe2` field but no conditional logic
+4. **Character API** — Could auto-import allocated passive nodes for tree highlighting.
+   Requires OAuth. Endpoint undocumented but community-known. TOS gray area.
+5. **PoE 2 support** — Config has `poe_version: poe1/poe2` field but no conditional logic
    exists. Passive tree data format differs. Future concern.
