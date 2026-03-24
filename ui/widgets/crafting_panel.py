@@ -56,7 +56,8 @@ class CraftingPanel(QWidget):
         self._method_detail.setStyleSheet(
             "background: #0f0f23; color: #d4c5a9; border: 1px solid #2a2a4a; font-size: 11px;"
         )
-        self._method_detail.setFixedHeight(180)
+        self._method_detail.setMinimumHeight(120)
+        self._method_detail.setMaximumHeight(280)
         sheet_layout.addWidget(self._method_detail)
 
         splitter.addWidget(sheet_widget)
@@ -138,6 +139,15 @@ class CraftingPanel(QWidget):
         for item in cost.get("line_items", []):
             acquire = ", ".join(item["acquire_via"][:2])
             lines.append(f"  • {item['name']} ×{item['qty']}  = {item['chaos_total']:.1f}c  [{acquire}]")
+
+        if fossil_guide := m.get("fossil_guide"):
+            lines.append("")
+            lines.append(f"<b style='color:#c8a84b'>Fossil Reference:</b>")
+            for fossil, effect in fossil_guide.items():
+                lines.append(
+                    f"  • <span style='color:#e2b96f'>{fossil}</span>"
+                    f"<span style='color:#8a7a65'> — {effect}</span>"
+                )
 
         if notes := m.get("notes"):
             lines.append(f"<br><i style='color:#8a7a65'>Note: {notes}</i>")

@@ -23,8 +23,17 @@ import urllib.request
 from typing import Optional
 
 _API_BASE     = "https://api.pathofexile.com"
-_UA           = "ExileHUD/1.0 (contact: github.com/BlandStarfish/ExileHUD)"
+_CONTACT      = "github.com/BlandStarfish/ExileHUD"
 _MIN_INTERVAL = 1.0   # minimum seconds between API requests
+
+
+def _ua(client_id: str) -> str:
+    """
+    GGG-required User-Agent format for OAuth API consumers:
+    OAuth {clientId}/{version} (contact: {contact})
+    See: pathofexile.com/developer/docs
+    """
+    return f"OAuth {client_id}/1.0 (contact: {_CONTACT})"
 
 
 class CharacterAPI:
@@ -85,7 +94,7 @@ class CharacterAPI:
         url = _API_BASE + path
         headers = {
             "Authorization": f"Bearer {token}",
-            "User-Agent": _UA,
+            "User-Agent": _ua(self._oauth.client_id),
         }
 
         for attempt in range(2):

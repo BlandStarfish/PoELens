@@ -52,6 +52,10 @@ class OAuthManager:
         self._tokens: dict = self._load_tokens()
 
     @property
+    def client_id(self) -> str:
+        return self._client_id
+
+    @property
     def is_configured(self) -> bool:
         """True if a client_id has been set in config."""
         return bool(self._client_id)
