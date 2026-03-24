@@ -173,15 +173,18 @@ def _send_analytics(event: str):
 
 
 def _gh_headers() -> dict:
-    h = {"User-Agent": "ExileHUD-Installer/1.0"}
+    h = {"User-Agent": "ExileHUD-Installer/1.0", "Accept": "application/vnd.github+json"}
     if GITHUB_TOKEN:
         h["Authorization"] = f"Bearer {GITHUB_TOKEN}"
     return h
 
 def github_zip_url() -> str:
+    # Use the GitHub API zipball endpoint — supports Bearer token auth for private repos.
+    # The web archive URL (github.com/…/archive/…zip) requires browser session cookies
+    # and does NOT support Authorization header auth.
     return (
-        f"https://github.com/{GITHUB_OWNER}/{GITHUB_REPO}/"
-        f"archive/refs/heads/{GITHUB_BRANCH}.zip"
+        f"https://api.github.com/repos/{GITHUB_OWNER}/{GITHUB_REPO}"
+        f"/zipball/{GITHUB_BRANCH}"
     )
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -377,24 +380,22 @@ class Installer(tk.Tk):
             # ── 3. Download app source from GitHub ────────────────────
             self._ui("Downloading ExileHUD from GitHub...", 28)
             app_zip = os.path.join(tmp, "app.zip")
-            req = urllib.request.Request(github_zip_url(), headers=_gh_headers())
-            # Test for 404 early and give a clear message
             try:
-                with urllib.request.urlopen(req, timeout=30) as resp:
-                    if resp.status == 404:
-                        raise RuntimeError(
-                            "Could not access the ExileHUD repository (404).\n"
-                            "The repo may be private. Contact the developer for access."
-                        )
+                self._download(github_zip_url(), app_zip, 28, 45,
+                               extra_headers=_gh_headers())
             except urllib.error.HTTPError as e:
+                if e.code in (401, 403):
+                    raise RuntimeError(
+                        f"GitHub returned {e.code} — access denied.\n"
+                        "The repository is private and the embedded token was rejected.\n"
+                        "Contact the developer for an updated installer."
+                    )
                 if e.code == 404:
                     raise RuntimeError(
-                        "Repository access denied (404). "
-                        "If this is a private repo, a valid GITHUB_TOKEN must be embedded in this installer."
+                        "Repository not found (404). "
+                        "Contact the developer for an updated installer."
                     )
                 raise
-            self._download(github_zip_url(), app_zip, 28, 45,
-                           extra_headers=_gh_headers())
 
             self._ui("Extracting app files...", 45)
             with zipfile.ZipFile(app_zip, "r") as zf:
@@ -427,11 +428,19 @@ class Installer(tk.Tk):
             self._ui("Writing config...", 72)
             self._write_config(dest)
             bat = os.path.join(dest, "run.bat")
+            main_py = os.path.join(dest, "main.py")
             with open(bat, "w") as f:
+                # set "VAR=VALUE" syntax handles spaces in paths on Windows.
+                # cd /d ensures relative imports resolve correctly.
                 f.write(
                     f'@echo off\n'
-                    f'set PYTHONPATH={runtime}\\Lib\\site-packages\n'
-                    f'"{python}" "{os.path.join(dest, "main.py")}"\n'
+                    f'cd /d "{dest}"\n'
+                    f'set "PYTHONPATH={runtime}\\Lib\\site-packages"\n'
+                    f'"{python}" "{main_py}"\n'
+                    f'if %errorlevel% neq 0 (\n'
+                    f'    echo ExileHUD exited with an error. Check state\\crash_log.jsonl for details.\n'
+                    f'    pause\n'
+                    f')\n'
                 )
             # Write version file for updater
             self._write_version(dest)

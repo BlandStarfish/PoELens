@@ -29,12 +29,13 @@ SUBTEXT  = "#8a7a65"
 
 class HUD(QMainWindow):
     def __init__(self, state, quest_tracker, price_checker, currency_tracker, crafting, map_overlay, config,
-                 oauth_manager=None, stash_api=None):
+                 oauth_manager=None, stash_api=None, character_api=None):
         super().__init__()
         self._state = state
         self._config = config
         self._oauth_manager = oauth_manager
         self._stash_api = stash_api
+        self._character_api = character_api
 
         self._setup_window()
         self._build_ui(quest_tracker, price_checker, currency_tracker, crafting, map_overlay)
@@ -101,7 +102,12 @@ class HUD(QMainWindow):
             league=self._config.get("league", "Standard"),
         )
         self._crafting_panel = CraftingPanel(crafting)
-        self._tree_panel     = PassiveTreePanel(quest_tracker)
+        self._tree_panel     = PassiveTreePanel(
+            quest_tracker,
+            oauth_manager=self._oauth_manager,
+            character_api=self._character_api,
+            league=self._config.get("league", "Standard"),
+        )
         self._map_panel      = MapPanel(map_overlay)
 
         # Tab indices: Quests=0, Tree=1, Price=2, Currency=3, Crafting=4, Map=5

@@ -8,7 +8,7 @@ Once registered, add it to state/config.json:
 Required in-app disclaimer (shown in currency panel when connected):
   "This product isn't affiliated with or endorsed by Grinding Gear Games in any way."
 
-Scopes used: account:stashes
+Scopes used: account:stashes account:characters
 
 Tokens are stored in state/oauth_tokens.json (gitignored — never committed).
 """
@@ -30,7 +30,7 @@ _AUTH_URL      = "https://www.pathofexile.com/oauth/authorize"
 _TOKEN_URL     = "https://www.pathofexile.com/oauth/token"
 _REDIRECT_HOST = "localhost"
 _REDIRECT_PORT = 64738
-_SCOPES        = "account:stashes"
+_SCOPES        = "account:stashes account:characters"
 _AUTH_TIMEOUT  = 120  # seconds user has to authorize in browser
 _TOKENS_PATH   = os.path.join(os.path.dirname(__file__), "..", "state", "oauth_tokens.json")
 

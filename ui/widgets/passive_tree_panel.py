@@ -25,6 +25,8 @@ from PyQt6.QtWidgets import (
     QGraphicsLineItem, QGraphicsTextItem, QGraphicsItem,
     QProgressBar, QFrame, QSizePolicy,
 )
+import threading
+
 from PyQt6.QtCore import Qt, QRectF, QPointF, QTimer, pyqtSignal, QThread, pyqtSlot
 from PyQt6.QtGui import QPen, QBrush, QColor, QFont, QTransform, QWheelEvent, QPainter
 
@@ -157,15 +159,27 @@ class NodeItem(QGraphicsEllipseItem):
 # ─────────────────────────────────────────────────────────────────────────────
 
 class PassiveTreePanel(QWidget):
-    def __init__(self, quest_tracker=None):
+    # Signals for thread-safe UI updates from background character API calls
+    _char_sync_done  = pyqtSignal(object, str)   # (set[str] node_ids, char_name)
+    _char_sync_error = pyqtSignal(str)
+
+    def __init__(self, quest_tracker=None, oauth_manager=None,
+                 character_api=None, league="Standard"):
         super().__init__()
         self._quest_tracker = quest_tracker
+        self._oauth = oauth_manager
+        self._character_api = character_api
+        self._league = league
         self._tree = None
         self._node_items: dict[str, NodeItem] = {}
         self._pinned_node = None
         self._allocated_ids: set[str] = set()   # node IDs from loaded build code
         self._build_ui()
         self._start_loading()
+
+        self._char_sync_done.connect(self._on_char_sync_done)
+        self._char_sync_error.connect(self._on_char_sync_error)
+
         if quest_tracker:
             quest_tracker.on_update(lambda _: self._refresh_quest_summary())
             self._refresh_quest_summary()
@@ -236,6 +250,10 @@ class PassiveTreePanel(QWidget):
 
         layout.addLayout(build_row)
 
+        # ── PoE Account character sync (only when OAuth is configured) ──
+        if self._oauth and self._oauth.is_configured:
+            self._build_char_sync_row(layout)
+
         # ── Progress / status ──
         self._status = QLabel("Loading passive tree data...")
         self._status.setStyleSheet("color: #8a7a65; font-size: 11px;")
@@ -267,6 +285,90 @@ class PassiveTreePanel(QWidget):
             " border: 1px solid #2a2a4a; border-radius: 4px; padding: 6px;"
         )
         layout.addWidget(self._detail)
+
+    def _build_char_sync_row(self, layout):
+        """Add the 'Sync from PoE Account' row (only when OAuth is configured)."""
+        sync_row = QHBoxLayout()
+        sync_row.setSpacing(4)
+
+        self._sync_status = QLabel("")
+        self._sync_status.setStyleSheet(
+            "color: #8a7a65; font-size: 10px;"
+        )
+        sync_row.addWidget(self._sync_status, 1)
+
+        self._sync_btn = QPushButton("↺ Sync from PoE Account")
+        self._sync_btn.setStyleSheet(
+            "QPushButton { color: #ffd700; font-size: 10px; padding: 2px 6px; }"
+            "QPushButton:disabled { color: #4a4a4a; }"
+        )
+        self._sync_btn.clicked.connect(self._sync_from_account)
+        sync_row.addWidget(self._sync_btn)
+
+        layout.addLayout(sync_row)
+        self._update_sync_status()
+
+    def _update_sync_status(self):
+        """Reflect current OAuth auth state in the sync row label."""
+        if not hasattr(self, "_sync_status"):
+            return
+        if self._oauth and self._oauth.is_authenticated:
+            name = self._oauth.account_name or "account"
+            self._sync_status.setText(f"PoE: {name}")
+            self._sync_btn.setEnabled(True)
+        else:
+            self._sync_status.setText("Not connected — connect in Currency tab first")
+            self._sync_btn.setEnabled(False)
+
+    def _sync_from_account(self):
+        """Fetch the best character's passive nodes in a background thread."""
+        if not self._character_api or not self._oauth or not self._oauth.is_authenticated:
+            self._sync_status.setText("Not connected — use Currency tab to connect.")
+            return
+
+        self._sync_btn.setEnabled(False)
+        self._sync_btn.setText("Syncing...")
+
+        def _fetch():
+            try:
+                char = self._character_api.get_best_character(self._league)
+                if not char:
+                    self._char_sync_error.emit(
+                        "No characters found in this league."
+                    )
+                    return
+                name = char.get("name", "")
+                hashes = self._character_api.get_passive_hashes(name)
+                if hashes is None:
+                    self._char_sync_error.emit(
+                        "Character data unavailable — re-connect in Currency tab "
+                        "to authorize character access."
+                    )
+                    return
+                self._char_sync_done.emit(hashes, name)
+            except Exception as e:
+                self._char_sync_error.emit(str(e))
+
+        threading.Thread(target=_fetch, daemon=True).start()
+
+    @pyqtSlot(object, str)
+    def _on_char_sync_done(self, node_ids: set, char_name: str):
+        self._allocated_ids = node_ids
+        self._apply_allocation()
+        self._sync_btn.setEnabled(True)
+        self._sync_btn.setText("↺ Sync from PoE Account")
+        in_tree = sum(1 for nid in node_ids if nid in self._node_items)
+        self._sync_status.setText(
+            f"Loaded: {char_name} ({in_tree} nodes)"
+        )
+        # Clear the manual build input to avoid confusion with the synced build
+        self._build_input.clear()
+
+    @pyqtSlot(str)
+    def _on_char_sync_error(self, message: str):
+        self._sync_btn.setEnabled(True)
+        self._sync_btn.setText("↺ Sync from PoE Account")
+        self._sync_status.setText(f"Error: {message[:80]}")
 
     # ------------------------------------------------------------------
     # Loading

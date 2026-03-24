@@ -77,9 +77,11 @@ def _do_update(progress_callback=None) -> bool:
         if progress_callback:
             progress_callback(msg)
 
+    # Use the GitHub API zipball endpoint — supports Bearer token auth for private repos.
+    # The web archive URL (github.com/…/archive/…zip) does NOT support Authorization headers.
     zip_url = (
-        f"https://github.com/{GITHUB_OWNER}/{GITHUB_REPO}"
-        f"/archive/refs/heads/{GITHUB_BRANCH}.zip"
+        f"https://api.github.com/repos/{GITHUB_OWNER}/{GITHUB_REPO}"
+        f"/zipball/{GITHUB_BRANCH}"
     )
     tmp = tempfile.mkdtemp()
     try:
