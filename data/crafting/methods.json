@@ -1,0 +1,169 @@
+{
+  "alteration_spam": {
+    "name": "Alteration Spam",
+    "description": "Spam Orbs of Alteration until desired magic affixes appear. Use Regal to upgrade to rare.",
+    "item_state": "Magic (blue)",
+    "goal": "Hit desired 1-2 prefixes/suffixes on magic item",
+    "steps": [
+      "Transmute a white item to magic with Orb of Transmutation",
+      "If wrong mods: use Orb of Alteration to reroll",
+      "Repeat until desired magic affixes appear",
+      "Optional: use Orb of Augmentation if only one affix",
+      "Use Regal Orb to upgrade to rare (adds one random affix)",
+      "Use crafting bench or Exalted to fill remaining slots if needed"
+    ],
+    "materials": [
+      {"name": "Orb of Alteration",    "qty_per_craft": 50,  "category": "Currency", "acquire_via": ["Vendor recipes", "Drop", "Trade"]},
+      {"name": "Orb of Transmutation", "qty_per_craft": 1,   "category": "Currency", "acquire_via": ["Drop", "Vendor"]},
+      {"name": "Regal Orb",            "qty_per_craft": 1,   "category": "Currency", "acquire_via": ["Drop", "Trade"]},
+      {"name": "Orb of Augmentation",  "qty_per_craft": 5,   "category": "Currency", "acquire_via": ["Drop", "Vendor"]}
+    ],
+    "tags": ["magic", "budget", "deterministic-ish"]
+  },
+
+  "essence_crafting": {
+    "name": "Essence Crafting",
+    "description": "Use Essences to guarantee one specific mod while randomizing the rest.",
+    "item_state": "White (normal)",
+    "goal": "Guarantee a specific mod, get lucky on the rest",
+    "steps": [
+      "Start with a white item of the desired base",
+      "Use the appropriate Essence (guarantees one mod)",
+      "Check the resulting rare — if mods are good, craft remaining slots",
+      "If not satisfied: use Orb of Scouring to reset and repeat",
+      "Use crafting bench mods to fill remaining open affixes"
+    ],
+    "materials": [
+      {"name": "Essence of Greed",     "qty_per_craft": 1,   "category": "Essence", "acquire_via": ["Monster drops", "Essence league mechanic", "Trade"]},
+      {"name": "Orb of Scouring",      "qty_per_craft": 1,   "category": "Currency", "acquire_via": ["Drop", "Vendor recipe", "Trade"]}
+    ],
+    "notes": "Replace Essence of Greed with your target essence. Different essences guarantee different mods.",
+    "tags": ["deterministic", "semi-budget", "rare"]
+  },
+
+  "fossil_crafting": {
+    "name": "Fossil Crafting",
+    "description": "Use Fossils in Resonators to heavily bias the mod pool toward desired affixes.",
+    "item_state": "White or Scoured",
+    "goal": "Heavily weighted random crafting — near-deterministic for some mods",
+    "steps": [
+      "Obtain appropriate fossils for your desired mods",
+      "Obtain matching Resonator (1-4 sockets depending on fossil count)",
+      "Place fossils into Resonator",
+      "Use Resonator on white/scoured item",
+      "Evaluate result — repeat with new resonator if needed"
+    ],
+    "materials": [
+      {"name": "Fossil",      "qty_per_craft": 1,  "category": "Fossil",    "acquire_via": ["Delve", "Trade"]},
+      {"name": "Resonator",   "qty_per_craft": 1,  "category": "Resonator", "acquire_via": ["Delve", "Trade"]}
+    ],
+    "fossil_guide": {
+      "Pristine Fossil":   "More life mods, no attack mods",
+      "Scorched Fossil":   "More fire mods",
+      "Frigid Fossil":     "More cold mods",
+      "Jagged Fossil":     "More physical mods",
+      "Dense Fossil":      "More armour/ES mods",
+      "Lucent Fossil":     "More mana mods",
+      "Shuddering Fossil": "More speed mods",
+      "Corroded Fossil":   "More chaos/poison mods",
+      "Metallic Fossil":   "More lightning mods",
+      "Aetheric Fossil":   "More spell damage mods",
+      "Serrated Fossil":   "More attack/crit mods",
+      "Hollow Fossil":     "Adds an Abyssal socket"
+    },
+    "tags": ["biased-random", "delve-required", "rare"]
+  },
+
+  "divine_orb": {
+    "name": "Divine Orb Reroll",
+    "description": "Reroll the numeric values of all explicit mods on a rare item.",
+    "item_state": "Rare with desired mods but bad values",
+    "goal": "Max roll or near-max roll on desired affixes",
+    "steps": [
+      "Ensure item already has the desired mod pool",
+      "Use Divine Orb to reroll all numeric values",
+      "Check if values are acceptable",
+      "Repeat until satisfied (can be expensive)"
+    ],
+    "materials": [
+      {"name": "Divine Orb", "qty_per_craft": 1, "category": "Currency", "acquire_via": ["Drop (rare)", "Trade", "End-game content"]}
+    ],
+    "tags": ["endgame", "expensive", "reroll-values"]
+  },
+
+  "harvest_reforge": {
+    "name": "Harvest Reforge",
+    "description": "Use Harvest crafts to reforge an item with constraints (keep prefix/suffix).",
+    "item_state": "Rare",
+    "goal": "Reroll half the affixes while keeping the good half",
+    "steps": [
+      "Identify which affixes to keep (prefix or suffix)",
+      "Use 'Reforge keeping prefixes' or 'Reforge keeping suffixes' Harvest craft",
+      "Evaluate new affixes on the other side",
+      "Repeat until satisfied",
+      "Optional: use crafting bench to fill open slots"
+    ],
+    "materials": [
+      {"name": "Lifeforce (Vivid/Wild/Primal)", "qty_per_craft": 100, "category": "Currency", "acquire_via": ["Harvest mechanic", "Trade"]}
+    ],
+    "notes": "Harvest crafts require access to the Harvest mechanic in maps or Kirac's map device.",
+    "tags": ["harvest", "semi-deterministic", "endgame"]
+  },
+
+  "exalt_slam": {
+    "name": "Exalted Orb Slam",
+    "description": "Add one random affix to a rare item with open slots.",
+    "item_state": "Rare with open prefix or suffix slot",
+    "goal": "Fill an open slot with a potentially good random affix",
+    "steps": [
+      "Ensure item has fewer than 3 prefixes OR fewer than 3 suffixes",
+      "Use Exalted Orb to add one random affix",
+      "If result is bad: use Crafting Bench to block bad mods and try again",
+      "Note: Exalted Orbs are expensive — only slam when the item is already near-complete"
+    ],
+    "materials": [
+      {"name": "Exalted Orb", "qty_per_craft": 1, "category": "Currency", "acquire_via": ["Drop", "Trade", "End-game"]}
+    ],
+    "tags": ["expensive", "gamble", "open-slot"]
+  },
+
+  "metacraft": {
+    "name": "Meta-crafting (Cannot Roll Mods)",
+    "description": "Use crafting bench 'Cannot roll X mods' to lock a side, then use currency to fill the other.",
+    "item_state": "Rare with some desired mods",
+    "goal": "Near-deterministically fill both prefix and suffix sides",
+    "steps": [
+      "Get item to a state where one side (prefix or suffix) is complete and good",
+      "Use crafting bench: 'Prefixes cannot be changed' (or Suffixes)",
+      "Use Orb of Scouring — only the unlocked side is affected",
+      "Re-roll the free side with Orb of Alteration or Essence",
+      "Remove the meta-craft and evaluate",
+      "Repeat as needed"
+    ],
+    "materials": [
+      {"name": "Exalted Orb",     "qty_per_craft": 2,  "category": "Currency", "acquire_via": ["Trade", "Drop"]},
+      {"name": "Orb of Scouring", "qty_per_craft": 5,  "category": "Currency", "acquire_via": ["Drop", "Vendor recipe", "Trade"]},
+      {"name": "Chaos Orb",       "qty_per_craft": 10, "category": "Currency", "acquire_via": ["Drop", "Trade"]}
+    ],
+    "notes": "Requires Master crafting bench in your hideout at appropriate level.",
+    "tags": ["advanced", "deterministic", "endgame", "meta-craft"]
+  },
+
+  "chaos_spam": {
+    "name": "Chaos Orb Spam",
+    "description": "Reroll a rare item's mods entirely with Chaos Orbs until desired outcome.",
+    "item_state": "Rare (6-mod preferred)",
+    "goal": "Hit target mod combination by brute force",
+    "steps": [
+      "Start with a rare item of the right base",
+      "Use Chaos Orb to reroll all mods",
+      "Check if any desired mods appear",
+      "Repeat — track frequency of target mod to estimate expected cost",
+      "Once a desired mod appears: consider meta-crafting to lock and refine"
+    ],
+    "materials": [
+      {"name": "Chaos Orb", "qty_per_craft": 100, "category": "Currency", "acquire_via": ["Drop", "Trade", "Map running"]}
+    ],
+    "tags": ["budget-start", "rng", "rare"]
+  }
+}

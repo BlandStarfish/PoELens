@@ -1,0 +1,318 @@
+{
+  "_comment": "Quests that award passive skill points in Path of Exile 1. Steps are in order of completion.",
+  "quests": [
+    {
+      "id": "q_dweller",
+      "name": "The Dweller of the Deep",
+      "act": 1,
+      "passive_points": 1,
+      "steps": [
+        "Talk to Nessa in Lioneye's Watch",
+        "Enter the Submerged Passage (bottom of The Flooded Depths)",
+        "Kill the Dweller of the Deep",
+        "Return to Nessa for your reward"
+      ],
+      "log_string": "Dweller of the Deep"
+    },
+    {
+      "id": "q_maerveth",
+      "name": "The Way Forward (Maerveth)",
+      "act": 1,
+      "passive_points": 1,
+      "steps": [
+        "Reach The Cavern of Wrath in Act 1",
+        "Kill Maerveth, Servant of Chaos",
+        "Return to Nessa"
+      ],
+      "log_string": "The Way Forward"
+    },
+    {
+      "id": "q_brutus",
+      "name": "The Caged Brute",
+      "act": 1,
+      "passive_points": 1,
+      "steps": [
+        "Enter the Prisoner's Gate",
+        "Descend through the Cells and Upper Prison",
+        "Kill Brutus, Lord Incarcerator in the Upper Prison",
+        "Return to Tarkleigh for your reward"
+      ],
+      "log_string": "The Caged Brute"
+    },
+    {
+      "id": "q_mercy",
+      "name": "A Mercy of Nails",
+      "act": 2,
+      "passive_points": 1,
+      "steps": [
+        "Talk to Greust in the Forest Encampment",
+        "Find and kill Fidelitas, the Mourning in The Crossroads",
+        "Return to Greust"
+      ],
+      "log_string": "A Mercy of Nails"
+    },
+    {
+      "id": "q_shadow",
+      "name": "Shadow of the Vaal",
+      "act": 2,
+      "passive_points": 1,
+      "steps": [
+        "Find the Ancient Pyramid in the Riverways",
+        "Explore the Ancient Pyramid",
+        "Kill Vaal Oversoul at the top of the Ancient Pyramid",
+        "Return to Helena for your reward"
+      ],
+      "log_string": "Shadow of the Vaal"
+    },
+    {
+      "id": "q_deal_with_bandits",
+      "name": "Deal with the Bandits",
+      "act": 2,
+      "passive_points": 2,
+      "notes": "Killing all three bandit lords awards 2 passive points. Helping a bandit lord awards 1 point and a stat bonus instead.",
+      "steps": [
+        "Travel to The Crossroads",
+        "Find and kill Oak in The Western Forest (or help him)",
+        "Find and kill Kraityn in The Riverways (or help him)",
+        "Find and kill Alira in The Chamber of Sins Level 2 (or help her)",
+        "Return to Eramir in the Forest Encampment"
+      ],
+      "log_string": "Deal with the Bandits"
+    },
+    {
+      "id": "q_sever_right_hand",
+      "name": "Sever the Right Hand",
+      "act": 3,
+      "passive_points": 1,
+      "steps": [
+        "Enter the Ebony Barracks",
+        "Kill General Gravicius in the Ebony Barracks",
+        "Return to Clarissa"
+      ],
+      "log_string": "Sever the Right Hand"
+    },
+    {
+      "id": "q_fixture_fate",
+      "name": "Fixture of Fate",
+      "act": 3,
+      "passive_points": 1,
+      "steps": [
+        "Collect all four Tomes in Act 3 library areas",
+        "Bring them to Siosa in The Library",
+        "Return to Siosa after he accepts the tomes"
+      ],
+      "log_string": "Fixture of Fate"
+    },
+    {
+      "id": "q_piety",
+      "name": "Piety's Pets",
+      "act": 3,
+      "passive_points": 1,
+      "steps": [
+        "Enter the Sceptre of God",
+        "Ascend to the Upper Sceptre of God",
+        "Kill Piety",
+        "Return to Dialla"
+      ],
+      "log_string": "Piety's Pets"
+    },
+    {
+      "id": "q_breaking_some_eggs",
+      "name": "Breaking Some Eggs",
+      "act": 4,
+      "passive_points": 1,
+      "steps": [
+        "Enter the Belly of the Beast Level 1",
+        "Find and kill Piety in the Belly of the Beast",
+        "Return to Oyun in Highgate"
+      ],
+      "log_string": "Breaking Some Eggs"
+    },
+    {
+      "id": "q_malachai",
+      "name": "An Indomitable Spirit",
+      "act": 4,
+      "passive_points": 1,
+      "steps": [
+        "Collect the four Virtue Gems in Act 4",
+        "Place them in the Altar of Sacrifice in The Harvest",
+        "Kill Malachai, The Nightmare",
+        "Return to Tasuni"
+      ],
+      "log_string": "An Indomitable Spirit"
+    },
+    {
+      "id": "q_death_to_purity",
+      "name": "Death to Purity",
+      "act": 5,
+      "passive_points": 1,
+      "steps": [
+        "Enter the Cathedral Rooftop",
+        "Kill Avarius, Reassembled in the Cathedral Rooftop",
+        "Return to Lani"
+      ],
+      "log_string": "Death to Purity"
+    },
+    {
+      "id": "q_kitava_act5",
+      "name": "Kitava, the Destroyer (Act 5)",
+      "act": 5,
+      "passive_points": -2,
+      "notes": "Killing Kitava at the end of Act 5 removes 2 passive points permanently (mandatory penalty).",
+      "steps": [
+        "Enter the Control Blocks",
+        "Descend to The Templar Courts",
+        "Kill High Templar Avarius to obtain the Kitava's Heart",
+        "Enter Kitava's Torments and defeat Kitava",
+        "This removes 2 passive points — this is unavoidable"
+      ],
+      "log_string": "Kitava, the Destroyer"
+    },
+    {
+      "id": "q_fallen_from_grace",
+      "name": "Fallen from Grace",
+      "act": 6,
+      "passive_points": 1,
+      "steps": [
+        "Enter The Twilight Strand in Act 6",
+        "Talk to Lilly Roth",
+        "Enter Lioneye's Watch (Act 6)",
+        "Kill Abberath, the Cloven One in The Mud Flats",
+        "Return to Lilly"
+      ],
+      "log_string": "Fallen from Grace"
+    },
+    {
+      "id": "q_the_cloven_one",
+      "name": "The Cloven One",
+      "act": 6,
+      "passive_points": 1,
+      "steps": [
+        "Collect Alira's Book, Oak's Book, and Kraityn's Book from The Mud Flats, The Riverways, and The Western Forest",
+        "Bring them to Eramir in The Forest Encampment (Act 6)",
+        "Return to Eramir"
+      ],
+      "log_string": "The Cloven One"
+    },
+    {
+      "id": "q_sin_heritage",
+      "name": "A Sin's Heritage",
+      "act": 7,
+      "passive_points": 1,
+      "steps": [
+        "Find and kill Greust in The Vaal City (Act 7)",
+        "Enter the Ashen Fields",
+        "Kill Magebane in the Dread Thicket",
+        "Return to Sin"
+      ],
+      "log_string": "A Sin's Heritage"
+    },
+    {
+      "id": "q_queen_of_despair",
+      "name": "Queen of Despair",
+      "act": 7,
+      "passive_points": 1,
+      "steps": [
+        "Enter the Chamber of Sins Level 1 (Act 7)",
+        "Descend to Chamber of Sins Level 2",
+        "Kill Maligaro, The Inquisitor",
+        "Return to Helena"
+      ],
+      "log_string": "Queen of Despair"
+    },
+    {
+      "id": "q_essence_drain",
+      "name": "Essence of the Artist",
+      "act": 8,
+      "passive_points": 1,
+      "steps": [
+        "Obtain Clarissa's Map from The Sarn Encampment (Act 8)",
+        "Find the Aqueduct area",
+        "Kill Doedre, Darksoul in The Quay",
+        "Return to Clarissa"
+      ],
+      "log_string": "Essence of the Artist"
+    },
+    {
+      "id": "q_love_is_dead",
+      "name": "Love is Dead",
+      "act": 8,
+      "passive_points": 1,
+      "steps": [
+        "Enter The Grain Gate (Act 8)",
+        "Kill Gravicius, Legatus Purus in the Grain Gate",
+        "Return to Clarissa"
+      ],
+      "log_string": "Love is Dead"
+    },
+    {
+      "id": "q_imperial_legacy",
+      "name": "Imperial Legacy",
+      "act": 8,
+      "passive_points": 1,
+      "steps": [
+        "Collect all four Tomes from Act 8 areas",
+        "Bring them to Siosa in The Library (Act 8)",
+        "Return to Siosa"
+      ],
+      "log_string": "Imperial Legacy"
+    },
+    {
+      "id": "q_act9_master_surgeon",
+      "name": "Master of a Million Faces",
+      "act": 9,
+      "passive_points": 1,
+      "steps": [
+        "Enter The Vastiri Desert (Act 9)",
+        "Find and kill Shakari in the Vastiri Desert",
+        "Return to Sin"
+      ],
+      "log_string": "Master of a Million Faces"
+    },
+    {
+      "id": "q_souls_withered",
+      "name": "Fastis Mortem",
+      "act": 9,
+      "passive_points": 1,
+      "steps": [
+        "Enter The Quarry (Act 9)",
+        "Kill Garukhan, Queen of the Winds",
+        "Return to Irasha"
+      ],
+      "log_string": "Fastis Mortem"
+    },
+    {
+      "id": "q_vilenta",
+      "name": "Vilenta's Vengeance",
+      "act": 10,
+      "passive_points": 1,
+      "steps": [
+        "Enter The Ravaged Square (Act 10)",
+        "Kill Vilenta in The Control Blocks",
+        "Return to Sin"
+      ],
+      "log_string": "Vilenta's Vengeance"
+    },
+    {
+      "id": "q_kitava_act10",
+      "name": "An End to Hunger (Act 10)",
+      "act": 10,
+      "passive_points": -4,
+      "notes": "Killing Kitava at the end of Act 10 removes 4 more passive points permanently.",
+      "steps": [
+        "Enter the Feeding Trough in Act 10",
+        "Descend to Kitava's Torments",
+        "Kill Kitava, the Destroyer",
+        "This removes 4 passive points — unavoidable"
+      ],
+      "log_string": "An End to Hunger"
+    }
+  ],
+  "summary": {
+    "total_quest_points_available": 24,
+    "mandatory_deductions": 6,
+    "net_passive_points_from_quests": 18,
+    "bandits_kill_all_bonus": 2,
+    "total_with_kill_all_bandits": 20
+  }
+}
