@@ -147,63 +147,13 @@ def download_tree_data():
 
     print("[...] Downloading passive tree data from GGG CDN...")
     try:
-        import urllib.request
-        import re
-
-        # Fetch the passive tree page to find the current data URL
-        req_obj = urllib.request.Request(
-            "https://www.pathofexile.com/passive-skill-tree",
-            headers={"User-Agent": "ExileHUD/1.0 (installer)"}
-        )
-        with urllib.request.urlopen(req_obj, timeout=15) as resp:
-            html = resp.read().decode("utf-8", errors="replace")
-
-        # Page embeds something like: "https://web.poecdn.com/.../data/SkillTree.json"
-        # or the GGG export repo URL pattern
-        match = (
-            re.search(r'"(https://[^"]+/data/SkillTree\.json[^"]*)"', html) or
-            re.search(r'"(https://[^"]+SkillTree\.json[^"]*)"', html)
-        )
-        if not match:
-            print("[WARN] Could not find tree data URL in page — using official GGG export repo")
-            _download_tree_fallback(tree_path)
-            return
-
-        tree_url = match.group(1)
-        print(f"[...] Tree data URL: {tree_url[:80]}...")
-
-        req_obj2 = urllib.request.Request(
-            tree_url, headers={"User-Agent": "ExileHUD/1.0 (installer)"}
-        )
-        with urllib.request.urlopen(req_obj2, timeout=30) as resp:
-            data = resp.read()
-
-        with open(tree_path, "wb") as f:
-            f.write(data)
-
-        size_kb = len(data) // 1024
-        print(f"[OK]  Passive tree data saved ({size_kb} KB)")
-
+        sys.path.insert(0, HERE)
+        from modules.passive_tree import PassiveTree
+        PassiveTree.download(callback=lambda msg: print(f"[...] {msg}"))
+        print("[OK]  Passive tree data downloaded")
     except Exception as e:
         print(f"[WARN] Could not download passive tree data: {e}")
         print("       You can run this manually later: python -m modules.passive_tree --download")
-
-
-def _download_tree_fallback(tree_path: str):
-    """Use the official GGG-maintained export repo as fallback."""
-    import urllib.request
-    fallback = (
-        "https://raw.githubusercontent.com/grindinggear/skilltree-export/master/data.json"
-    )
-    try:
-        req = urllib.request.Request(fallback, headers={"User-Agent": "ExileHUD/1.0"})
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            data = resp.read()
-        with open(tree_path, "wb") as f:
-            f.write(data)
-        print(f"[OK]  Passive tree data saved from fallback ({len(data)//1024} KB)")
-    except Exception as e:
-        print(f"[WARN] Fallback also failed: {e}")
 
 
 # ─────────────────────────────────────────────

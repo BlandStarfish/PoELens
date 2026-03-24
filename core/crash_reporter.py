@@ -62,7 +62,7 @@ def _write_entry(exc_type, exc_value, tb):
 def _show_crash_dialog(entry: dict):
     """Show a PyQt6 crash dialog if Qt is running, else print to stderr."""
     try:
-        from PyQt6.QtWidgets import QApplication, QDialog, QVBoxLayout, QLabel, QPushButton, QTextEdit
+        from PyQt6.QtWidgets import QApplication, QDialog, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QTextEdit
         app = QApplication.instance()
         if not app:
             raise RuntimeError("No QApplication")
@@ -101,7 +101,7 @@ def _show_crash_dialog(entry: dict):
             f"<span style='color:#8a7a65'>Crash log saved to: {_LOG_PATH}</span>"
         ))
 
-        btns_layout = __import__("PyQt6.QtWidgets", fromlist=["QHBoxLayout"]).QHBoxLayout()
+        btns_layout = QHBoxLayout()
         close_btn = QPushButton("Close")
         close_btn.clicked.connect(dlg.accept)
         restart_btn = QPushButton("Restart ExileHUD")

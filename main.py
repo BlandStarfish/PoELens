@@ -33,6 +33,7 @@ from modules.quest_tracker import QuestTracker
 from modules.price_check import PriceChecker
 from modules.currency_tracker import CurrencyTracker
 from modules.crafting import CraftingModule
+from modules.map_overlay import MapOverlay
 
 # Lazy UI import — avoids loading Qt before QApplication exists
 import ui.hud as hud_module
@@ -65,14 +66,16 @@ def main():
         def extract_prices(self, listings): return extract_prices(listings)
 
     # Modules
-    quest_tracker   = QuestTracker(state)
-    price_checker   = PriceChecker(ninja, TradeAPI(), conf["league"])
+    quest_tracker    = QuestTracker(state)
+    price_checker    = PriceChecker(ninja, TradeAPI(), conf["league"])
     currency_tracker = CurrencyTracker(state, ninja)
-    crafting        = CraftingModule(state, ninja)
+    crafting         = CraftingModule(state, ninja)
+    map_overlay      = MapOverlay()
 
     # Client.txt watcher
     log_watcher = ClientLogWatcher(conf["client_log_path"])
     log_watcher.on("zone_change",   lambda d: state.set_zone(d["zone"]))
+    log_watcher.on("zone_change",   map_overlay.handle_zone_change)
     log_watcher.on("quest_complete", quest_tracker.handle_quest_event)
     log_watcher.start()
 
@@ -86,6 +89,7 @@ def main():
         price_checker=price_checker,
         currency_tracker=currency_tracker,
         crafting=crafting,
+        map_overlay=map_overlay,
         config=conf,
     )
 

@@ -74,8 +74,8 @@ install.py                   — CLI installer (Python users)
 ## Known Quirks
 
 ### Tab Index (hud.py)
-Tabs are: 0=Quests, 1=Tree, 2=Price, 3=Currency, 4=Crafting
-`show_crafting()` must use index 4, not 3. (Fixed Session 1)
+Tabs are: 0=Quests, 1=Tree, 2=Price, 3=Currency, 4=Crafting, 5=Map
+`show_crafting()` uses index 4. `show_map()` uses index 5. (Map tab added Session 2)
 
 ### Updater Signal (updater.py)
 Original code tried `QMetaObject.invokeMethod(app, "_show_update_dialog")` but that method
@@ -112,6 +112,22 @@ See `requirements.txt` for full list. Key packages:
 - `PyQt6` — main UI framework
 - `requests` — HTTP for poe.ninja and trade API
 - `keyboard` — global hotkey listener (requires admin on some systems)
+
+### Zone Names in Client.txt (map_overlay.py)
+Client.txt log entry: `Generating level N area "Zone Name"`. Zone names are exact in-game
+strings. Zones that repeat across acts have different names (e.g. Act 6 uses
+"Lioneye's Watch (Act 6)"). data/zones.json includes ~120 campaign zones with explicit
+"(Act N)" suffixes for duplicated names. If a zone is not in the database, map_panel.py
+shows "(zone not in database)" gracefully.
+
+### price_check.py: stave vs staff
+PoE item class is "Staves" not "Staffs". Use "stave" as the substring to match
+(e.g. "stave" in "staves" = True, "staff" in "staves" = False). Fixed Session 2.
+
+### install.py: PassiveTree import is safe before pip install
+modules/passive_tree.py imports only stdlib modules (json, os, re, threading,
+urllib.request, dataclasses, typing). Safe to import from install.py before
+dependencies are installed. Fixed Session 2 to remove 66-line duplication.
 
 ## Open Questions
 

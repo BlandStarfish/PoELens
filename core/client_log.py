@@ -9,7 +9,7 @@ Events emitted:
   chat_message     {"channel": str, "player": str, "message": str}
   whisper_in       {"player": str, "message": str}
   whisper_out      {"player": str, "message": str}
-  quest_complete   {"quest_id": str, "name": str}  (parsed from log text)
+  quest_complete   {"name": str}  (parsed from log text)
   level_up         {"level": int, "class": str}
   item_found       {"item": str}   (rarity drops from log)
 """

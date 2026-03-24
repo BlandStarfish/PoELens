@@ -17,6 +17,7 @@ from ui.widgets.price_panel import PricePanel
 from ui.widgets.currency_panel import CurrencyPanel
 from ui.widgets.crafting_panel import CraftingPanel
 from ui.widgets.passive_tree_panel import PassiveTreePanel
+from ui.widgets.map_panel import MapPanel
 
 
 DARK_BG = "#1a1a2e"
@@ -27,13 +28,13 @@ SUBTEXT  = "#8a7a65"
 
 
 class HUD(QMainWindow):
-    def __init__(self, state, quest_tracker, price_checker, currency_tracker, crafting, config):
+    def __init__(self, state, quest_tracker, price_checker, currency_tracker, crafting, map_overlay, config):
         super().__init__()
         self._state = state
         self._config = config
 
         self._setup_window()
-        self._build_ui(quest_tracker, price_checker, currency_tracker, crafting)
+        self._build_ui(quest_tracker, price_checker, currency_tracker, crafting, map_overlay)
 
         # Wire price checker results to price panel
         price_checker.on_result(self._price_panel.show_result)
@@ -64,7 +65,7 @@ class HUD(QMainWindow):
         else:
             self.setGeometry(1500, 40, 400, 700)
 
-    def _build_ui(self, quest_tracker, price_checker, currency_tracker, crafting):
+    def _build_ui(self, quest_tracker, price_checker, currency_tracker, crafting, map_overlay):
         root = QWidget()
         root.setStyleSheet(f"""
             QWidget {{ background-color: {DARK_BG}; color: {TEXT}; font-family: 'Segoe UI'; font-size: 12px; border-radius: 8px; }}
@@ -88,17 +89,20 @@ class HUD(QMainWindow):
         tabs = QTabWidget()
         self._tabs = tabs
 
-        self._quest_panel = QuestPanel(quest_tracker)
-        self._price_panel = PricePanel()
+        self._quest_panel    = QuestPanel(quest_tracker)
+        self._price_panel    = PricePanel()
         self._currency_panel = CurrencyPanel(currency_tracker)
         self._crafting_panel = CraftingPanel(crafting)
-        self._tree_panel = PassiveTreePanel(quest_tracker)
+        self._tree_panel     = PassiveTreePanel(quest_tracker)
+        self._map_panel      = MapPanel(map_overlay)
 
+        # Tab indices: Quests=0, Tree=1, Price=2, Currency=3, Crafting=4, Map=5
         tabs.addTab(self._quest_panel,    "Quests")
         tabs.addTab(self._tree_panel,     "Tree")
         tabs.addTab(self._price_panel,    "Price")
         tabs.addTab(self._currency_panel, "Currency")
         tabs.addTab(self._crafting_panel, "Crafting")
+        tabs.addTab(self._map_panel,      "Map")
 
         layout.addWidget(tabs)
         self.setCentralWidget(root)
@@ -156,8 +160,8 @@ class HUD(QMainWindow):
         self._tabs.setCurrentIndex(4)  # Quests=0, Tree=1, Price=2, Currency=3, Crafting=4
 
     def show_map(self):
-        # Map overlay is a future module; placeholder
         self.show()
+        self._tabs.setCurrentIndex(5)  # Quests=0, Tree=1, Price=2, Currency=3, Crafting=4, Map=5
 
     def _refresh_currency(self):
         self._currency_panel.refresh()

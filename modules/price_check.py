@@ -124,9 +124,9 @@ class PriceChecker:
             return "UniqueJewel"
         if rarity == "unique":
             # Guess from item class
-            if any(x in ic for x in ["sword", "axe", "mace", "bow", "wand", "staff", "dagger", "claw"]):
+            if any(x in ic for x in ["sword", "axe", "mace", "bow", "wand", "stave", "dagger", "claw", "sceptre", "spear", "flail"]):
                 return "UniqueWeapon"
-            if any(x in ic for x in ["helmet", "body", "gloves", "boots", "shield", "quiver"]):
+            if any(x in ic for x in ["helmet", "body", "gloves", "boots", "shield", "quiver", "armour"]):
                 return "UniqueArmour"
             return "UniqueAccessory"
         return "BaseType"
