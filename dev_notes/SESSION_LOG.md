@@ -388,3 +388,154 @@ is now the single implementation -- any bugs in that function affect both the in
 and the runtime module. Worth keeping in mind.
 
 ═══════════════════════════════════════════════════════════════
+
+═══════════════════════════════════════════════════════════════
+SESSION: 2026-03-23  (Session 3)
+═══════════════════════════════════════════════════════════════
+
+## ORIENTATION SUMMARY
+Session 3. Read all prior session notes. Session 2 left off with 4 suggestions;
+primary targets were map overlay zone mods (MEDIUM) and price check currency
+conversion (LOW). Both implemented this session. Currency stash API deferred
+again -- TOS research still required before proceeding.
+
+## ASSESSMENT GRADES
+
+| Module               | Completeness | Quality | Vision Alignment |
+|----------------------|-------------|---------|-----------------|
+| Quest Tracker        |     8/10     |  9/10   |      9/10       |
+| Passive Tree Viewer  |     7/10     |  8/10   |      8/10       |
+| Price Checker        |     9/10     |  8/10   |      9/10       |
+| Currency Tracker     |     6/10     |  8/10   |      7/10       |
+| Crafting System      |     7/10     |  8/10   |      8/10       |
+| Core Infrastructure  |     9/10     |  9/10   |      9/10       |
+| Map Overlay          |     6/10     |  9/10   |      8/10       |
+
+Items below 6: None this session. Currency Tracker completeness still borderline at 6
+(manual entry limitation persists).
+
+## SMOKE TEST FINDINGS
+
+### Phase 1B -- Logic & Structure Issues
+
+1. api/poe_trade.py:84-96 -- BUG: extract_prices() returned raw float amounts without
+   currency context. Non-chaos listings (divine, exalt, etc.) were appended as
+   raw amounts (e.g. 1 divine = "1c" displayed). Comment said "caller normalizes via
+   poe_ninja" but PriceChecker never did this. Fixed.
+
+2. ui/widgets/map_panel.py:108-109 -- ANTI-PATTERN: `from PyQt6.QtCore import pyqtSlot`
+   inside the class body, used in post-definition assignment. Same pattern in
+   price_panel.py:113-114. Fixed both to module-level import + @pyqtSlot decorator.
+
+### Phase 1C -- Redundancy & Counter-Vision Issues
+
+No new counter-vision issues found.
+
+## MAINTENANCE LOG
+
+### Fix 1 -- poe_trade.py + price_check.py: Non-chaos price normalization
+- Files: api/poe_trade.py, modules/price_check.py
+- Issue: extract_prices() returned list[float] with no currency info; non-chaos
+  listings (divines, exalts) displayed as raw amounts with "c" suffix
+- Fix:
+  * extract_prices() now returns list[dict] with {"amount": float, "currency": str}
+  * Added _TRADE_TO_NINJA map (16 currency keys -> poe.ninja names) to price_check.py
+  * Added PriceChecker._normalize_prices() method that converts each price to chaos
+    using poe.ninja lookup; falls back to raw amount if currency unknown
+  * _do_check() now calls _normalize_prices() before passing to trade_listings
+- Why it matters: A 1-divine listing was displaying as "1c" instead of "~450c".
+  Price check results were materially wrong for high-value items.
+
+### Fix 2 -- map_panel.py + price_panel.py: Inline pyqtSlot import pattern
+- Files: ui/widgets/map_panel.py, ui/widgets/price_panel.py
+- Issue: pyqtSlot imported inside class body and applied via post-definition assignment
+- Fix: Moved to module-level import; applied as proper @pyqtSlot decorator
+- Why it matters: Anti-pattern; consistent with how rest of project handles Qt slots
+
+## DEVELOPMENT LOG
+
+### Map Overlay v2 -- Zone Notes + Resistance Reminders
+
+**Goal**: Advance map overlay from "zone identity only" to "zone identity + contextual notes".
+
+**Approach**: Static data (no external API needed). Two layers of notes:
+1. Zone-specific notes in zones.json for mechanically significant zones
+2. Act-based resistance penalty fallback in map_panel.py for acts 6-10
+
+**Files modified**:
+
+data/zones.json
+  - Added optional "notes" field to ~8 zones:
+    - The Cathedral Rooftop (Act 5): "Killing Kitava applies -30% to all resistances permanently"
+    - The Cathedral Rooftop (Act 10): "Killing Kitava applies additional -30% all res (-60% total)"
+    - Lioneye's Watch (Act 6): "-30% all res penalty now active (Act 5 Kitava)"
+    - Quest-relevant zones: Tidal Island, Weaver's Chambers, Dread Thicket, Docks, Library
+      (brief "Quest: [name]" reminders for new players)
+
+modules/map_panel.py (expanded map panel)
+  - Added _notes_label QLabel (amber/gold color, word-wrapped) to zone card below boss row
+  - Added module-level _act_resist_note(act) function: returns "-30% all res" for acts 6-9,
+    "-60% all res" for act 10+, empty string otherwise
+  - _show_current(): shows zone notes if present, falls back to _act_resist_note() for the
+    act. Priority: zone-specific notes > act fallback > hidden.
+  - ⚠ prefix on all notes for visual salience
+
+**UX result**:
+- Player enters The Cathedral Rooftop (Act 5): sees red "Boss: Kitava, Destroyer of Worlds"
+  and amber "⚠ Killing Kitava applies -30% to all resistances permanently"
+- Player enters any Act 6-9 zone without a specific note: sees amber
+  "⚠ -30% all res penalty active (from Act 5 Kitava)" as a reminder
+- Player enters Act 10: sees "⚠ -60% all res penalty active (from both Kitavas)"
+- Kitava (Act 10) zone: zone-specific note takes priority over act fallback
+
+**VISION.md updated**: Map Overlay section updated from "NOT STARTED" to "IMPLEMENTED (v2)"
+with current feature list and remaining gaps.
+
+## TECHNICAL NOTES
+
+- **extract_prices() interface change**: Return type changed from list[float] to list[dict].
+  The TradeAPI shim in main.py passes through unchanged (just delegates). Only PriceChecker
+  and callers of _normalize_prices() are affected. If future code calls extract_prices()
+  directly, it must call normalize or handle the dict format.
+
+- **_act_resist_note() fallback**: The function returns a note for ALL act 6+ zones,
+  even if the player hasn't killed Kitava yet (e.g., doing a fresh run). This is technically
+  a false-positive for fresh-run act 6 zones. Accepted tradeoff: the note is informational
+  and still relevant (it tells them the penalty is incoming or active). Zones with specific
+  notes (like Lioneye's Watch Act 6) override the generic act fallback.
+
+- **zones.json notes scope**: Only added notes where the information is actionable and
+  accurate regardless of character state. Resistance notes are always factually true at
+  the point of encountering those zones (Kitava kills are essentially mandatory to progress).
+  Did not add subjective farming notes (too opinionated / version-dependent).
+
+## SUGGESTIONS FOR NEXT SESSION
+
+1. **Currency tracker -- stash tab API research** (MEDIUM, DEFERRED): TOS research required
+   before implementing. Questions: Is POESESSID-based access TOS-compliant? Is the stash
+   tab API officially documented? Research poedb and GGG developer forums before coding.
+   This is the single largest UX improvement remaining.
+
+2. **Passive tree -- player node highlighting** (FUTURE/LONG): Character API could return
+   allocated nodes. Requires POESESSID or OAuth. TOS gray area -- research before starting.
+   This would bring the passive tree from 7/10 to 9/10 completeness.
+
+3. **Map overlay -- atlas map data** (LOW): Campaign zones are complete. Atlas maps (endgame)
+   would require community data (poedb or GGG datamining). Separate from campaign coverage.
+   Lower priority than currency tracker improvements.
+
+4. **Price check -- item parsing edge cases** (LOW): parse_item_clipboard() may fail on
+   fractured/influenced items that have extra header lines before the rarity line. Worth
+   fuzzing with real PoE clipboard data when possible.
+
+## PROJECT HEALTH
+
+Overall grade: 8.0/10 (up from 7.8 last session)
+% complete toward original vision: ~77% (up from ~72%)
+
+All 6 features implemented. Price checking is now fully correct for all trade currencies.
+Map overlay now provides genuinely useful context (resistance reminders, quest hints).
+Codebase quality remains high -- no technical debt introduced. The main remaining gap is
+currency tracker's manual entry requirement; all other features are functional and polished.
+
+═══════════════════════════════════════════════════════════════

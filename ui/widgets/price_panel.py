@@ -3,7 +3,7 @@ Price check panel — displays results from the last price check hotkey press.
 """
 
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QFrame, QHBoxLayout
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, pyqtSlot
 
 ACCENT = "#e2b96f"
 TEXT   = "#d4c5a9"
@@ -78,6 +78,7 @@ class PricePanel(QWidget):
                                  Qt.ConnectionType.QueuedConnection,
                                  Q_ARG("PyQt_PyObject", result))
 
+    @pyqtSlot("PyQt_PyObject")
     def _update_ui(self, result: dict):
         self._error_label.setText("")
         self._trade_link.setText("")
@@ -108,7 +109,3 @@ class PricePanel(QWidget):
         url = result.get("trade_url", "")
         if url:
             self._trade_link.setText(f'<a href="{url}">View on trade site</a>')
-
-    # Make _update_ui invokable from QMetaObject
-    from PyQt6.QtCore import pyqtSlot
-    _update_ui = pyqtSlot("PyQt_PyObject")(_update_ui)

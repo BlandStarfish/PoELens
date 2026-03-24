@@ -124,6 +124,27 @@ shows "(zone not in database)" gracefully.
 PoE item class is "Staves" not "Staffs". Use "stave" as the substring to match
 (e.g. "stave" in "staves" = True, "staff" in "staves" = False). Fixed Session 2.
 
+### poe_trade.py / price_check.py: Non-chaos price normalization (Session 3)
+extract_prices() now returns list[dict] with {"amount": float, "currency": str} rather
+than list[float]. PriceChecker._normalize_prices() converts to chaos using _TRADE_TO_NINJA
+map + poe.ninja lookups. trade API currency keys: "divine", "exalt", "alch", "alt", "fuse",
+"chance", "scour", "regal", "jew", "chrom", "blessed", "annul", "mir", "vaal", "ancient",
+"harbinger". If a key is unknown, amount passes through as-is (graceful degradation).
+
+### zones.json: notes field (Session 3)
+Added optional "notes" field to mechanically significant zones:
+- Kitava zones (Act 5 and Act 10 Cathedral Rooftop): resistance penalty warning
+- Lioneye's Watch (Act 6): confirmation that -30% res is now active
+- A handful of quest-relevant zones (Tidal Island, Weaver's Chambers, The Docks, The Library,
+  The Dread Thicket)
+map_panel.py: shows zone "notes" if present; otherwise falls back to _act_resist_note()
+which returns a resistance reminder for acts 6-9 (-30%) and act 10+ (-60%).
+Priority: zone-specific notes > act-based fallback > nothing.
+
+### map_panel.py / price_panel.py: pyqtSlot import pattern (Session 3)
+Both files previously imported pyqtSlot inside the class body and used the decorator in
+post-definition assignment syntax. Fixed to module-level import + @pyqtSlot decorator.
+
 ### install.py: PassiveTree import is safe before pip install
 modules/passive_tree.py imports only stdlib modules (json, os, re, threading,
 urllib.request, dataclasses, typing). Safe to import from install.py before

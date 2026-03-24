@@ -13,7 +13,7 @@ from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel,
     QListWidget, QListWidgetItem, QFrame,
 )
-from PyQt6.QtCore import Qt, QMetaObject
+from PyQt6.QtCore import Qt, QMetaObject, pyqtSlot
 from PyQt6.QtGui import QColor
 
 ACCENT  = "#e2b96f"
@@ -21,6 +21,23 @@ TEXT    = "#d4c5a9"
 DIM     = "#8a7a65"
 GREEN   = "#5cba6e"
 TEAL    = "#4ae8c8"
+
+
+def _act_resist_note(act) -> str:
+    """
+    Return a resistance penalty reminder based on act number.
+    Acts 6-9 follow Act 5 Kitava (-30%). Act 10+ follows both Kitavas (-60%).
+    Only shown when the zone has no zone-specific notes of its own.
+    """
+    try:
+        act = int(act)
+    except (TypeError, ValueError):
+        return ""
+    if 6 <= act <= 9:
+        return "-30% all res penalty active (from Act 5 Kitava)"
+    if act >= 10:
+        return "-60% all res penalty active (from both Kitavas)"
+    return ""
 
 
 class MapPanel(QWidget):
@@ -61,6 +78,12 @@ class MapPanel(QWidget):
         self._boss_label.setWordWrap(True)
         card_layout.addWidget(self._boss_label)
 
+        self._notes_label = QLabel("")
+        self._notes_label.setStyleSheet(f"color: #c8a84b; font-size: 11px; background: transparent; border: none;")
+        self._notes_label.setWordWrap(True)
+        self._notes_label.hide()
+        card_layout.addWidget(self._notes_label)
+
         layout.addWidget(card)
 
         # ── Hint label (shown when no zone data) ──
@@ -99,14 +122,12 @@ class MapPanel(QWidget):
             Qt.ConnectionType.QueuedConnection,
         )
 
+    @pyqtSlot()
     def _update_ui(self):
         current = self._overlay.get_current_zone()
         if current:
             self._show_current(current)
         self._refresh_history()
-
-    from PyQt6.QtCore import pyqtSlot
-    _update_ui = pyqtSlot()(_update_ui)
 
     def _show_current(self, entry: dict):
         self._hint.hide()
@@ -129,9 +150,17 @@ class MapPanel(QWidget):
                 self._boss_label.show()
             else:
                 self._boss_label.hide()
+
+            notes = info.get("notes") or _act_resist_note(act)
+            if notes:
+                self._notes_label.setText(f"\u26a0 {notes}")
+                self._notes_label.show()
+            else:
+                self._notes_label.hide()
         else:
             self._zone_meta.setText("(zone not in database)")
             self._boss_label.hide()
+            self._notes_label.hide()
 
     def _refresh_history(self):
         self._history_list.clear()

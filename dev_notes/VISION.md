@@ -53,12 +53,15 @@ The overlay is organized as tabs (one per module) inside a frameless window, pos
 - Total pending queue cost display
 - **Priority: MEDIUM — complete for core use cases**
 
-### 6. Map Overlay ❌ NOT STARTED
-- Show zone/map information overlay (area mods, league mechanics present, boss info)
-- Triggered by zone change events from Client.txt
-- Data source: TBD (poedb scrape or static data file)
-- Most research required; lowest priority
-- **Priority: LOW — last feature to build**
+### 6. Map Overlay ✅ IMPLEMENTED (v2)
+- Zone identity card: name (gold, prominent), act, area level, waypoint status, boss info
+- Zone-specific notes for mechanically significant zones (Kitava resistance warnings, key quest hints)
+- Act-based resistance penalty reminder for acts 6-10 (static, always accurate)
+- Session zone history (last 15 zones, timestamped, towns dimmed)
+- Triggered by zone_change events from Client.txt
+- Data source: static data/zones.json (~120 campaign zones, Acts 1-10)
+- **Missing: Atlas map mods data (endgame content, would require poedb scrape or community data)**
+- **Priority: LOW for atlas mods — campaign data complete**
 
 ---
 

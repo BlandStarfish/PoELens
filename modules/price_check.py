@@ -12,6 +12,28 @@ import re
 import threading
 from typing import Callable, Optional
 
+# Maps trade API currency keys to poe.ninja item names (for chaos normalization)
+_TRADE_TO_NINJA: dict[str, str] = {
+    "chaos":   "Chaos Orb",
+    "divine":  "Divine Orb",
+    "exalt":   "Exalted Orb",
+    "alch":    "Orb of Alchemy",
+    "alt":     "Orb of Alteration",
+    "aug":     "Orb of Augmentation",
+    "fuse":    "Orb of Fusing",
+    "chance":  "Orb of Chance",
+    "scour":   "Orb of Scouring",
+    "regal":   "Regal Orb",
+    "jew":     "Jeweller's Orb",
+    "chrom":   "Chromatic Orb",
+    "blessed": "Blessed Orb",
+    "annul":   "Orb of Annulment",
+    "mir":     "Mirror of Kalandra",
+    "vaal":    "Vaal Orb",
+    "ancient": "Ancient Orb",
+    "harbinger": "Harbinger's Orb",
+}
+
 try:
     from PyQt6.QtWidgets import QApplication
     def _get_clipboard() -> str:
@@ -103,11 +125,31 @@ class PriceChecker:
             query_id = search_result.get("id", "")
             if ids:
                 listings = self._trade.fetch_listings(ids, query_id)
-                prices = self._trade.extract_prices(listings or [])
+                raw_prices = self._trade.extract_prices(listings or [])
+                prices = self._normalize_prices(raw_prices)
                 result["trade_listings"] = sorted(prices)[:5]
                 result["trade_url"] = f"https://www.pathofexile.com/trade/search/{self._league}/{query_id}"
 
         self._emit(result)
+
+    def _normalize_prices(self, raw_prices: list[dict]) -> list[float]:
+        """Convert trade API price dicts (amount + currency key) to chaos equivalents."""
+        result = []
+        for p in raw_prices:
+            currency_key = p.get("currency", "")
+            amount = p.get("amount", 0.0)
+            if not amount:
+                continue
+            if currency_key == "chaos":
+                result.append(amount)
+            else:
+                ninja_name = _TRADE_TO_NINJA.get(currency_key)
+                if ninja_name:
+                    chaos_val = self._ninja.get_price(ninja_name, "Currency")
+                    result.append(amount * chaos_val if chaos_val else amount)
+                else:
+                    result.append(amount)  # unknown currency — pass through as-is
+        return result
 
     def _guess_category(self, item: dict) -> str:
         ic = item.get("item_class", "").lower()

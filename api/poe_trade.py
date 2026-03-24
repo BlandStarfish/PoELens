@@ -81,16 +81,17 @@ def build_price_check_query(item_name: str, item_type: Optional[str] = None) -> 
     return query
 
 
-def extract_prices(listings: list) -> list[float]:
-    """Extract chaos-equivalent prices from fetch_listings results."""
+def extract_prices(listings: list) -> list[dict]:
+    """
+    Extract price info from fetch_listings results.
+    Returns list of {"amount": float, "currency": str} dicts.
+    Callers normalize to chaos via poe.ninja (e.g. PriceChecker._normalize_prices).
+    """
     prices = []
     for listing in listings:
         price_info = listing.get("listing", {}).get("price", {})
         amount = price_info.get("amount", 0)
         currency = price_info.get("currency", "")
-        # For now just return chaos amounts; chaos conversion handled by poe_ninja
-        if currency == "chaos":
-            prices.append(float(amount))
-        elif amount > 0:
-            prices.append(float(amount))  # caller normalizes via poe_ninja
+        if amount > 0 and currency:
+            prices.append({"amount": float(amount), "currency": currency})
     return prices

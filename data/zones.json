@@ -4,7 +4,7 @@
     "Twilight Strand":              {"act": 1, "area_level": 1,  "waypoint": false, "boss": "Hillock",                        "type": "campaign"},
     "Lioneye's Watch":              {"act": 1, "area_level": 1,  "waypoint": true,  "boss": null,                             "type": "town"},
     "The Coast":                    {"act": 1, "area_level": 2,  "waypoint": true,  "boss": null,                             "type": "campaign"},
-    "The Tidal Island":             {"act": 1, "area_level": 2,  "waypoint": true,  "boss": "Hailrake",                       "type": "campaign"},
+    "The Tidal Island":             {"act": 1, "area_level": 2,  "waypoint": true,  "boss": "Hailrake",                       "type": "campaign",   "notes": "Quest: Medicine Chest — kill Hailrake"},
     "The Mud Flats":                {"act": 1, "area_level": 4,  "waypoint": true,  "boss": null,                             "type": "campaign"},
     "The Fetid Pool":               {"act": 1, "area_level": 5,  "waypoint": false, "boss": null,                             "type": "campaign"},
     "The Submerged Passage":        {"act": 1, "area_level": 6,  "waypoint": true,  "boss": null,                             "type": "campaign"},
@@ -27,11 +27,11 @@
     "The Chamber of Sins Level 2":  {"act": 2, "area_level": 16, "waypoint": false, "boss": "Fidelitas, the Mourning",        "type": "campaign"},
     "The Riverways":                {"act": 2, "area_level": 16, "waypoint": true,  "boss": null,                             "type": "campaign"},
     "The Western Forest":           {"act": 2, "area_level": 17, "waypoint": true,  "boss": null,                             "type": "campaign"},
-    "The Weaver's Chambers":        {"act": 2, "area_level": 17, "waypoint": false, "boss": "The Weaver",                     "type": "campaign"},
+    "The Weaver's Chambers":        {"act": 2, "area_level": 17, "waypoint": false, "boss": "The Weaver",                     "type": "campaign",   "notes": "Quest: Sharp and Cruel — kill The Weaver"},
     "The Wetlands":                 {"act": 2, "area_level": 18, "waypoint": true,  "boss": null,                             "type": "campaign"},
     "The Vaal Ruins":               {"act": 2, "area_level": 18, "waypoint": false, "boss": "Ancient Doom",                   "type": "campaign"},
     "The Northern Forest":          {"act": 2, "area_level": 18, "waypoint": true,  "boss": null,                             "type": "campaign"},
-    "The Dread Thicket":            {"act": 2, "area_level": 18, "waypoint": false, "boss": "Great White Beast",              "type": "campaign"},
+    "The Dread Thicket":            {"act": 2, "area_level": 18, "waypoint": false, "boss": "Great White Beast",              "type": "campaign",   "notes": "Quest: Through Sacred Ground — kill Great White Beast"},
     "The Caverns":                  {"act": 2, "area_level": 20, "waypoint": true,  "boss": null,                             "type": "campaign"},
     "The Ancient Pyramid":          {"act": 2, "area_level": 20, "waypoint": false, "boss": "Vaal Oversoul",                  "type": "campaign"},
 
@@ -46,10 +46,10 @@
     "The Lunaris Temple Level 2":   {"act": 3, "area_level": 24, "waypoint": false, "boss": "General Gravicius",              "type": "campaign"},
     "The Solaris Temple Level 1":   {"act": 3, "area_level": 24, "waypoint": true,  "boss": null,                             "type": "campaign"},
     "The Solaris Temple Level 2":   {"act": 3, "area_level": 24, "waypoint": false, "boss": "Piety",                         "type": "campaign"},
-    "The Docks":                    {"act": 3, "area_level": 24, "waypoint": true,  "boss": null,                             "type": "campaign"},
+    "The Docks":                    {"act": 3, "area_level": 24, "waypoint": true,  "boss": null,                             "type": "campaign",   "notes": "Quest: Sever the Right Hand — find Tolman"},
     "The Battlefront":              {"act": 3, "area_level": 24, "waypoint": true,  "boss": null,                             "type": "campaign"},
     "The Imperial Gardens":         {"act": 3, "area_level": 26, "waypoint": true,  "boss": null,                             "type": "campaign"},
-    "The Library":                  {"act": 3, "area_level": 26, "waypoint": true,  "boss": null,                             "type": "campaign"},
+    "The Library":                  {"act": 3, "area_level": 26, "waypoint": true,  "boss": null,                             "type": "campaign",   "notes": "Quest: A Fixture of Fate — find the library"},
     "The Archives":                 {"act": 3, "area_level": 26, "waypoint": false, "boss": null,                             "type": "campaign"},
     "The Sceptre of God":           {"act": 3, "area_level": 28, "waypoint": true,  "boss": null,                             "type": "campaign"},
     "The Upper Sceptre of God":     {"act": 3, "area_level": 28, "waypoint": false, "boss": "Dominus, Ascendant",             "type": "campaign"},
@@ -78,9 +78,9 @@
     "The Ruined Square":            {"act": 5, "area_level": 38, "waypoint": true,  "boss": null,                             "type": "campaign"},
     "The Ossuary":                  {"act": 5, "area_level": 40, "waypoint": true,  "boss": null,                             "type": "campaign"},
     "The Reliquary":                {"act": 5, "area_level": 40, "waypoint": false, "boss": null,                             "type": "campaign"},
-    "The Cathedral Rooftop":        {"act": 5, "area_level": 40, "waypoint": false, "boss": "Kitava, Destroyer of Worlds",    "type": "campaign"},
+    "The Cathedral Rooftop":        {"act": 5, "area_level": 40, "waypoint": false, "boss": "Kitava, Destroyer of Worlds",    "type": "campaign",   "notes": "Killing Kitava applies -30% to all resistances permanently"},
 
-    "Lioneye's Watch (Act 6)":      {"act": 6, "area_level": 40, "waypoint": true,  "boss": null,                             "type": "town"},
+    "Lioneye's Watch (Act 6)":      {"act": 6, "area_level": 40, "waypoint": true,  "boss": null,                             "type": "town",     "notes": "-30% all res penalty now active (Act 5 Kitava)"},
     "The Twilight Strand (Act 6)":  {"act": 6, "area_level": 40, "waypoint": false, "boss": "Hillock, the Brutal",            "type": "campaign"},
     "The Coast (Act 6)":            {"act": 6, "area_level": 40, "waypoint": true,  "boss": null,                             "type": "campaign"},
     "The Mud Flats (Act 6)":        {"act": 6, "area_level": 41, "waypoint": true,  "boss": null,                             "type": "campaign"},
@@ -145,6 +145,6 @@
     "The Desecrated Chambers":      {"act": 10, "area_level": 58, "waypoint": true,  "boss": null,                            "type": "campaign"},
     "The Ossuary (Act 10)":         {"act": 10, "area_level": 60, "waypoint": true,  "boss": null,                            "type": "campaign"},
     "The Reliquary (Act 10)":       {"act": 10, "area_level": 60, "waypoint": false, "boss": null,                            "type": "campaign"},
-    "The Cathedral Rooftop (Act 10)": {"act": 10, "area_level": 60, "waypoint": false, "boss": "Kitava, the Destroyer",       "type": "campaign"}
+    "The Cathedral Rooftop (Act 10)": {"act": 10, "area_level": 60, "waypoint": false, "boss": "Kitava, the Destroyer",      "type": "campaign",  "notes": "Killing Kitava applies additional -30% all res (total -60% penalty)"}
   }
 }
