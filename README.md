@@ -1,4 +1,4 @@
-# ExileHUD
+# PoELens
 
 A TOS-compliant Path of Exile overlay providing real-time quality-of-life tools as a transparent, always-on-top panel alongside the game.
 
@@ -6,7 +6,7 @@ A TOS-compliant Path of Exile overlay providing real-time quality-of-life tools 
 
 ## ⚠️ Analytics Disclosure
 
-**This software collects anonymous usage analytics. By installing or running ExileHUD, you agree to this collection.**
+**This software collects anonymous usage analytics. By installing or running PoELens, you agree to this collection.**
 
 When the installer completes and each time the app launches, the following data is sent to the developer:
 
@@ -28,11 +28,11 @@ When the installer completes and each time the app launches, the following data 
 | Feature | Status |
 |---|---|
 | Quest Passive Point Tracker | ✅ Complete |
-| Passive Tree Viewer + Build Import | ✅ Complete |
+| Passive Tree Viewer + Build Import + Character Sync | ✅ Complete |
 | Price Checking (poe.ninja + Trade API) | ✅ Complete |
 | Currency Per Hour (manual + OAuth stash auto-fill) | ✅ Complete |
 | Crafting Cheat Sheets + Task Queue | ✅ Complete |
-| Map Overlay (zone info, resistance warnings) | ✅ Complete |
+| Map Overlay (zone info, resistance warnings, atlas maps) | ✅ Complete |
 
 ---
 
@@ -40,8 +40,8 @@ When the installer completes and each time the app launches, the following data 
 
 ### Option A — GUI Installer (recommended)
 
-1. Download `ExileHUD-Setup.zip`
-2. Extract and run `ExileHUD-Setup.exe`
+1. Download `PoELens-Setup.zip`
+2. Extract and run `PoELens-Setup.exe`
 3. Enter the installer password (contact the developer)
 4. Follow on-screen prompts — no Python required
 
@@ -50,8 +50,8 @@ When the installer completes and each time the app launches, the following data 
 Requires Python 3.10+.
 
 ```
-git clone https://github.com/BlandStarfish/ExileHUD
-cd ExileHUD
+git clone https://github.com/BlandStarfish/PoELens
+cd PoELens
 python install.py
 python main.py
 ```
@@ -93,7 +93,7 @@ To enable automatic currency reading from your stash:
 
 ## TOS Compliance
 
-ExileHUD is read-only and passive:
+PoELens is read-only and passive:
 
 - Reads `Client.txt` log file only (no game memory access)
 - Reads clipboard only (no input simulation)

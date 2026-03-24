@@ -22,4 +22,4 @@ installer_password.json
 state/oauth_tokens.json
 
 # keep the release zip
-!ExileHUD-Setup.zip
+!PoELens-Setup.zip

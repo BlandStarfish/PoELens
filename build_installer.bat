@@ -1,6 +1,6 @@
 @echo off
 echo ============================================
-echo   ExileHUD Installer Builder
+echo   PoELens Installer Builder
 echo ============================================
 echo.
 
@@ -22,16 +22,16 @@ if errorlevel 1 (
 python -m PyInstaller ^
     --onefile ^
     --noconsole ^
-    --name "ExileHUD-Setup" ^
+    --name "PoELens-Setup" ^
     --icon "assets\icon.ico" ^
     installer_gui.py
 
 echo.
-if exist "dist\ExileHUD-Setup.exe" (
+if exist "dist\PoELens-Setup.exe" (
     :: Zip it
-    python -c "import zipfile,os; z=zipfile.ZipFile('ExileHUD-Setup.zip','w',zipfile.ZIP_DEFLATED,compresslevel=9); z.write('dist/ExileHUD-Setup.exe','ExileHUD-Setup.exe'); z.close(); print(f'ZIP: {os.path.getsize(chr(34)+\"ExileHUD-Setup.zip\"+chr(34))/1024/1024:.1f} MB')"
+    python -c "import zipfile,os; z=zipfile.ZipFile('PoELens-Setup.zip','w',zipfile.ZIP_DEFLATED,compresslevel=9); z.write('dist/PoELens-Setup.exe','PoELens-Setup.exe'); z.close(); print(f'ZIP: {os.path.getsize(chr(34)+\"PoELens-Setup.zip\"+chr(34))/1024/1024:.1f} MB')"
     echo.
-    echo SUCCESS: ExileHUD-Setup.zip is ready to share.
+    echo SUCCESS: PoELens-Setup.zip is ready to share.
 ) else (
     echo FAILED: check output above for errors.
 )
