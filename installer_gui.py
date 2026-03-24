@@ -39,8 +39,8 @@ DEFAULT_DEST  = os.path.join(os.path.expanduser("~"), APP_NAME)
 # The plaintext password is never stored; only a salted SHA-256 hash.
 # ─────────────────────────────────────────────────────────────────────────────
 
-_PW_SALT = "a5d3cc499dddf1ab20085c551ff6529e"
-_PW_HASH = "6768c1a42decd86a8f6ac8321fd47ed7580c84c9dc24f6ac46e6bed6d0b38d87"
+_PW_SALT = "e36a127b9e4d4dacdbf4c888a412c597"
+_PW_HASH = "195f1db775f438a4d64271385eb4b44e0d944d65e58bdca20127c76b7837a78d"
 # Default password is "changeme" — run set_password.py to set your own.
 
 def _check_password(entered: str) -> bool:
