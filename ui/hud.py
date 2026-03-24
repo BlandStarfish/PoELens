@@ -16,6 +16,7 @@ from ui.widgets.quest_panel import QuestPanel
 from ui.widgets.price_panel import PricePanel
 from ui.widgets.currency_panel import CurrencyPanel
 from ui.widgets.crafting_panel import CraftingPanel
+from ui.widgets.passive_tree_panel import PassiveTreePanel
 
 
 DARK_BG = "#1a1a2e"
@@ -91,8 +92,10 @@ class HUD(QMainWindow):
         self._price_panel = PricePanel()
         self._currency_panel = CurrencyPanel(currency_tracker)
         self._crafting_panel = CraftingPanel(crafting)
+        self._tree_panel = PassiveTreePanel(quest_tracker)
 
         tabs.addTab(self._quest_panel,    "Quests")
+        tabs.addTab(self._tree_panel,     "Tree")
         tabs.addTab(self._price_panel,    "Price")
         tabs.addTab(self._currency_panel, "Currency")
         tabs.addTab(self._crafting_panel, "Crafting")
@@ -146,7 +149,7 @@ class HUD(QMainWindow):
 
     def show_passive_tree(self):
         self.show()
-        self._tabs.setCurrentIndex(0)  # quests tab for now; passive tree is next
+        self._tabs.setCurrentIndex(1)  # Tree tab
 
     def show_crafting(self):
         self.show()
