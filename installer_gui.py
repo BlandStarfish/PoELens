@@ -40,8 +40,8 @@ ANALYTICS_WEBHOOK_URL = ""
 # Password protection
 # ─────────────────────────────────────────────────────────────────────────────
 
-_PW_SALT = "cba88870fd6243c674ff7b5382ccba9a"
-_PW_HASH = "b28ec286f30a93ec593e82013d8c41fda99da5c3ee262eb822aa8eb38a2a3c3a"
+_PW_SALT = "e36a127b9e4d4dacdbf4c888a412c597"
+_PW_HASH = "195f1db775f438a4d64271385eb4b44e0d944d65e58bdca20127c76b7837a78d"
 
 def _check_password(entered: str) -> bool:
     h = hashlib.sha256((_PW_SALT + entered).encode("utf-8")).hexdigest()
@@ -341,9 +341,12 @@ class Installer(tk.Tk):
 
     def _do_install(self):
         dest    = self._folder.get()
-        runtime = os.path.join(dest, ".runtime")   # embedded Python lives here
-        python  = os.path.join(runtime, "python.exe")
         tmp     = tempfile.mkdtemp()
+
+        # Extract Python runtime into tmp first — dest will be wiped when the
+        # app archive is installed, so we can't put the runtime there yet.
+        runtime_tmp = os.path.join(tmp, ".runtime")
+        python_tmp  = os.path.join(runtime_tmp, "python.exe")
 
         try:
             # ── 1. Download embedded Python runtime ───────────────────
@@ -352,15 +355,15 @@ class Installer(tk.Tk):
             self._download(PYTHON_EMBED_URL, embed_zip, 3, 20)
 
             self._ui("Extracting Python runtime...", 20)
-            os.makedirs(runtime, exist_ok=True)
+            os.makedirs(runtime_tmp, exist_ok=True)
             with zipfile.ZipFile(embed_zip, "r") as zf:
-                zf.extractall(runtime)
+                zf.extractall(runtime_tmp)
             self.after(0, lambda: self._log("Python runtime ready."))
 
             # Enable site-packages in the embeddable distro
-            pth_files = [f for f in os.listdir(runtime) if f.endswith("._pth")]
+            pth_files = [f for f in os.listdir(runtime_tmp) if f.endswith("._pth")]
             for pf in pth_files:
-                path = os.path.join(runtime, pf)
+                path = os.path.join(runtime_tmp, pf)
                 content = open(path).read()
                 if "#import site" in content:
                     open(path, "w").write(content.replace("#import site", "import site"))
@@ -370,7 +373,7 @@ class Installer(tk.Tk):
             getpip = os.path.join(tmp, "get-pip.py")
             self._download(GETPIP_URL, getpip, 22, 26)
             r = subprocess.run(
-                [python, getpip, "--quiet"],
+                [python_tmp, getpip, "--quiet"],
                 capture_output=True, text=True, timeout=120
             )
             if r.returncode != 0:
@@ -401,18 +404,20 @@ class Installer(tk.Tk):
             with zipfile.ZipFile(app_zip, "r") as zf:
                 zf.extractall(tmp)
             # GitHub's zipball API names the root dir {owner}-{repo}-{sha} — find it dynamically
-            subdirs = [d for d in os.listdir(tmp) if os.path.isdir(os.path.join(tmp, d))]
+            subdirs = [d for d in os.listdir(tmp)
+                       if os.path.isdir(os.path.join(tmp, d)) and d != ".runtime"]
             if not subdirs:
                 raise RuntimeError("App archive has unexpected structure — no directory found.")
             extracted = os.path.join(tmp, subdirs[0])
             if os.path.exists(dest):
-                # Preserve .runtime and state/ if updating
                 shutil.rmtree(dest, ignore_errors=True)
             shutil.copytree(extracted, dest)
-            # Restore runtime (we extracted it above, before dest was wiped)
-            if not os.path.exists(runtime):
-                os.makedirs(runtime, exist_ok=True)
             self.after(0, lambda: self._log(f"App files installed to: {dest}"))
+
+            # ── Move runtime into dest now that the app tree is in place ──
+            runtime = os.path.join(dest, ".runtime")
+            python  = os.path.join(runtime, "python.exe")
+            shutil.copytree(runtime_tmp, runtime)
 
             # ── 4. Install Python packages ────────────────────────────
             self._ui("Installing packages (this takes ~1 min first time)...", 48)
