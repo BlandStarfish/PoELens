@@ -150,6 +150,29 @@ modules/passive_tree.py imports only stdlib modules (json, os, re, threading,
 urllib.request, dataclasses, typing). Safe to import from install.py before
 dependencies are installed. Fixed Session 2 to remove 66-line duplication.
 
+### QPainter.RenderHint vs QPainter.RenderHints (Session 4)
+In PyQt6, QPainter.RenderHint (enum) and QPainter.RenderHints (flags combination) are
+different classes. QGraphicsView.setRenderHint() takes a QPainter.RenderHint enum value.
+QGraphicsView.renderHints() returns a QPainter.RenderHints flags value.
+NEVER use `self.renderHints().__class__.Antialiasing` -- the flags class does not have
+the enum values. Always import QPainter and use `QPainter.RenderHint.Antialiasing`.
+
+### install.py: config.py import is safe before pip install (updated Session 4)
+config.py uses only json + os (stdlib). Safe to import from install.py at the top level,
+before pip install runs. DEFAULTS is now imported from config.py instead of duplicated.
+
+### Currency rate calculation (Session 4)
+get_currency_rate() now divides delta by the snapshot's own elapsed_hours (recorded at
+snapshot time), not by current elapsed time. This gives a stable, accurate rate that
+does not dilute as time passes between snapshots. Rate is "as of last snapshot" -- it
+updates only when a new snapshot is taken.
+
+### currency_last_amounts schema (Session 4)
+New field "currency_last_amounts": {} added to _PROFILE_DEFAULTS in state.py.
+Populated by log_currency_snapshot() each time a snapshot is taken. Used by
+CurrencyPanel.__init__ to restore spinbox values on app restart. The {**defaults, **data}
+merge pattern handles backward compatibility -- existing profiles get {} automatically.
+
 ## Open Questions
 
 1. **Stash tab API** — Would need OAuth login flow or user-provided POESESSID. Is this

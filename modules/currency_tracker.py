@@ -58,20 +58,31 @@ class CurrencyTracker:
         self._state.log_currency_snapshot(current_amounts)
         self._fire_update()
 
+    def get_last_amounts(self) -> dict:
+        """Returns the last manually entered currency amounts (restored from disk on restart)."""
+        return self._state.currency_last_amounts
+
     def get_display_data(self) -> dict:
         """
         Returns display-ready data including:
+        - session_start: float | None  (Unix timestamp when session started)
         - rates: {currency: per_hr}
         - chaos_rates: {currency: chaos_per_hr}  (converted via poe.ninja)
         - total_chaos_per_hr: float
-        - elapsed_minutes: float
+        - elapsed_minutes: float  (time since session start)
         """
-        rates = self._state.get_currency_rate()
-        if not rates:
-            return {"rates": {}, "chaos_rates": {}, "total_chaos_per_hr": 0, "elapsed_minutes": 0}
-
         start = self._state.currency_session_start
         elapsed = (time.time() - start) / 60 if start else 0
+
+        rates = self._state.get_currency_rate()
+        if not rates:
+            return {
+                "session_start": start,
+                "rates": {},
+                "chaos_rates": {},
+                "total_chaos_per_hr": 0,
+                "elapsed_minutes": round(elapsed, 1),
+            }
 
         chaos_rates = {}
         total_chaos = 0.0
@@ -82,6 +93,7 @@ class CurrencyTracker:
             total_chaos += chaos_per_hr
 
         return {
+            "session_start": start,
             "rates": rates,
             "chaos_rates": chaos_rates,
             "total_chaos_per_hr": round(total_chaos, 2),

@@ -4,6 +4,8 @@ User clicks "Start Session" and manually enters current currency counts.
 Subsequent snapshots are taken via the Snapshot button.
 """
 
+import datetime
+
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel,
     QPushButton, QSpinBox, QScrollArea, QFrame,
@@ -25,14 +27,26 @@ class CurrencyPanel(QWidget):
         self._spinboxes: dict[str, QSpinBox] = {}
         self._build_ui()
         tracker.on_update(self._on_update)
+        # Restore last known amounts from disk (populated by most recent snapshot)
+        last = tracker.get_last_amounts()
+        for currency, amount in last.items():
+            if currency in self._spinboxes:
+                self._spinboxes[currency].setValue(amount)
+        # Show current session state if one is already active
+        self._on_update(tracker.get_display_data())
 
     def _build_ui(self):
         layout = QVBoxLayout(self)
         layout.setContentsMargins(6, 6, 6, 6)
         layout.setSpacing(6)
 
+        # Session start time (shown when a session is active)
+        self._session_label = QLabel("")
+        self._session_label.setStyleSheet(f"color: {DIM}; font-size: 11px;")
+        layout.addWidget(self._session_label)
+
         # Rate display
-        self._rate_label = QLabel("Session not started")
+        self._rate_label = QLabel("Start a session and take snapshots to track rates.")
         self._rate_label.setStyleSheet(f"color: {ACCENT}; font-weight: bold;")
         self._rate_label.setWordWrap(True)
         layout.addWidget(self._rate_label)
@@ -83,13 +97,23 @@ class CurrencyPanel(QWidget):
     def _start_session(self):
         self._tracker.start_session(self._get_amounts())
         self._rate_label.setText("Session started — take snapshots as you play.")
+        # Show session start time immediately (before first snapshot)
+        self._on_update(self._tracker.get_display_data())
 
     def _take_snapshot(self):
         self._tracker.snapshot(self._get_amounts())
 
     def _on_update(self, data: dict):
+        start = data.get("session_start")
+        if start:
+            start_str = datetime.datetime.fromtimestamp(start).strftime("%H:%M")
+            self._session_label.setText(f"Session started: {start_str}")
+        else:
+            self._session_label.setText("")
+
         if not data.get("rates"):
             return
+
         lines = []
         for currency, chaos_hr in sorted(data["chaos_rates"].items(), key=lambda x: -x[1]):
             if abs(chaos_hr) > 0.01:
@@ -100,6 +124,4 @@ class CurrencyPanel(QWidget):
         self._elapsed_label.setText(f"Total: {total:.1f}c/hr  |  {elapsed:.0f} min elapsed")
 
     def refresh(self):
-        data = self._tracker.get_display_data()
-        if data["rates"]:
-            self._on_update(data)
+        self._on_update(self._tracker.get_display_data())

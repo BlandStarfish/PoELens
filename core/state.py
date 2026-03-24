@@ -18,6 +18,7 @@ _PROFILE_DEFAULTS = {
     "crafting_queue": [],        # list of crafting task dicts
     "currency_session_start": None,
     "currency_baseline": {},     # {"Chaos Orb": N, ...}
+    "currency_last_amounts": {}, # last manually entered currency counts (restored on restart)
 }
 
 
@@ -147,19 +148,28 @@ class AppState:
             "elapsed_hours": elapsed_hours,
             "delta": delta,
         })
+        # Persist last known amounts so they can be restored after a restart
+        self._profile["currency_last_amounts"] = dict(current)
         self._save_currency()
+        self._save_profile()
         self._notify("currency_delta", delta)
 
+    @property
+    def currency_last_amounts(self) -> dict:
+        """Last manually entered currency amounts (from most recent snapshot)."""
+        return dict(self._profile.get("currency_last_amounts", {}))
+
     def get_currency_rate(self) -> dict:
-        """Returns approximate currency/hr based on current session."""
-        start = self._profile.get("currency_session_start")
-        if not start:
-            return {}
-        elapsed = (time.time() - start) / 3600
-        if elapsed < 0.001:
-            return {}
+        """
+        Returns currency/hr rates based on the most recent snapshot.
+        Uses the snapshot's own elapsed time so the rate stays accurate
+        rather than diluting as time passes between snapshots.
+        """
         sessions = self._currency_log.get("sessions", [])
         if not sessions:
             return {}
         last = sessions[-1]
+        elapsed = last.get("elapsed_hours", 0)
+        if elapsed < 0.001:
+            return {}
         return {k: round(v / elapsed, 2) for k, v in last["delta"].items()}

@@ -5,7 +5,7 @@ All overlay modules subscribe to this event bus instead of reading the log
 directly. TOS-safe: read-only file access, no process interaction.
 
 Events emitted:
-  zone_change      {"zone": str, "timestamp": str}
+  zone_change      {"zone": str}
   chat_message     {"channel": str, "player": str, "message": str}
   whisper_in       {"player": str, "message": str}
   whisper_out      {"player": str, "message": str}
@@ -88,7 +88,7 @@ class ClientLogWatcher:
 
     def _parse(self, line: str):
         if m := _ZONE_RE.search(line):
-            self._emit("zone_change", {"zone": m.group(1), "line": line})
+            self._emit("zone_change", {"zone": m.group(1)})
             return
 
         if m := _WHISPER_IN_RE.search(line):

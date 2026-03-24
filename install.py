@@ -20,6 +20,10 @@ import shutil
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
+# config.py uses only stdlib — safe to import before pip install runs
+sys.path.insert(0, HERE)
+from config import DEFAULTS as _CFG_DEFAULTS
+
 # ─────────────────────────────────────────────
 # 1. Python version check
 # ─────────────────────────────────────────────
@@ -54,23 +58,6 @@ def install_deps():
 # 3. State directory and config
 # ─────────────────────────────────────────────
 
-DEFAULTS = {
-    "poe_version": "poe1",
-    "client_log_path": r"C:\Program Files (x86)\Grinding Gear Games\Path of Exile\logs\Client.txt",
-    "league": "Standard",
-    "overlay_screen": 0,
-    "overlay_opacity": 0.92,
-    "hotkeys": {
-        "price_check":    "ctrl+d",
-        "toggle_hud":     "ctrl+shift+h",
-        "passive_tree":   "ctrl+shift+p",
-        "crafting_queue": "ctrl+shift+c",
-        "map_overlay":    "ctrl+shift+m",
-    },
-    "price_refresh_interval": 300,
-    "currency_reset_hour": 0,
-}
-
 def setup_state():
     state_dir = os.path.join(HERE, "state")
     os.makedirs(state_dir, exist_ok=True)
@@ -80,6 +67,9 @@ def setup_state():
         print("[OK]  state/config.json already exists — not overwritten")
         return
 
+    # Make a mutable copy so auto-detection doesn't mutate the imported dict
+    cfg = dict(_CFG_DEFAULTS)
+
     # Try to auto-detect PoE log path
     candidates = [
         r"C:\Program Files (x86)\Grinding Gear Games\Path of Exile\logs\Client.txt",
@@ -88,13 +78,13 @@ def setup_state():
     ]
     found_log = next((p for p in candidates if os.path.exists(p)), None)
     if found_log:
-        DEFAULTS["client_log_path"] = found_log
+        cfg["client_log_path"] = found_log
         print(f"[OK]  Auto-detected PoE log: {found_log}")
     else:
         print("[WARN] Could not auto-detect Client.txt — edit state/config.json manually")
 
     with open(config_path, "w") as f:
-        json.dump(DEFAULTS, f, indent=2)
+        json.dump(cfg, f, indent=2)
     print("[OK]  state/config.json created")
 
 # ─────────────────────────────────────────────

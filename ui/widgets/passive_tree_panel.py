@@ -26,7 +26,7 @@ from PyQt6.QtWidgets import (
     QProgressBar, QFrame, QSizePolicy,
 )
 from PyQt6.QtCore import Qt, QRectF, QPointF, QTimer, pyqtSignal, QThread, pyqtSlot
-from PyQt6.QtGui import QPen, QBrush, QColor, QFont, QTransform, QWheelEvent
+from PyQt6.QtGui import QPen, QBrush, QColor, QFont, QTransform, QWheelEvent, QPainter
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Colors
@@ -366,7 +366,7 @@ class PassiveTreePanel(QWidget):
 class TreeView(QGraphicsView):
     def __init__(self, scene):
         super().__init__(scene)
-        self.setRenderHint(self.renderHints().__class__.Antialiasing, True)
+        self.setRenderHint(QPainter.RenderHint.Antialiasing)
         self.setDragMode(QGraphicsView.DragMode.ScrollHandDrag)
         self.setTransformationAnchor(QGraphicsView.ViewportAnchor.AnchorUnderMouse)
         self.setResizeAnchor(QGraphicsView.ViewportAnchor.AnchorUnderMouse)

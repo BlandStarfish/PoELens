@@ -539,3 +539,169 @@ Codebase quality remains high -- no technical debt introduced. The main remainin
 currency tracker's manual entry requirement; all other features are functional and polished.
 
 ═══════════════════════════════════════════════════════════════
+
+
+═══════════════════════════════════════════════════════════════
+SESSION: 2026-03-24  (Session 4)
+═══════════════════════════════════════════════════════════════
+
+## ORIENTATION SUMMARY
+Session 4. Read all prior session notes. Session 3 left off with 4 suggestions; primary
+targets were currency stash API (DEFERRED -- TOS research required) and price check edge
+cases. Since the TOS-dependent items are blocked, this session focused on: 4 maintenance
+fixes found in the smoke test, and currency tracker UX improvements that do not require
+any API access.
+
+## ASSESSMENT GRADES
+
+| Module               | Completeness | Quality | Vision Alignment |
+|----------------------|-------------|---------|-----------------|
+| Quest Tracker        |     8/10     |  9/10   |      9/10       |
+| Passive Tree Viewer  |     7/10     |  9/10   |      8/10       |
+| Price Checker        |     9/10     |  8/10   |      9/10       |
+| Currency Tracker     |     6/10     |  9/10   |      7/10       |
+| Crafting System      |     7/10     |  9/10   |      8/10       |
+| Core Infrastructure  |     9/10     |  9/10   |      9/10       |
+| Map Overlay          |     6/10     |  9/10   |      8/10       |
+
+Items below 6: None.
+
+## SMOKE TEST FINDINGS
+
+### Phase 1B -- Logic & Structure Issues
+
+1. ui/widgets/passive_tree_panel.py:369 -- CRASH BUG: `self.setRenderHint(
+   self.renderHints().__class__.Antialiasing, True)` -- renderHints() returns
+   QPainter.RenderHints (flag combination class), not QPainter.RenderHint (enum).
+   .Antialiasing does not exist on the flags class; AttributeError at TreeView init. Fixed.
+
+2. ui/widgets/crafting_panel.py:166 -- UX BUG: Queue items showed raw method_id
+   (e.g. "alteration_spam") instead of method_name (e.g. "Alteration Spam"). Fixed.
+
+3. install.py:57-72 -- DUPLICATION: 15-line DEFAULTS dict manually duplicated config.py.
+   New config keys added to config.py would not appear in installer-generated config.json. Fixed.
+
+4. core/client_log.py:91 -- MINOR: zone_change event emitted unused "line" field.
+   Docstring showed nonexistent "timestamp" field. Fixed to emit {"zone": str} only.
+
+### Phase 1C -- Redundancy & Counter-Vision Issues
+
+No counter-vision issues found this session.
+
+## MAINTENANCE LOG
+
+### Fix 1 -- passive_tree_panel.py: Wrong QPainter class for renderHints (CRASH BUG)
+- File: ui/widgets/passive_tree_panel.py:369
+- Issue: renderHints().__class__ is QPainter.RenderHints (flags), not QPainter.RenderHint
+  (enum). Accessing .Antialiasing on the flags class raises AttributeError at runtime,
+  crashing TreeView initialization.
+- Fix: Added QPainter to imports; changed to `self.setRenderHint(QPainter.RenderHint.Antialiasing)`
+- Why it matters: Would crash the passive tree viewer on every launch.
+
+### Fix 2 -- crafting_panel.py: Queue shows method_id instead of method_name
+- File: ui/widgets/crafting_panel.py:166
+- Issue: Queue list items showed "alteration_spam x3 ~450c" not "Alteration Spam x3 ~450c"
+- Fix: `method_name = cost.get("method_name") or task.get("method_id", "?")` before formatting
+- Why it matters: UX regression -- method_name is available and much more readable.
+
+### Fix 3 -- install.py: DEFAULTS duplication removed
+- File: install.py
+- Issue: 15-line DEFAULTS dict duplicated config.py's DEFAULTS. Divergence risk on new keys.
+- Fix: `from config import DEFAULTS as _CFG_DEFAULTS` at top of file. setup_state() makes
+  a local copy (dict(_CFG_DEFAULTS)) before mutating for log path auto-detection.
+  config.py uses only stdlib so safe to import before pip install runs.
+- Why it matters: Single source of truth for defaults.
+
+### Fix 4 -- client_log.py: Remove unused "line" field from zone_change event
+- File: core/client_log.py:91
+- Issue: Event emitted {"zone": str, "line": str}; "line" unused everywhere. Docstring
+  showed {"zone": str, "timestamp": str} -- also wrong.
+- Fix: Emit {"zone": str} only. Update docstring to match.
+- Why it matters: Accurate docs; leaner event payload.
+
+## DEVELOPMENT LOG
+
+### Currency Tracker UX Improvements
+
+**Goal**: Improve the manual-entry currency tracker without needing stash tab API.
+Three specific issues addressed:
+
+**1. Rate calculation accuracy (state.py)**
+Previously: get_currency_rate() divided snapshot delta by (time.now - session_start).
+Problem: As time passed between snapshots, the rate artificially diluted. A snapshot
+showing +100 chaos at 30min would show 100c/hr at 30min but only 50c/hr at 60min.
+Fix: Now divides by the snapshot's own elapsed_hours field (logged at snapshot time).
+Rate stays stable at the accurate value until the next snapshot is taken.
+
+**2. Spinbox value restore on restart (state.py + currency_tracker.py + currency_panel.py)**
+Previously: On app restart, all spinboxes reset to 0. User had to re-enter all currency
+counts before they could take a new snapshot or start a new session.
+Fix: log_currency_snapshot() now also persists current amounts to profile["currency_last_amounts"].
+Added @property currency_last_amounts on AppState. Added get_last_amounts() to
+CurrencyTracker. CurrencyPanel.__init__ now populates spinboxes from last amounts on load.
+Also added "currency_last_amounts": {} to _PROFILE_DEFAULTS (backward-compatible).
+
+**3. Session start time display (currency_panel.py)**
+Previously: No visual indication of when the current session was started.
+Fix: Added session_start field to get_display_data() return dict. CurrencyPanel now
+shows "Session started: HH:MM" in a dim label above the rate display. Visible whenever a
+session is active, even before the first snapshot is taken.
+
+**Side effect improvements (currency_panel.py)**
+- Default label text changed to "Start a session and take snapshots to track rates."
+- refresh() now always calls _on_update (was conditional on rates existing). Ensures
+  session start time shows on timer ticks even before first snapshot.
+- _start_session() now immediately calls _on_update to show start time.
+
+**Files modified**: core/state.py, modules/currency_tracker.py, ui/widgets/currency_panel.py
+
+## TECHNICAL NOTES
+
+- **QPainter.RenderHint vs QPainter.RenderHints**: In PyQt6, RenderHint (enum) and
+  RenderHints (flags combination) are different classes. setRenderHint() takes a
+  RenderHint enum value. renderHints() returns a RenderHints flags value. Never use
+  renderHints().__class__ to get the RenderHint class -- import QPainter directly.
+
+- **install.py safe config.py import**: config.py uses only json + os (stdlib). Always
+  safe to import before pip install runs, even from install.py at the top level.
+
+- **Currency rate accuracy**: get_currency_rate() now returns the rate AS OF the last
+  snapshot. It does not update between snapshots. This is intentional: a stable rate
+  is more useful than an artificially decaying rate. Rate only updates on new snapshots.
+
+- **currency_last_amounts schema change**: New field added to profile.json defaults.
+  The _PROFILE_DEFAULTS merge pattern ({**defaults, **data}) automatically adds the new
+  key with default value {} to existing profiles on first load. No migration needed.
+
+## SUGGESTIONS FOR NEXT SESSION
+
+1. **TOS research -- stash tab API** (MEDIUM, DEFERRED 4 sessions): Check GGG's
+   developer documentation to determine if POESESSID-based stash tab reads are ToS-compliant.
+   Key questions: Is the endpoint officially documented? Rate limited? Does ToS specifically
+   address third-party tools using session tokens? Document findings in TECHNICAL.md.
+
+2. **Price check -- item parsing robustness** (LOW): Fuzz parse_item_clipboard() against
+   real PoE clipboard data: fractured, influenced, mirrored/split, unidentified magic/rare,
+   synthesised, corrupted items. Most likely already handled but worth verifying.
+
+3. **Map overlay -- atlas map zones** (LOW): 100+ endgame maps not in zones.json.
+   Requires community data source research (poedb.tw etc.) before starting.
+
+4. **Currency tracker -- cross-session aggregation** (LOW): The session log stores all
+   historical snapshots. Could display a lifetime or 7-day average chaos/hr metric.
+   No external data needed -- pure in-memory computation.
+
+## PROJECT HEALTH
+
+Overall grade: 8.2/10 (up from 8.0 last session)
+% complete toward original vision: ~80% (up from ~77%)
+
+All 6 features implemented. Latent crash bug in passive tree viewer patched. Currency
+tracker UX meaningfully improved without requiring any TOS-sensitive API access. Codebase
+quality is high throughout -- no technical debt introduced this session.
+
+Remaining gaps: (1) currency auto-reading (blocked on TOS research), (2) passive tree
+player node tracking (blocked on OAuth/TOS research), (3) atlas map data (research needed).
+All current features are functional and polished.
+
+═══════════════════════════════════════════════════════════════

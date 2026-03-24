@@ -162,9 +162,10 @@ class CraftingPanel(QWidget):
             cost = task.get("cost", {})
             total_c = cost.get("total_chaos", 0)
             done_mark = "✓ " if task.get("completed") else ""
+            method_name = cost.get("method_name") or task.get("method_id", "?")
             text = (
                 f"{done_mark}[{i+1}] {task['item_name']}  "
-                f"({task.get('method_id','?')} ×{task.get('quantity',1)})  "
+                f"({method_name} ×{task.get('quantity',1)})  "
                 f"~{total_c:.0f}c"
             )
             item = QListWidgetItem(text)
