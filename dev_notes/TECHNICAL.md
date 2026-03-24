@@ -192,26 +192,32 @@ No rotation needed. Long-term use gives increasingly meaningful all-time average
 
 ## Open Questions
 
-1. **Stash tab API TOS** — Research initiated Session 5. Prior knowledge: GGG has an
-   official OAuth 2.0 API documented at pathofexile.com/developer/docs. The stash
-   endpoint is `/api/stash/{league}`. POESESSID-based access is NOT officially
-   supported and GGG has stated they may revoke it without notice. OAuth is the
-   correct approach. GGG's Third Party Developer Policy (as of ~2024) explicitly
-   allows stash tab reads via OAuth for tools that don't give competitive advantage.
-   Currency tracking falls clearly within TOS-compliant use.
-   NOTE: Web research agent ran Session 5 -- update this section with confirmed
-   current findings if they differ from above.
+1. **Stash tab API -- OAuth implementation** (UNBLOCKED as of Session 5):
+   TOS research confirmed: OAuth is the correct, fully TOS-compliant approach.
+   POESESSID is technically prohibited (credential-sharing clause) and uses
+   undocumented endpoints. The 2020 POE Overlay incident showed POESESSID is
+   detectable and actionable.
 
-2. **Stash tab API -- OAuth implementation** -- If TOS confirms OAuth is safe:
-   - Scope needed: "account:stashes"
-   - Endpoint: GET /api/stash/{league}
-   - Requires user to authenticate once via browser OAuth flow
-   - Token stored in state/config.json (never committed)
-   - Would auto-read currency counts and eliminate manual spinbox entry
+   **To register**: Email oauth@grindinggear.com for a public OAuth client registration.
+   **Required disclaimer in-app**: "This product isn't affiliated with or endorsed
+   by Grinding Gear Games in any way."
 
-3. **Map overlay data source** — poedb.tw? Static JSON? Need to decide format and
+   **Implementation details**:
+   - OAuth 2.1 flow; desktop tools register as public clients (no client_secret)
+   - Scope needed: `account:stashes`
+   - Endpoint: GET /api/stash/{league} (list tabs) + GET /api/stash/{league}/{stash_id}
+   - User authenticates once in-browser; token stored in state/ (never committed)
+   - Access token refresh handled via standard OAuth refresh flow
+   - Official docs: https://www.pathofexile.com/developer/docs/authorization
+
+   **TOS verdict**: Fully compliant when using OAuth. POESESSID = do NOT use.
+   Known compliant tools using stash API: Exilence Next, Sidekick, poe-ninja, trade sites.
+
+2. **Map overlay data source** — poedb.tw? Static JSON? Need to decide format and
    update strategy for map mods.
-4. **Character API** — Could auto-import allocated passive nodes for tree highlighting.
-   Requires OAuth. Endpoint undocumented but community-known. TOS gray area.
-5. **PoE 2 support** — Config has `poe_version: poe1/poe2` field but no conditional logic
+3. **Character API** — Could auto-import allocated passive nodes for tree highlighting.
+   Uses undocumented but community-known endpoint. Requires OAuth (same flow as stash).
+   TOS status: likely compliant if read-only and non-competitive, but needs confirmation
+   before implementing. Could reuse the OAuth infrastructure built for stash access.
+4. **PoE 2 support** — Config has `poe_version: poe1/poe2` field but no conditional logic
    exists. Passive tree data format differs. Future concern.

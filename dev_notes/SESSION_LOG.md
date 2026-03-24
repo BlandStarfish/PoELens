@@ -858,10 +858,13 @@ ui/widgets/currency_panel.py
 
 ## SUGGESTIONS FOR NEXT SESSION
 
-1. **TOS research -- stash tab API** (MEDIUM, DEFERRED 5 sessions): Research ran
-   this session (web agent). See TECHNICAL.md for findings. If OAuth-based stash read
-   is TOS-approved, implement OAuth flow + stash tab read. This eliminates the largest
-   remaining UX friction in the currency tracker.
+1. **Stash tab API via OAuth** (MEDIUM, NOW UNBLOCKED): TOS research completed this
+   session. Verdict: OAuth is fully TOS-compliant; POESESSID is technically prohibited
+   (credential-sharing clause) and was involved in a 2020 wave of account locks.
+   Register by emailing oauth@grindinggear.com. Scope: "account:stashes". Endpoint:
+   GET /api/stash/{league}. Full details in TECHNICAL.md. This is the single highest-
+   impact remaining feature — it eliminates manual spinbox entry from the currency
+   tracker. Implement OAuth flow next session.
 
 2. **Map overlay -- atlas map zones** (LOW): Campaign zones complete. Needs community
    data source for endgame maps. Research poedb.tw or GGG data exports. Deferred until
