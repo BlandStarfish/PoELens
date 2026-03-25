@@ -440,3 +440,13 @@ accepts a float and matches the callback signature exactly. Opacity is applied i
 all other settings (path, league, hotkeys) take effect on next restart.
 Hotkeys partial save: empty fields are excluded from saved dict. config.load() merges with DEFAULTS,
 so clearing a hotkey field resets it to default rather than disabling it entirely.
+
+### chaos_recipe.py: unidentified item tracking (Session 14)
+count_sets() now tracks "unid" tier per slot alongside chaos/regal.
+item.get("identified", True) — absent field or True = identified; False = unidentified.
+Defaults to True (identified) when absent, which is the safe assumption.
+"unid_sets" = _complete("unid"): minimum across all slots of unid count
+(treating rings as unid//2). Requires all slots in the set to have ≥1 unid item.
+A single identified item in any slot drops unid_sets to 0 for that potential set.
+chaos_panel.py: "Unid" column added (5th column, teal color). Summary shows
+"N fully-unid set(s) → 2× yield" when unid_sets > 0.

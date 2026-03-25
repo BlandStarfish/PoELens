@@ -75,13 +75,14 @@ def count_sets(items: list[dict]) -> dict:
         "chaos_sets":  int — complete sets using ilvl 60-74 items only
         "regal_sets":  int — complete sets using ilvl 75+ items only
         "any_sets":    int — complete sets using any qualifying items (ilvl 60+)
-        "counts":      {slot: {"chaos": n, "regal": n, "any": n}}
+        "unid_sets":   int — complete sets where all items are unidentified (2x yield)
+        "counts":      {slot: {"chaos": n, "regal": n, "any": n, "unid": n}}
         "missing":     [slot, ...] — slots blocking the next complete any_set
       }
     """
-    # Per-slot counts by tier
+    # Per-slot counts by tier; "unid" tracks unidentified rares (any ilvl 60+)
     by_slot: dict[str, dict[str, int]] = {
-        s: {"chaos": 0, "regal": 0}
+        s: {"chaos": 0, "regal": 0, "unid": 0}
         for s in ("helmet", "chest", "gloves", "boots", "belt",
                   "ring", "amulet", "weapon_2h", "weapon_1h", "offhand")
     }
@@ -97,14 +98,15 @@ def count_sets(items: list[dict]) -> dict:
             continue
         tier = "regal" if ilvl >= _REGAL_MIN else "chaos"
         by_slot[slot][tier] += 1
+        if not item.get("identified", True):
+            by_slot[slot]["unid"] += 1
 
     def _weapon_slots(tier: str) -> int:
         """Weapon slots available: each 2H fills one slot; each 1H+offhand pair fills one slot."""
         two_h     = by_slot["weapon_2h"][tier]
         one_h     = by_slot["weapon_1h"][tier]
         off_hands = by_slot["offhand"][tier]
-        paired    = min(one_h, off_hands)
-        return two_h + paired
+        return two_h + min(one_h, off_hands)
 
     def _complete(tier: str) -> int:
         return min(
@@ -125,10 +127,7 @@ def count_sets(items: list[dict]) -> dict:
     }
 
     def _weapon_slots_any() -> int:
-        two_h  = any_slot["weapon_2h"]
-        one_h  = any_slot["weapon_1h"]
-        off_h  = any_slot["offhand"]
-        return two_h + min(one_h, off_h)
+        return any_slot["weapon_2h"] + min(any_slot["weapon_1h"], any_slot["offhand"])
 
     any_sets = min(
         any_slot["helmet"],
@@ -141,6 +140,9 @@ def count_sets(items: list[dict]) -> dict:
         _weapon_slots_any(),
     )
 
+    # "unid" — only items where identified == False (all slots must be unid for 2x yield)
+    unid_sets = _complete("unid")
+
     # Build user-facing counts (collapse weapon_1h/2h/offhand → "weapon")
     counts: dict[str, dict[str, int]] = {}
     for slot in SLOTS:
@@ -149,12 +151,14 @@ def count_sets(items: list[dict]) -> dict:
                 "chaos": _weapon_slots("chaos"),
                 "regal": _weapon_slots("regal"),
                 "any":   _weapon_slots_any(),
+                "unid":  _weapon_slots("unid"),
             }
         else:
             counts[slot] = {
                 "chaos": by_slot[slot]["chaos"],
                 "regal": by_slot[slot]["regal"],
                 "any":   any_slot[slot],
+                "unid":  by_slot[slot]["unid"],
             }
 
     # Slots missing for the NEXT complete any_set
@@ -172,6 +176,7 @@ def count_sets(items: list[dict]) -> dict:
         "chaos_sets": _complete("chaos"),
         "regal_sets": _complete("regal"),
         "any_sets":   any_sets,
+        "unid_sets":  unid_sets,
         "counts":     counts,
         "missing":    missing,
     }

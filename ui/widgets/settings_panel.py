@@ -77,7 +77,7 @@ class SettingsPanel(QWidget):
 
         self._league = QLineEdit(self._config.get("league", ""))
         self._league.setStyleSheet(_field_style())
-        self._league.setPlaceholderText("e.g. Mercenaries")
+        self._league.setPlaceholderText("e.g. Standard")
         game_form.addRow(_lbl("League:"), self._league)
 
         layout.addWidget(game_group)

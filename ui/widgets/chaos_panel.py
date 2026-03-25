@@ -20,7 +20,6 @@ TEXT   = "#d4c5a9"
 DIM    = "#8a7a65"
 GREEN  = "#5cba6e"
 RED    = "#e05050"
-GOLD   = "#e2b96f"
 TEAL   = "#4ecdc4"
 
 # Slot display names for UI
@@ -109,9 +108,11 @@ class ChaosPanel(QWidget):
         grid.setContentsMargins(8, 6, 8, 6)
 
         # Header row
-        for col, header in enumerate(("Slot", "60-74", "75+", "Any")):
+        for col, header in enumerate(("Slot", "60-74", "75+", "Any", "Unid")):
             lbl = QLabel(header)
-            lbl.setStyleSheet(f"color: {DIM}; font-size: 10px; font-weight: bold;")
+            style = f"color: {TEAL}; font-size: 10px; font-weight: bold;" if header == "Unid" \
+                    else f"color: {DIM}; font-size: 10px; font-weight: bold;"
+            lbl.setStyleSheet(style)
             lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
             grid.addWidget(lbl, 0, col)
 
@@ -120,7 +121,7 @@ class ChaosPanel(QWidget):
             name_lbl.setStyleSheet(f"color: {TEXT}; font-size: 11px;")
             grid.addWidget(name_lbl, row, 0)
 
-            for col, key in enumerate(("chaos", "regal", "any"), start=1):
+            for col, key in enumerate(("chaos", "regal", "any", "unid"), start=1):
                 val_lbl = QLabel("—")
                 val_lbl.setStyleSheet(f"color: {DIM}; font-size: 11px;")
                 val_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -184,27 +185,38 @@ class ChaosPanel(QWidget):
         counts = result.get("counts", {})
         for slot in SLOTS:
             slot_data = counts.get(slot, {})
-            for key in ("chaos", "regal", "any"):
+            for key in ("chaos", "regal", "any", "unid"):
                 lbl = self._slot_labels.get(f"{slot}_{key}")
                 if lbl:
                     val = slot_data.get(key, 0)
                     lbl.setText(str(val))
-                    lbl.setStyleSheet(
-                        f"color: {GREEN if val > 0 else DIM}; font-size: 11px;"
-                    )
+                    if key == "unid":
+                        lbl.setStyleSheet(
+                            f"color: {TEAL if val > 0 else DIM}; font-size: 11px;"
+                        )
+                    else:
+                        lbl.setStyleSheet(
+                            f"color: {GREEN if val > 0 else DIM}; font-size: 11px;"
+                        )
 
-        # Missing slots for next set
-        missing = result.get("missing", [])
+        # Missing slots for next set + unid summary
+        missing   = result.get("missing", [])
+        unid_sets = result.get("unid_sets", 0)
+
+        parts = []
         if missing and any_s == 0:
             names = ", ".join(_SLOT_LABELS.get(s, s) for s in missing)
-            self._missing_label.setText(f"Missing for first set: {names}")
+            parts.append(f"Missing for first set: {names}")
         elif missing:
             names = ", ".join(_SLOT_LABELS.get(s, s) for s in missing)
-            self._missing_label.setText(
-                f"{any_s} complete set(s)  •  Missing for next: {names}"
-            )
+            parts.append(f"{any_s} complete set(s)  •  Missing for next: {names}")
         else:
-            self._missing_label.setText(f"{any_s} complete set(s) ready")
+            parts.append(f"{any_s} complete set(s) ready")
+
+        if unid_sets > 0:
+            parts.append(f"{unid_sets} fully-unid set(s) → 2× yield")
+
+        self._missing_label.setText("  |  ".join(parts))
 
         self._status.setStyleSheet(f"color: {GREEN}; font-size: 10px;")
         self._status.setText("Scan complete.")
