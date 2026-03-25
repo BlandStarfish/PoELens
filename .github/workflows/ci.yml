@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  push:
+    branches: [master, "feature/**"]
+  pull_request:
+    branches: [master]
+
+jobs:
+  # ── Job 1: Installer smoke tests ────────────────────────────────────────────
+  # Runs on Linux (fast, cheap).  No display needed — tkinter is mocked.
+  # Tests: zip structure, syntax, constants, password gate, uninstaller content,
+  #        analytics error-swallowing.
+  smoke-tests:
+    name: Installer Smoke Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install test dependencies
+        run: pip install pytest PyQt6
+
+      - name: Run smoke tests
+        run: pytest tests/test_installer_smoke.py -v --tb=short
+
+  # ── Job 2: Overlay z-order integration test ──────────────────────────────────
+  # Runs on Windows (required for Win32 ctypes + Qt GUI rendering).
+  # Launches a dummy fullscreen game window and the overlay stub,
+  # then checks WS_EX_TOPMOST via Win32 API and takes a screenshot.
+  # The screenshot is uploaded as an artifact — inspect it after each run
+  # to visually verify the overlay is rendering correctly over the game sim.
+  overlay-zorder:
+    name: Overlay Z-Order Test (Windows)
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install app dependencies
+        run: pip install PyQt6 mss Pillow pywin32
+
+      - name: Install test dependencies
+        run: pip install pytest
+
+      - name: Run overlay z-order tests
+        run: pytest tests/test_overlay_zorder.py -v --tb=short
+
+      - name: Upload screenshot artifact
+        # Always upload — even on test failure — so we can inspect what was on screen
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: overlay-zorder-screenshot
+          path: tests/screenshots/
+          if-no-files-found: warn
+          retention-days: 30

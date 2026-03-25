@@ -1,0 +1,2 @@
+# Development and test dependencies — not required for running PoELens itself
+pytest>=7.4
