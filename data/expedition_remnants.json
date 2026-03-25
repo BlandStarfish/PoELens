@@ -1,0 +1,229 @@
+{
+  "_comment": "PoE Expedition remnant keyword reference. Organized by effect category.",
+  "remnants": [
+    {
+      "category": "Monster Buffs",
+      "keyword": "Runic Monsters are Hexproof",
+      "effect": "Monsters cannot be cursed. All curse-based damage and utility (Vulnerability, Temporal Chains, etc.) are completely negated.",
+      "danger": "high",
+      "notes": "Hard counter to curse builds. Skip unless you deal non-curse damage."
+    },
+    {
+      "category": "Monster Buffs",
+      "keyword": "All Runic Monsters deal 50% more Damage",
+      "effect": "All damage from Expedition monsters is multiplied by 1.5×. Affects all damage types.",
+      "danger": "high",
+      "notes": "One-shots at moderate character investment. Avoid unless very tanky."
+    },
+    {
+      "category": "Monster Buffs",
+      "keyword": "All Runic Monsters have 50% more Maximum Life",
+      "effect": "Monsters have 1.5× their normal life pool. Significantly increases kill time.",
+      "danger": "medium",
+      "notes": "Annoying but rarely lethal. Combined with Regeneration becomes a real problem."
+    },
+    {
+      "category": "Monster Buffs",
+      "keyword": "All Runic Monsters Regenerate 5% of Life per second",
+      "effect": "Monsters heal 5% of their max life every second. Sustained DPS required to out-damage healing.",
+      "danger": "high",
+      "notes": "Paired with increased life this can make monsters near-unkillable. Avoid if DPS is limited."
+    },
+    {
+      "category": "Monster Buffs",
+      "keyword": "All Runic Monsters deal 30% more Physical Damage",
+      "effect": "Physical damage from monsters is 1.3× normal. Increases bleed/stun risk.",
+      "danger": "medium",
+      "notes": "Problematic against squishy builds. Physical reduction and armour help."
+    },
+    {
+      "category": "Monster Buffs",
+      "keyword": "All Runic Monsters deal 25% more Elemental Damage",
+      "effect": "All elemental damage (fire, cold, lightning) is 1.25× normal.",
+      "danger": "medium",
+      "notes": "Applies to all three elements at once. Elemental resistance capping is essential."
+    },
+    {
+      "category": "Monster Buffs",
+      "keyword": "All Runic Monsters have 30% increased Attack Speed",
+      "effect": "Monsters attack 30% faster. Greatly increases incoming hit frequency.",
+      "danger": "high",
+      "notes": "Especially dangerous against melee players. Combined with damage modifiers, can be lethal."
+    },
+    {
+      "category": "Monster Buffs",
+      "keyword": "All Runic Monsters have 30% increased Cast Speed",
+      "effect": "Spellcasting Expedition monsters cast 30% faster. More spell projectiles per second.",
+      "danger": "medium",
+      "notes": "Primarily impacts projectile-spewing caster monsters."
+    },
+    {
+      "category": "Monster Buffs",
+      "keyword": "All Runic Monsters have Onslaught",
+      "effect": "Monsters gain the Onslaught buff: 20% increased attack/cast speed and 20% increased movement speed.",
+      "danger": "high",
+      "notes": "Effectively stacks on top of other speed modifiers. Combined with damage mods, very lethal."
+    },
+    {
+      "category": "Monster Buffs",
+      "keyword": "All Runic Monsters deal 30% more Chaos Damage",
+      "effect": "Chaos damage is 1.3× normal. Ignores energy shield.",
+      "danger": "high",
+      "notes": "Bypasses ES entirely. Full chaos resistance capping (75%) is mandatory here."
+    },
+    {
+      "category": "Monster Buffs",
+      "keyword": "Runic Monsters cannot be Slowed",
+      "effect": "Chill, temporal chains, and any slow effects do not reduce monster speed.",
+      "danger": "medium",
+      "notes": "Negates cold-based kiting strategies. Movement speed matters more."
+    },
+    {
+      "category": "Monster Buffs",
+      "keyword": "Runic Monsters have Elemental Ailment Immunity",
+      "effect": "Monsters cannot be Ignited, Chilled, Frozen, or Shocked.",
+      "danger": "medium",
+      "notes": "Disables ailment-scaling builds (Ignite, Freeze). DPS from hits unaffected."
+    },
+    {
+      "category": "Monster Buffs",
+      "keyword": "All Runic Monsters are Enraged",
+      "effect": "Monsters gain the Enraged buff, dealing significantly more damage.",
+      "danger": "high",
+      "notes": "One of the most dangerous generic damage modifiers. Hard to offset without high EHP."
+    },
+    {
+      "category": "Monster Buffs",
+      "keyword": "Runic Monsters fully Regenerate Life if not hit recently",
+      "effect": "Monsters fully heal in a brief window between hits. Sustained DPS is mandatory.",
+      "danger": "high",
+      "notes": "Demands continuous damage output. DoT builds handle this naturally; hit builds need high hit rate."
+    },
+    {
+      "category": "Monster Buffs",
+      "keyword": "Runic Monsters Steal Power, Frenzy, and Endurance Charges on Hit",
+      "effect": "Each monster hit removes a charge from the player and adds it to the monster.",
+      "danger": "high",
+      "notes": "Build-breaking against charge-dependent characters. Avoid if your build relies on endurance, frenzy, or power charges."
+    },
+    {
+      "category": "Monster Buffs",
+      "keyword": "Runic Monsters are Possessed",
+      "effect": "Monsters are inhabited by Tormented Spirits, gaining extra modifiers and emitting auras.",
+      "danger": "medium",
+      "notes": "Unpredictable — spirit modifiers vary. Generally increases difficulty."
+    },
+    {
+      "category": "Loot Bonuses",
+      "keyword": "Area contains additional Runic Monster Markers",
+      "effect": "More Expedition monster packs spawn in the detonation area. More packs = more loot.",
+      "danger": "none",
+      "notes": "Always include. More markers is almost always better for loot density."
+    },
+    {
+      "category": "Loot Bonuses",
+      "keyword": "Remnant has 25% increased Item Quantity",
+      "effect": "Items dropped from Runic Monsters in range are 25% more numerous.",
+      "danger": "none",
+      "notes": "Standard loot multiplier. Always worth including."
+    },
+    {
+      "category": "Loot Bonuses",
+      "keyword": "Runic Monsters drop additional Expedition Artifacts",
+      "effect": "Each Runic Monster drop has a chance to include extra Expedition artifacts (Astragali, Exotic Coinage, etc.).",
+      "danger": "none",
+      "notes": "Expedition artifacts are the primary Expedition currency. Strong include."
+    },
+    {
+      "category": "Loot Bonuses",
+      "keyword": "Runic Monsters drop additional Expedition Logbooks",
+      "effect": "Increases the chance and quantity of Expedition Logbooks dropped by Runic Monsters.",
+      "danger": "none",
+      "notes": "Logbooks are valuable — always include if you want to run more logbooks."
+    },
+    {
+      "category": "Loot Bonuses",
+      "keyword": "Runic Monsters drop additional Currency Items",
+      "effect": "Runic Monsters have a chance to drop extra currency items with each kill.",
+      "danger": "none",
+      "notes": "Reliable chaos/exalt source. One of the best Expedition modifiers."
+    },
+    {
+      "category": "Loot Bonuses",
+      "keyword": "Runic Monsters drop additional Rare or Unique Items",
+      "effect": "Runic Monster kills include extra rare or unique item drops.",
+      "danger": "none",
+      "notes": "High value for loot quantity builds. Excellent modifier."
+    },
+    {
+      "category": "Loot Bonuses",
+      "keyword": "Expedition contains additional Runic Treasure Chests",
+      "effect": "Extra Runic Treasure Chests (requiring a specific key to open) appear in the area.",
+      "danger": "none",
+      "notes": "Value depends on which keys you have. Generally good if you have chest keys stockpiled."
+    },
+    {
+      "category": "Loot Bonuses",
+      "keyword": "Runic Monsters have 15% increased Item Rarity",
+      "effect": "Items dropped by Runic Monsters have 15% higher rarity bonus.",
+      "danger": "none",
+      "notes": "Good but weaker than IIQ. Include if available."
+    },
+    {
+      "category": "Area Modifiers",
+      "keyword": "Area contains 25% increased number of Expedition Remnants",
+      "effect": "More Remnant runic stones appear in the detonation area, giving more modifier choices.",
+      "danger": "none",
+      "notes": "More remnants = more control over encounter difficulty and loot. Always good."
+    },
+    {
+      "category": "Area Modifiers",
+      "keyword": "Runic Monsters have 75% chance to drop a Rare item",
+      "effect": "Greatly increases the proportion of Runic Monster drops that are rare (yellow) items.",
+      "danger": "none",
+      "notes": "Excellent for self-found players. Less impactful if you're filtering for high-value items only."
+    },
+    {
+      "category": "Area Modifiers",
+      "keyword": "Runic Monsters are Resurrected on Death",
+      "effect": "Runic Monsters revive once after being killed. Must be defeated twice.",
+      "danger": "medium",
+      "notes": "Doubles effective monster life in practice. Slow if you don't have rapid burst damage."
+    },
+    {
+      "category": "Area Modifiers",
+      "keyword": "Players are cursed with Temporal Chains",
+      "effect": "Players' action speed is slowed. Affects movement, attack, cast, and cooldown speeds.",
+      "danger": "high",
+      "notes": "One of the hardest debuffs — slows everything you do. Avoid unless you have Temporal Chains immunity."
+    },
+    {
+      "category": "Area Modifiers",
+      "keyword": "Players deal 20% less damage",
+      "effect": "All player damage is reduced by 20%. Slows kills and extends exposure to danger.",
+      "danger": "medium",
+      "notes": "Stacks poorly with other damage-reduction modifiers. Skip if already taking damage nerfs."
+    },
+    {
+      "category": "Area Modifiers",
+      "keyword": "Players have 30% reduced Effect of Flasks",
+      "effect": "Life, mana, and utility flasks are 30% less effective during this Expedition.",
+      "danger": "medium",
+      "notes": "Can be lethal for flask-reliant builds during tanky monster combos. Less impactful for ES builds."
+    },
+    {
+      "category": "Logbook Specific",
+      "keyword": "Area contains an additional Runic Boss",
+      "effect": "An additional named Expedition boss spawns in the detonation area.",
+      "danger": "medium",
+      "notes": "Bosses drop better loot but are significantly more dangerous than regular Runic Monsters."
+    },
+    {
+      "category": "Logbook Specific",
+      "keyword": "Expedition has 50% increased Monster Pack Size",
+      "effect": "Each Runic Monster pack is 50% larger in terms of individual monsters per pack.",
+      "danger": "medium",
+      "notes": "More monsters per pack = more loot but also more incoming damage. Worth it for most builds."
+    }
+  ]
+}

@@ -35,7 +35,8 @@ class PoeNinja:
     def __init__(self, league: str, ttl: int = 300):
         self._league = league
         self._ttl = ttl
-        self._cache: dict[str, tuple[float, dict]] = {}  # category -> (timestamp, prices)
+        self._cache: dict[str, tuple[float, dict]] = {}      # category -> (timestamp, prices)
+        self._raw_cache: dict[str, tuple[float, list]] = {}  # category -> (timestamp, raw lines)
 
     def get_price(self, item_name: str, category: str = "Currency") -> Optional[float]:
         """
@@ -71,6 +72,7 @@ class PoeNinja:
 
         prices = {}
         if endpoint == "currencyoverview":
+            self._raw_cache[category] = (time.time(), data.get("lines", []))
             for entry in data.get("lines", []):
                 prices[entry["currencyTypeName"]] = entry.get("chaosEquivalent", 0)
         else:
@@ -107,6 +109,41 @@ class PoeNinja:
                 }
         return result
 
+    def get_currency_flip_data(self) -> list[dict]:
+        """
+        Returns currency exchange data for flip calculation.
+        Each entry: {name, buy, sell, listing_count}
+
+        buy  = chaos paid to acquire 1 unit (receive.value)
+        sell = chaos received when selling 1 unit (pay.value)
+
+        Only returns entries where both buy and sell rates exist.
+        Data is sourced from the currencyoverview endpoint (same fetch as get_price).
+        """
+        # Populate raw cache if needed
+        self._get_category("Currency")
+        cached = self._raw_cache.get("Currency")
+        if not cached:
+            return []
+        _, lines = cached
+        result = []
+        for entry in lines:
+            name    = entry.get("currencyTypeName", "")
+            receive = entry.get("receive") or {}
+            pay     = entry.get("pay") or {}
+            buy     = receive.get("value")
+            sell    = pay.get("value")
+            if not name or buy is None or sell is None or buy <= 0:
+                continue
+            result.append({
+                "name":          name,
+                "buy":           float(buy),
+                "sell":          float(sell),
+                "listing_count": receive.get("listing_count", 0),
+            })
+        return result
+
     def set_league(self, league: str):
         self._league = league
         self._cache.clear()
+        self._raw_cache.clear()

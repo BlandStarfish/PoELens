@@ -31,6 +31,9 @@ from ui.widgets.bestiary_panel import BestiaryPanel
 from ui.widgets.heist_panel import HeistPanel
 from ui.widgets.gem_panel import GemPanel
 from ui.widgets.map_stash_panel import MapStashPanel
+from ui.widgets.expedition_panel import ExpeditionPanel
+from ui.widgets.currency_flip_panel import CurrencyFlipPanel
+from ui.widgets.lab_panel import LabPanel
 
 
 DARK_BG = "#1a1a2e"
@@ -50,11 +53,13 @@ _CHAR_QUESTS = 0
 _CHAR_TREE   = 1
 _CHAR_XP     = 2
 _CHAR_NOTES  = 3
+_CHAR_LAB    = 4
 
 _LOOT_PRICE    = 0
 _LOOT_CURRENCY = 1
 _LOOT_RECIPE   = 2
 _LOOT_DIVS     = 3
+_LOOT_FLIP     = 4
 
 _END_MAP       = 0
 _END_ATLAS     = 1
@@ -63,8 +68,9 @@ _END_HEIST     = 3
 _END_GEMS      = 4
 _END_MAP_STASH = 5
 
-_INFO_BESTIARY = 0
-_INFO_SETTINGS = 1
+_INFO_BESTIARY    = 0
+_INFO_EXPEDITION  = 1
+_INFO_SETTINGS    = 2
 
 
 class HUD(QMainWindow):
@@ -72,6 +78,7 @@ class HUD(QMainWindow):
                  map_overlay, xp_tracker, chaos_recipe, config,
                  div_tracker=None, atlas_tracker=None,
                  heist_planner=None, gem_planner=None, map_scanner=None,
+                 lab_tracker=None, currency_flip=None,
                  oauth_manager=None, stash_api=None, character_api=None):
         super().__init__()
         self._state = state
@@ -83,7 +90,8 @@ class HUD(QMainWindow):
         self._setup_window()
         self._build_ui(quest_tracker, price_checker, currency_tracker, crafting,
                        map_overlay, xp_tracker, chaos_recipe,
-                       div_tracker, atlas_tracker, heist_planner, gem_planner, map_scanner)
+                       div_tracker, atlas_tracker, heist_planner, gem_planner, map_scanner,
+                       lab_tracker, currency_flip)
 
         # Wire price checker results to price panel
         price_checker.on_result(self._price_panel.show_result)
@@ -117,7 +125,8 @@ class HUD(QMainWindow):
     def _build_ui(self, quest_tracker, price_checker, currency_tracker, crafting,
                   map_overlay, xp_tracker, chaos_recipe,
                   div_tracker=None, atlas_tracker=None,
-                  heist_planner=None, gem_planner=None, map_scanner=None):
+                  heist_planner=None, gem_planner=None, map_scanner=None,
+                  lab_tracker=None, currency_flip=None):
         root = QWidget()
         root.setStyleSheet(f"""
             QWidget {{ background-color: {DARK_BG}; color: {TEXT}; font-family: 'Segoe UI'; font-size: 12px; border-radius: 8px; }}
@@ -205,6 +214,9 @@ class HUD(QMainWindow):
             stash_api=self._stash_api,
             league=league,
         ) if map_scanner else QWidget()
+        self._expedition_panel   = ExpeditionPanel()
+        self._currency_flip_panel = CurrencyFlipPanel(currency_flip) if currency_flip else QWidget()
+        self._lab_panel = LabPanel(lab_tracker) if lab_tracker else QWidget()
 
         # ── Outer tab widget (4 categories, evenly spaced) ─────────────
         outer_tabs = QTabWidget()
@@ -222,23 +234,25 @@ class HUD(QMainWindow):
             t.tabBar().setExpanding(False)
             return t
 
-        # Character group: Quests · Tree · XP · Notes
+        # Character group: Quests · Tree · XP · Notes · Lab
         char_tabs = _make_inner()
         char_tabs.addTab(self._quest_panel, "Quests")    # _CHAR_QUESTS = 0
         char_tabs.addTab(self._tree_panel,  "Tree")      # _CHAR_TREE   = 1
         char_tabs.addTab(self._xp_panel,    "XP")        # _CHAR_XP     = 2
         char_tabs.addTab(self._notes_panel, "Notes")     # _CHAR_NOTES  = 3
+        char_tabs.addTab(self._lab_panel,   "Lab")       # _CHAR_LAB    = 4
         self._inner_tabs.append(char_tabs)
         outer_tabs.addTab(char_tabs, "Character")        # _GRP_CHARACTER = 0
 
-        # Loot group: Price · Currency · Recipe · Divs
+        # Loot group: Price · Currency · Recipe · Divs · Flip
         loot_tabs = _make_inner()
-        loot_tabs.addTab(self._price_panel,    "Price")    # _LOOT_PRICE    = 0
-        loot_tabs.addTab(self._currency_panel, "Currency") # _LOOT_CURRENCY = 1
-        loot_tabs.addTab(self._chaos_panel,    "Recipe")   # _LOOT_RECIPE   = 2
-        loot_tabs.addTab(self._div_panel,      "Divs")     # _LOOT_DIVS     = 3
+        loot_tabs.addTab(self._price_panel,         "Price")    # _LOOT_PRICE    = 0
+        loot_tabs.addTab(self._currency_panel,      "Currency") # _LOOT_CURRENCY = 1
+        loot_tabs.addTab(self._chaos_panel,         "Recipe")   # _LOOT_RECIPE   = 2
+        loot_tabs.addTab(self._div_panel,           "Divs")     # _LOOT_DIVS     = 3
+        loot_tabs.addTab(self._currency_flip_panel, "Flip")     # _LOOT_FLIP     = 4
         self._inner_tabs.append(loot_tabs)
-        outer_tabs.addTab(loot_tabs, "Loot")               # _GRP_LOOT      = 1
+        outer_tabs.addTab(loot_tabs, "Loot")                    # _GRP_LOOT      = 1
 
         # Endgame group: Map · Atlas · Crafting · Heist · Gems
         end_tabs = _make_inner()
@@ -251,12 +265,13 @@ class HUD(QMainWindow):
         self._inner_tabs.append(end_tabs)
         outer_tabs.addTab(end_tabs, "Endgame")             # _GRP_ENDGAME   = 2
 
-        # Info group: Bestiary · Settings
+        # Info group: Bestiary · Expedition · Settings
         info_tabs = _make_inner()
-        info_tabs.addTab(self._bestiary_panel, "Bestiary") # _INFO_BESTIARY = 0
-        info_tabs.addTab(self._settings_panel, "Settings") # _INFO_SETTINGS = 1
+        info_tabs.addTab(self._bestiary_panel,   "Bestiary")   # _INFO_BESTIARY   = 0
+        info_tabs.addTab(self._expedition_panel, "Expedition") # _INFO_EXPEDITION = 1
+        info_tabs.addTab(self._settings_panel,   "Settings")   # _INFO_SETTINGS   = 2
         self._inner_tabs.append(info_tabs)
-        outer_tabs.addTab(info_tabs, "Info")               # _GRP_INFO      = 3
+        outer_tabs.addTab(info_tabs, "Info")                   # _GRP_INFO        = 3
 
         # Restore last active tabs from config (saved on tab-change)
         outer_tabs.setCurrentIndex(self._config.get("last_group", 0))
