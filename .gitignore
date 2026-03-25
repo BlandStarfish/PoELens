@@ -15,8 +15,10 @@ state/version.json
 state/crash_log.jsonl
 assets/minimap_cache/
 *.log
-# password file — NEVER commit this
+# password file and build tools — developer-only, never commit
 installer_password.json
+set_password.py
+inject_password.py
 
 # OAuth tokens — contains access/refresh tokens, never commit
 state/oauth_tokens.json
