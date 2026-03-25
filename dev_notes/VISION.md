@@ -89,6 +89,55 @@ The overlay is organized as tabs (one per module) inside a frameless window, pos
 - Boss strategies, league goals, build reminders, map target lists
 - No external dependencies, no API calls
 
+---
+
+## Expansion Roadmap (Auto-Approved 2026-03-25)
+
+These features were auto-approved by the development agent after all original roadmap items reached 9+/10 completion. Implement in priority order listed.
+
+### E1. Divination Card Tracker (HIGH)
+- Scan stash tabs via OAuth Stash API for divination card stacks
+- For each card, show: current stack count vs full stack size, completion %, and the reward item
+- Sort by completion % — shows which full stacks are closest to completion
+- Group: near-complete (≥ 75%), in-progress, and single cards
+- Uses existing stash_api.py and OAuth infrastructure — minimal new code
+- Data source: static data/div_cards.json (full stack sizes from RePoE or manual curation)
+- **Rationale:** Divination farming is a core PoE endgame activity; completing card sets is satisfying and this makes it trackable without leaving the overlay
+
+### E2. Atlas Map Completion Tracker (HIGH)
+- Track which atlas map zones have been entered this session via Client.txt zone_change events
+- Cross-reference against zones.json atlas entries to identify uncompleted maps
+- Display: completion count, percentage of total atlas, and list of unvisited maps by tier
+- Persist map completion flags across sessions in state/atlas_progress.json
+- No new APIs required — purely Client.txt + existing zones.json
+- **Rationale:** Natural extension of the map overlay; "which maps haven't I done yet?" is a common player question, and all data is already in the codebase
+
+### E3. Bestiary Recipe Browser (MEDIUM)
+- Static reference tool: browse Bestiary crafting recipes by target modifier or beast name
+- Show: beast name, beast type (Einhar faction), resulting modifier, recipe category
+- Search/filter by modifier name or beast type
+- Data source: static data/bestiary_recipes.json (curated from community sources, ~100 entries)
+- No API calls — purely static data, zero latency
+- **Rationale:** Bestiary is permanently in PoE; players frequently look up "which beast gives this mod" — having it in the overlay is more convenient than alt-tabbing to the wiki
+
+### E4. Heist Blueprint Organizer (MEDIUM)
+- Scan stash tabs for Heist Contracts and Blueprints via stash API
+- Group by rogue job type (Lockpicking, Agility, etc.) and show coverage
+- For Blueprints: show which wings are unlocked, recommended rogues, target reward types
+- Highlight high-value reward types (Replica Uniques, Trinkets, Currency)
+- Uses existing OAuth + stash_api.py; adds minimal parsing logic for Heist item mods
+- **Rationale:** Heist planning is an inventory management challenge; showing blueprint status in the overlay reduces the need to manually inspect each blueprint
+
+### E5. Gem Level Planner (LOW)
+- Read equipped gem data from the Character API (OAuth account:characters scope)
+- Display: gem name, current level, current quality, XP to next level
+- Highlight gems worth selling (high-level Awakened, 20/20 gems)
+- Show total gem XP earned this session if polling is active
+- Requires parsing the `items` field from character API response (already uses account:characters)
+- **Rationale:** Leveling valuable gems in off-hand slots is a passive income source; a quick summary surfaces gems that are ready to sell without opening the character sheet
+
+---
+
 ### 6. Map Overlay ✅ IMPLEMENTED (v3)
 - Zone identity card: name (gold, prominent), act/tier, area level, waypoint status, boss info
 - Zone-specific notes for mechanically significant zones (Kitava resistance warnings, key quest hints, Pinnacle Guardian drops)

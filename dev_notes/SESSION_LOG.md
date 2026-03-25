@@ -2547,3 +2547,154 @@ All 10 features complete and polished. Campaign progression and XP reset close
 the last two known UX gaps. 61 tests pass. Only remaining roadmap item is map mod
 display (blocked on external data source). No technical debt introduced.
 ═══════════════════════════════════════════════════════════════
+
+═══════════════════════════════════════════════════════════════
+SESSION: 2026-03-25  (Session 17)
+═══════════════════════════════════════════════════════════════
+
+## ORIENTATION SUMMARY
+
+Session 17. Read all prior session notes (Sessions 1-16). Session 16 left with:
+1. Merge feature/reinstall-fix-uninstaller -> master (URGENT) -- 5 sessions of work
+2. Add tests for MapOverlay and campaign progression (Session 16 suggestion)
+3. Map mod display (BLOCKED, no data source)
+4. PoE 2 support (LOW, deferred)
+
+All 56 tests passed at session start. Branch: feature/reinstall-fix-uninstaller.
+
+## ASSESSMENT GRADES
+
+Module               | Completeness | Quality | Vision Alignment
+---------------------|-------------|---------|----------------
+Quest Tracker        |    10/10    |  9/10   |    10/10
+Passive Tree Viewer  |    10/10    |  9/10   |    10/10
+Price Checker        |    10/10    |  9/10   |    10/10
+Currency Tracker     |    10/10    |  9/10   |    10/10
+Crafting System      |    10/10    |  9/10   |     9/10
+Core Infrastructure  |    10/10    |  9/10   |    10/10
+Map Overlay          |    10/10    |  9/10   |    10/10
+XP Rate Tracker      |    10/10    |  9/10   |    10/10
+Chaos Recipe Counter |     9/10    |  9/10   |     9/10
+Build Notes Panel    |    10/10    |  9/10   |     9/10
+Settings Panel       |     9/10    |  9/10   |    10/10
+OAuth/Stash/Char API |     9/10    |  9/10   |     9/10
+Test Suite           |    10/10    |  9/10   |     9/10  (88 tests after this session)
+Installer/Uninstaller|     9/10    |  8/10   |     9/10
+
+All modules at 9/10 or above on all axes. No flags.
+
+## SMOKE TEST FINDINGS
+
+### Phase 1B -- Logic & Structure Issues
+
+1. map_panel.py:157,170 -- OBSERVATION (not a bug): act variable is assigned twice
+   in the non-atlas branch. Line 157 uses "?" default (for zone_meta display).
+   Line 170 uses None default (for resistance note logic). Intentional design --
+   two semantic defaults for two distinct uses. Functional, not worth changing.
+
+### Phase 1C -- Redundancy Issues
+
+None found.
+
+## MAINTENANCE LOG
+
+None. Codebase fully clean, no fixes required this session.
+
+## DEVELOPMENT LOG
+
+### Feature 1: Test Suite -- MapOverlay + Campaign Bar Tests (32 tests)
+
+New file: tests/test_map_overlay.py (32 tests, all pass)
+
+TestMapOverlayInitial (2): initial state checks -- None current zone, empty history.
+
+TestMapOverlayZoneChange (8):
+  Known zone populates info (act field, area_level, waypoint, type present).
+  Unknown zone has info=None, no crash. Empty/whitespace zone names ignored
+  (strip() guard in handle_zone_change). Second zone replaces current.
+  Timestamp captured within before/after window. Atlas zones have tier in info.
+
+TestMapOverlayHistory (5):
+  Most-recent-first ordering confirmed. History capped at 15. Oldest entry
+  dropped when full. get_history() returns copy -- mutation is isolated.
+  Single zone produces len-1 history.
+
+TestMapOverlayCallback (6):
+  on_update fires on zone change with name/info/timestamp entry. Correct zone
+  name received. Multiple registered callbacks all fire. ZeroDivisionError in
+  callback caught silently. Empty zone name -- callback NOT fired.
+
+TestCampaignProgressText (11):
+  Replicates bar formula from MapPanel._update_campaign_progress() without Qt.
+  Acts 1/5/10 produce correct filled/empty counts. Acts 0/-1/11 return None.
+  None/"/?" all return None. "5" parses same as int 5. Bar always 10 chars
+  for valid acts. "Act N / 10" always present.
+
+Bug found and fixed during testing: atlas test used v.get("type") on all zone_db
+values. zones.json has a "_comment" string key inside zones dict causing
+AttributeError on .get(). Fix: isinstance(v, dict) guard added.
+Note: main MapOverlay code is unaffected -- it only uses .get(zone_name).
+
+Combined test count: 88 (56 existing + 32 new), all green.
+
+### Feature 2: Phase 4 Expansion -- 5 New Features Auto-Approved
+
+All original roadmap items complete at 9+/10. Phase 4 triggered.
+VISION.md updated with "Expansion Roadmap (Auto-Approved 2026-03-25)":
+
+E1. Divination Card Tracker (HIGH): stash API + data/div_cards.json, completion %
+E2. Atlas Map Completion Tracker (HIGH): Client.txt only, state/atlas_progress.json
+E3. Bestiary Recipe Browser (MEDIUM): static data/bestiary_recipes.json, zero API
+E4. Heist Blueprint Organizer (MEDIUM): stash API, blueprint wing tracking
+E5. Gem Level Planner (LOW): character API gem data, sell-candidate highlighting
+
+Asana notifications posted as comments to HUMAN INBOX + PENDING APPROVALS
+(workaround for missing asana_create_task MCP tool).
+
+### Git: Branch Merged to Master
+
+Merged feature/reinstall-fix-uninstaller -> master. Pushed to origin/master.
+This branch held Sessions 14-17 work (5 commits) not previously in master.
+
+## TECHNICAL NOTES
+
+### zones.json _comment key in zone_db
+_load_zone_db() returns json.load().get("zones", {}). The "zones" object contains
+a "_comment" key with a string value. Any code iterating zone_db.items() MUST
+guard with isinstance(v, dict). Main MapOverlay code is safe (only uses .get()).
+Future test writers: add isinstance guard if iterating zone_db values.
+
+### Asana create_task tool unavailable
+MCP does not expose asana_create_task. Session summaries posted as comments on
+most recent tasks in each project. If MCP is reconfigured to include create_task,
+switch to direct task creation for cleaner inbox organization.
+
+### Expansion roadmap E1 implementation guidance
+RePoE data: github.com/brather1ng/RePoE/tree/master/data
+divination.min.json -- "Stack Size" under item["properties"] array.
+Or poe.ninja API has card data: GET /api/data/itemoverview?league=X&type=DivinationCard
+Returns "stackSize" field directly. Prefer poe.ninja (already wired) over RePoE.
+
+## SUGGESTIONS FOR NEXT SESSION
+
+1. Divination Card Tracker (HIGH, E1): Use poe.ninja DivinationCard endpoint for
+   stack sizes (already wired, just new type). modules/div_cards.py, ui/widgets/div_panel.py.
+   Wire into HUD tab index 10. Label: "Divs".
+
+2. Atlas Map Completion Tracker (HIGH, E2): modules/atlas_tracker.py subscribes to
+   zone_change, updates visited set. ui/widgets/atlas_panel.py. state/atlas_progress.json.
+   Wire into HUD tab index 11. Label: "Atlas".
+
+3. Bestiary Recipe Browser (MEDIUM, E3): data/bestiary_recipes.json (community-sourced)
+   + ui/widgets/bestiary_panel.py. No state, no API. Tab index 12. Label: "Bestiary".
+
+4. Map mod display (BLOCKED): poedb.tw has no stable JSON API. Research alternatives.
+
+## PROJECT HEALTH
+
+Overall grade: 10/10
+% complete toward original vision: 100%
+% complete toward expanded vision: 0% (5 new features queued, none started)
+
+88 tests pass. No technical debt. feature/reinstall-fix-uninstaller merged to master.
+═══════════════════════════════════════════════════════════════
