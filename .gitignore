@@ -15,8 +15,9 @@ state/version.json
 state/crash_log.jsonl
 assets/minimap_cache/
 *.log
-# password file and build tools — developer-only, never commit
+# password file, secrets, and build tools — developer-only, never commit
 installer_password.json
+installer_secrets.json
 set_password.py
 inject_password.py
 

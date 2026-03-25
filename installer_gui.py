@@ -15,7 +15,7 @@ Flow:
 Compile with:  build_installer.bat
 """
 
-import hashlib, os, sys, json, shutil, time, zipfile, threading, urllib.request, socket, platform
+import hashlib, os, re, sys, json, shutil, time, zipfile, threading, urllib.request, socket, platform
 import subprocess, tempfile, tkinter as tk
 from tkinter import ttk, filedialog
 from datetime import datetime, timezone
@@ -35,6 +35,12 @@ DEFAULT_DEST  = os.path.join(os.path.expanduser("~"), APP_NAME)
 # Discord webhook for anonymous install analytics (see README for disclosure).
 # Set to "" to disable analytics in the build.
 ANALYTICS_WEBHOOK_URL = ""
+
+# Fine-grained GitHub PAT (issues: write only on this repo).
+# Injected at build time by inject_password.py from installer_secrets.json.
+# Enables automatic GitHub Issue filing on install success/failure.
+# Leave "" to disable reporting — the installer will still work without it.
+GITHUB_REPORT_TOKEN = ""
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Password protection
@@ -199,6 +205,8 @@ class Installer(tk.Tk):
         self.configure(bg=BG)
         self._center(560, 520)
         self._install_dest = None
+        self._current_step = "initializing"   # updated throughout install for error reports
+        self._is_reinstall = False             # set true when an existing install is detected
         self._build()
 
     def _center(self, w, h):
@@ -350,10 +358,12 @@ class Installer(tk.Tk):
 
         try:
             # ── 1. Download embedded Python runtime ───────────────────
+            self._current_step = "downloading Python runtime"
             self._ui("Downloading Python runtime (~11 MB)...", 3)
             embed_zip = os.path.join(tmp, "python_embed.zip")
             self._download(PYTHON_EMBED_URL, embed_zip, 3, 20)
 
+            self._current_step = "extracting Python runtime"
             self._ui("Extracting Python runtime...", 20)
             os.makedirs(runtime_tmp, exist_ok=True)
             with zipfile.ZipFile(embed_zip, "r") as zf:
@@ -369,6 +379,7 @@ class Installer(tk.Tk):
                     open(path, "w").write(content.replace("#import site", "import site"))
 
             # ── 2. Bootstrap pip into the embedded runtime ────────────
+            self._current_step = "bootstrapping pip"
             self._ui("Bootstrapping package manager...", 22)
             getpip = os.path.join(tmp, "get-pip.py")
             self._download(GETPIP_URL, getpip, 22, 26)
@@ -381,6 +392,7 @@ class Installer(tk.Tk):
             self.after(0, lambda: self._log("pip ready."))
 
             # ── 3. Download app source from GitHub ────────────────────
+            self._current_step = "downloading app from GitHub"
             self._ui("Downloading PoELens from GitHub...", 28)
             app_zip = os.path.join(tmp, "app.zip")
             try:
@@ -400,6 +412,7 @@ class Installer(tk.Tk):
                     )
                 raise
 
+            self._current_step = "extracting app files"
             self._ui("Extracting app files...", 45)
             with zipfile.ZipFile(app_zip, "r") as zf:
                 zf.extractall(tmp)
@@ -411,7 +424,8 @@ class Installer(tk.Tk):
             extracted = os.path.join(tmp, subdirs[0])
             # Preserve user state and wipe old install if this is a reinstall.
             state_backup = None
-            if os.path.exists(dest):
+            self._is_reinstall = os.path.exists(dest)
+            if self._is_reinstall:
                 # Terminate any running PoELens processes before wiping the folder.
                 # If python.exe has files open under dest, rmtree will fail
                 # and the subsequent copytree will crash with FileExistsError.
@@ -436,6 +450,7 @@ class Installer(tk.Tk):
                     self.after(0, lambda: self._log("User settings preserved for reinstall."))
 
                 # Wipe old install — retry once if a file handle is briefly lingering
+                self._current_step = "removing previous installation"
                 for attempt in range(2):
                     try:
                         shutil.rmtree(dest)
@@ -453,6 +468,7 @@ class Installer(tk.Tk):
                             )
 
             # dirs_exist_ok=True handles any partial-wipe edge cases gracefully
+            self._current_step = "copying app files"
             shutil.copytree(extracted, dest, dirs_exist_ok=True)
             self.after(0, lambda: self._log(f"App files installed to: {dest}"))
 
@@ -468,6 +484,7 @@ class Installer(tk.Tk):
             shutil.copytree(runtime_tmp, runtime)
 
             # ── 4. Install Python packages ────────────────────────────
+            self._current_step = "installing Python packages"
             self._ui("Installing packages (this takes ~1 min first time)...", 48)
             req_file = os.path.join(dest, "requirements.txt")
             pip = os.path.join(runtime, "Scripts", "pip.exe")
@@ -481,6 +498,7 @@ class Installer(tk.Tk):
             self._ui("Packages installed.", 70)
 
             # ── 5. Write config + run.bat ─────────────────────────────
+            self._current_step = "writing config"
             self._ui("Writing config...", 72)
             self._write_config(dest)
             bat = os.path.join(dest, "run.bat")
@@ -502,6 +520,7 @@ class Installer(tk.Tk):
             self._write_version(dest)
 
             # ── 6. Passive tree data ──────────────────────────────────
+            self._current_step = "downloading passive tree data"
             self._ui("Downloading passive tree data...", 75)
             tree_path = os.path.join(dest, "data", "passive_tree.json")
             if not os.path.exists(tree_path):
@@ -513,12 +532,14 @@ class Installer(tk.Tk):
             self._ui("Tree data ready.", 93)
 
             # ── 7. Shortcuts ──────────────────────────────────────────
+            self._current_step = "creating shortcuts"
             if self._shortcut.get():
                 self._make_shortcut(dest, "Desktop")
             if self._startmenu.get():
                 self._make_shortcut(dest, "StartMenu")
 
             # ── 8. Uninstaller ────────────────────────────────────────
+            self._current_step = "writing uninstaller"
             self._write_uninstaller(dest)
 
             self._install_dest = dest
@@ -675,18 +696,95 @@ class Installer(tk.Tk):
         except Exception as e:
             self.after(0, lambda: self._log(f"Warning: could not write uninstaller: {e}"))
 
+    def _report_to_github(self, event: str, error: str | None = None):
+        """File a GitHub Issue with anonymous install telemetry.
+
+        Requires GITHUB_REPORT_TOKEN — a fine-grained PAT with 'issues: write'
+        on this repo only.  Injected at build time; silently skipped if absent.
+        No personal data is transmitted: paths are stripped, IDs are hashed.
+        """
+        if not GITHUB_REPORT_TOKEN:
+            return
+        try:
+            anon_id = hashlib.sha256(
+                socket.gethostname().encode("utf-8")
+            ).hexdigest()[:16]
+            os_ver  = f"{platform.system()} {platform.release()} ({platform.version()})"
+            ts      = datetime.now(timezone.utc).isoformat()
+
+            title = (
+                f"[AutoReport] {event} \u2014 "
+                f"{self._current_step} \u2014 "
+                f"{platform.system()} {platform.release()}"
+            )
+
+            rows = [
+                ("Event",     event),
+                ("Step",      self._current_step),
+                ("OS",        os_ver),
+                ("Arch",      platform.machine()),
+                ("Reinstall", "Yes" if self._is_reinstall else "No"),
+                ("Timestamp", ts),
+                ("Anon ID",   f"`{anon_id}`"),
+            ]
+            table = "| Field | Value |\n|---|---|\n"
+            for k, v in rows:
+                table += f"| **{k}** | {v} |\n"
+
+            body = f"## Install Report\n\n{table}\n"
+
+            if error:
+                # Strip Windows-style paths so no install directories leak.
+                sanitized = re.sub(r"[A-Za-z]:\\[^\n\r\t]*", "<path>", error)
+                sanitized = re.sub(r"/(?:home|Users|tmp)/[^\s\n]*", "<path>", sanitized)
+                body += f"\n## Error Details\n```\n{sanitized[:2000]}\n```\n"
+
+            body += (
+                "\n---\n*Auto-filed by the PoELens installer. "
+                "No personal data collected. See README for analytics disclosure.*"
+            )
+
+            payload = json.dumps({
+                "title": title,
+                "body":  body,
+                "labels": ["automated-report"],
+            }).encode("utf-8")
+
+            req = urllib.request.Request(
+                f"https://api.github.com/repos/{GITHUB_OWNER}/{GITHUB_REPO}/issues",
+                data=payload,
+                headers={
+                    "Authorization":        f"Bearer {GITHUB_REPORT_TOKEN}",
+                    "Accept":               "application/vnd.github+json",
+                    "Content-Type":         "application/json",
+                    "User-Agent":           "PoELens-Installer/1.0",
+                    "X-GitHub-Api-Version": "2022-11-28",
+                },
+                method="POST",
+            )
+            urllib.request.urlopen(req, timeout=10)
+        except Exception:
+            pass  # Reporting must never crash or block the installer
+
     def _done(self):
+        self._current_step = "complete"
         self._status.configure(text="Installation complete!", fg=GREEN)
         self._install_btn.pack_forget()
         self._launch_btn.pack(side="right", padx=(8, 0))
         self._cancel_btn.configure(text="Close", state="normal")
         threading.Thread(target=_send_analytics, args=("install",), daemon=True).start()
+        threading.Thread(
+            target=self._report_to_github, args=("install_success",), daemon=True
+        ).start()
 
     def _error(self, msg):
         self._status.configure(text="Installation failed — see log below", fg=RED)
         self._log(f"\nFAILED: {msg}")
         self._install_btn.configure(state="normal", text="Retry")
         self._cancel_btn.configure(state="normal")
+        threading.Thread(
+            target=self._report_to_github, args=("install_failure", msg), daemon=True
+        ).start()
 
     def _launch(self):
         if self._install_dest:

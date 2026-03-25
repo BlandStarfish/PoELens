@@ -1,0 +1,85 @@
+name: Triage Installer Reports
+
+# Fires whenever the installer auto-files a GitHub Issue.
+# Labels, categorises, and (on failure streaks) opens a tracking issue.
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  triage:
+    # Only process issues auto-filed by the installer
+    if: startsWith(github.event.issue.title, '[AutoReport]')
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+
+    steps:
+      - name: Detect event type
+        id: detect
+        run: |
+          TITLE="${{ github.event.issue.title }}"
+          if echo "$TITLE" | grep -q "install_success"; then
+            echo "event=success" >> $GITHUB_OUTPUT
+          elif echo "$TITLE" | grep -q "install_failure"; then
+            echo "event=failure" >> $GITHUB_OUTPUT
+          else
+            echo "event=unknown" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Label success reports
+        if: steps.detect.outputs.event == 'success'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo:  context.repo.repo,
+              issue_number: context.issue.number,
+              labels: ['install-success', 'automated-report'],
+            });
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo:  context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed',   // auto-close successes — they're counters, not bugs
+            });
+
+      - name: Label failure reports
+        if: steps.detect.outputs.event == 'failure'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Extract failing step from title: "[AutoReport] install_failure — <step> — Windows..."
+            const title  = context.payload.issue.title;
+            const match  = title.match(/install_failure\s*[—\-]\s*([^—\-]+)\s*[—\-]/);
+            const step   = match ? match[1].trim() : 'unknown step';
+
+            // Add labels
+            const labels = ['install-failure', 'automated-report'];
+            if (step.includes('pip') || step.includes('package')) labels.push('dep-issue');
+            if (step.includes('GitHub') || step.includes('download'))  labels.push('network-issue');
+            if (step.includes('remov') || step.includes('wipe'))       labels.push('reinstall-issue');
+
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo:  context.repo.repo,
+              issue_number: context.issue.number,
+              labels,
+            });
+
+            // Post a triage comment summarising the step
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo:  context.repo.repo,
+              issue_number: context.issue.number,
+              body: [
+                '### 🤖 Auto-triage',
+                '',
+                `**Failing step:** \`${step}\``,
+                '',
+                'This issue was automatically filed by the PoELens installer.',
+                'Review the error details above and close when resolved.',
+              ].join('\n'),
+            });
