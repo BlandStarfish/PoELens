@@ -470,3 +470,18 @@ Clears all character-specific fields: completed_quests, passive_points_used,
 ascendancy_points_used, and all xp_* fields. Preserves currency, crafting, zone.
 Fires two notifications: completed_quests ([]) and xp_session (None).
 Quest panel updates immediately. XP panel updates on next 5-min timer tick (not instant).
+
+### map_panel.py: Campaign progression banner (Session 16)
+_build_ui() adds self._progress_label (QLabel, hidden) above the zone card.
+_show_current() populates it:
+  - atlas zones: "Endgame Atlas" in TEAL (#4ae8c8)
+  - campaign acts 1-10: "Campaign   Act N / 10   [━━━━━─────]" in ACCENT (#e2b96f)
+  - unknown zones (info=None): label.hide()
+_update_campaign_progress(act) builds the bar from Unicode box chars:
+  filled="━"*act_n, empty="─"*(10-act_n). Guards: act must be int 1-10.
+
+### xp_tracker.py: xp_session change subscription (Session 16)
+Added to __init__: state.on_change("xp_session", lambda _: self._fire_update())
+Propagates new-character resets to XP panel within one event cycle.
+Previously the panel waited up to 5 min for the auto-poll timer.
+Pattern mirrors quest_panel.py subscribing to "completed_quests".

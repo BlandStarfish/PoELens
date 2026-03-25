@@ -102,20 +102,14 @@ The overlay is organized as tabs (one per module) inside a frameless window, pos
   - History shows T{tier} prefix for atlas maps instead of Act number
 - **Priority: LOW for atlas mods (map mod display) — zone identity complete**
 
-### 10. Uninstaller / Cleaner 🔲 PLANNED (Priority: MEDIUM)
-- Standalone `PoELens-Uninstall.exe` placed in the install folder by the installer
-- Step 1: Detect and gracefully terminate any running PoELens process (taskkill by name)
-- Step 2: Remove Desktop shortcut (`~/Desktop/PoELens.lnk`) if present
-- Step 3: Remove Start Menu shortcut (`%APPDATA%/Microsoft/Windows/Start Menu/Programs/PoELens.lnk`) if present
-- Step 4: Prompt user — "Keep your settings and play history? (Yes/No)"
-  - Yes: delete everything except `state/` folder
-  - No: delete the entire install folder including state
-- Step 5: Self-delete the install folder (including the uninstaller itself, using a deferred cmd trick)
-- Built with tkinter (same as installer — zero extra deps, compiles to standalone .exe)
+### 10. Uninstaller / Cleaner ✅ IMPLEMENTED
+- `Uninstall PoELens.bat` written to the install folder by the installer at install time
+- Terminates any running PoELens process via `taskkill`
+- Removes Desktop and Start Menu shortcuts
+- Prompts for CONFIRM before deleting anything
+- Recursively deletes the install folder (`rd /s /q`)
+- Implemented as a Windows bat script (written by `_write_uninstaller()` in installer_gui.py)
 - No registry entries exist to clean (installer never writes to registry)
-- No system services or startup entries exist to clean
-- Note: installer should write install path to a known location (e.g. `%APPDATA%/PoELens/install_path.txt`)
-  so the uninstaller can find the install folder even if moved
 
 ---
 

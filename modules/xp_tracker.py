@@ -20,6 +20,8 @@ class XPTracker:
         self._character_api = character_api
         self._on_update: list[Callable] = []
         self._last_zone_poll = 0.0
+        # Propagate new-character resets to the XP panel immediately
+        state.on_change("xp_session", lambda _: self._fire_update())
 
     def on_update(self, callback: Callable):
         self._on_update.append(callback)

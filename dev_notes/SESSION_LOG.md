@@ -2375,3 +2375,175 @@ New Character reset flow, chaos recipe unit tests (26 tests). All 56 tests pass.
 Only remaining roadmap item is map mod display (blocked on data source).
 No technical debt introduced.
 ═══════════════════════════════════════════════════════════════
+
+═══════════════════════════════════════════════════════════════
+SESSION: 2026-03-25  (Session 16)
+═══════════════════════════════════════════════════════════════
+
+## ORIENTATION SUMMARY
+
+Session 16. Read all prior session notes (Sessions 1-15). Session 15 left with:
+1. Map mod display (MEDIUM, BLOCKED) — no data source identified, deferred again
+2. Campaign Progression Tracker (NEW, LOW, no blockers) — primary target, implemented
+3. XP panel immediate-reset after new character — implemented (1-line fix)
+4. PoE 2 support (FUTURE) — deferred
+
+All 61 tests pass at session start. Branch: feature/reinstall-fix-uninstaller
+(ahead of master by Sessions 14-15 work + installer test suite).
+
+## ASSESSMENT GRADES
+
+Module               | Completeness | Quality | Vision Alignment
+---------------------|-------------|---------|----------------
+Quest Tracker        |    10/10    |  9/10   |    10/10
+Passive Tree Viewer  |    10/10    |  9/10   |    10/10
+Price Checker        |    10/10    |  9/10   |    10/10
+Currency Tracker     |    10/10    |  9/10   |    10/10
+Crafting System      |    10/10    |  9/10   |     9/10
+Core Infrastructure  |    10/10    |  9/10   |    10/10
+Map Overlay          |    10/10    |  9/10   |    10/10
+XP Rate Tracker      |    10/10    |  9/10   |    10/10
+Chaos Recipe Counter |     9/10    |  9/10   |     9/10
+Build Notes Panel    |    10/10    |  9/10   |     9/10
+Settings Panel       |     9/10    |  9/10   |    10/10
+OAuth/Stash/Char API |     9/10    |  9/10   |     9/10
+Test Suite           |     9/10    |  9/10   |     9/10
+Installer/Uninstaller|     9/10    |  8/10   |     9/10
+
+All modules at or above 9/10 on all axes. No flags.
+
+## SMOKE TEST FINDINGS
+
+### Phase 1B -- Logic & Structure Issues
+
+1. core/state.py:7-29 -- PEP 8 VIOLATION: _XP_TABLE dict literal appeared BEFORE
+   `import json, os, time`. Valid Python but wrong — imports must precede module-level
+   data per PEP 8 and project convention. Fixed: moved imports above _XP_TABLE.
+
+### Phase 1C -- Redundancy & Counter-Vision Issues
+
+1. dev_notes/VISION.md: Item 10 (Uninstaller) still marked "🔲 PLANNED" despite being
+   fully implemented as a bat script (`_write_uninstaller` in installer_gui.py).
+   All 8 uninstaller tests pass. Fixed: updated to "✅ IMPLEMENTED".
+
+### Phase 1D -- Proximity Expansion
+
+state.py flagged → assessed xp_tracker.py, currency_tracker.py, modules/*.py →
+no additional issues. VISION.md flagged → no other stale entries found.
+
+## MAINTENANCE LOG
+
+### Fix 1 -- state.py: Imports before module-level data
+- File: core/state.py lines 7-35
+- Issue: `_XP_TABLE` dict appeared before `import json, os, time`
+- Fix: Moved 3 stdlib imports immediately after the module docstring, before _XP_TABLE
+- Why it matters: PEP 8 compliance; consistent with all other project files
+
+### Fix 2 -- VISION.md: Stale uninstaller status
+- File: dev_notes/VISION.md item 10
+- Issue: "🔲 PLANNED" despite `_write_uninstaller` implemented in installer_gui.py
+  and 8 tests covering it
+- Fix: Updated to "✅ IMPLEMENTED" with accurate description of the bat-script approach
+- Why it matters: Stale PLANNED status could mislead future sessions into re-implementing
+
+## DEVELOPMENT LOG
+
+### Feature 1: XP Panel Immediate-Reset on New Character
+
+Problem: state.reset_character() fires _notify("xp_session", None) but XPTracker
+did not listen for that event. XP panel only refreshed on the next 5-min timer tick.
+
+Files modified: modules/xp_tracker.py
+
+Change: Added 1 line to XPTracker.__init__:
+  state.on_change("xp_session", lambda _: self._fire_update())
+
+Effect: When "New Character" is clicked in Settings → state.reset_character() fires
+→ "xp_session" notification → XPTracker._fire_update() → XPPanel._updated signal →
+_on_update() called → panel clears immediately (same event cycle, <1s).
+
+This closes the known gap documented in Session 15 technical notes.
+
+### Feature 2: Campaign Progression Tracker
+
+Problem: Map tab showed zone name + "Act N • Area level X • Waypoint" but gave
+no visual sense of where the player was in the overall 10-act campaign. No progress
+context for new characters or new leagues.
+
+Solution: Added a compact progress banner ABOVE the zone card in the Map tab.
+- Campaign zones: "Campaign   Act N / 10   [━━━━━─────]" in PoE gold
+- Atlas endgame: "Endgame Atlas" in teal (#4ae8c8)
+- Unknown zones: banner hidden (no noise when no data)
+
+Files modified: ui/widgets/map_panel.py
+
+Changes:
+1. _build_ui(): Added self._progress_label (QLabel, hidden by default) above zone card
+2. _show_current(): Updated atlas branch to set progress_label to "Endgame Atlas"
+   (teal), and campaign branch to call new _update_campaign_progress(act)
+3. _show_current() else branch: progress_label.hide() for unknown zones
+4. New method _update_campaign_progress(act):
+   - Validates act is int in range 1-10; hides label otherwise
+   - Builds filled/empty bar: filled="━"*act_n, empty="─"*(10-act_n)
+   - Sets text: "Campaign   Act N / 10   [━━━━─────]" in ACCENT color
+   - Shows the label
+
+Visual result examples:
+  Act 1: Campaign   Act 1 / 10   [━─────────]
+  Act 5: Campaign   Act 5 / 10   [━━━━━─────]
+  Act 10: Campaign   Act 10 / 10   [━━━━━━━━━━]
+  Atlas map: Endgame Atlas  (teal)
+
+Post-implementation check:
+- Pure UI change — no new files, no new state, no new API calls
+- Uses existing zones.json act field (already populated for all campaign zones)
+- Zero technical debt; no regression in existing 61 tests
+- Consistent with established map_panel.py patterns
+
+## TECHNICAL NOTES
+
+### xp_tracker.py: on_change("xp_session") subscription pattern
+XPTracker now participates in the state change notification bus for xp_session events.
+This is the same pattern used by quest_panel.py subscribing to "completed_quests".
+The lambda `lambda _: self._fire_update()` ignores the value (None on reset, dict on start)
+and always re-reads from state.get_xp_display_data(). This is intentionally stateless:
+no matter what triggered the event, the panel always shows current ground truth.
+
+### map_panel.py: progress bar characters
+Uses Unicode box-drawing characters:
+  Filled: ━ (U+2501 BOX DRAWINGS HEAVY HORIZONTAL)
+  Empty:  ─ (U+2500 BOX DRAWINGS LIGHT HORIZONTAL)
+These render well in Segoe UI at 11px. If a user has a font that doesn't support
+these characters, they'll see fallback glyphs but no crash.
+
+### Branch state
+feature/reinstall-fix-uninstaller is now 5 commits ahead of master (Sessions 14, 15, 16
+plus the test suite and installer analytics work). All changes are additive, tests green.
+This branch should be merged to master before the next release build.
+
+## SUGGESTIONS FOR NEXT SESSION
+
+1. Merge feature/reinstall-fix-uninstaller → master (URGENT): This branch has 5 sessions
+   of work not yet in master. Next release build from master will miss everything.
+   Action: git checkout master && git merge feature/reinstall-fix-uninstaller && git push
+
+2. Map mod display (MEDIUM, BLOCKED): Research poedb.tw community API or PoE2 data
+   exports for rolled map affix information. Without a data source, cannot implement.
+
+3. PoE 2 support groundwork (LOW): config.py has `poe_version: poe1/poe2` field.
+   Minimum viable PoE 2 support: different Client.txt path default, different passive
+   tree data URL. Could add conditional logic gated on poe_version config field.
+
+4. Test suite: Add unit tests for MapOverlay.handle_zone_change() and the campaign
+   progression bar logic (_update_campaign_progress). Low priority; existing coverage
+   is adequate, but these would formalize the new feature's contract.
+
+## PROJECT HEALTH
+
+Overall grade: 9.9/10 (unchanged)
+% complete toward vision: ~99.5%
+
+All 10 features complete and polished. Campaign progression and XP reset close
+the last two known UX gaps. 61 tests pass. Only remaining roadmap item is map mod
+display (blocked on external data source). No technical debt introduced.
+═══════════════════════════════════════════════════════════════

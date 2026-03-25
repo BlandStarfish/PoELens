@@ -3,6 +3,10 @@ Persistent application state — quest completion, currency log, crafting queue.
 Saved to state/profile.json and state/currency_log.json.
 """
 
+import json
+import os
+import time
+
 # Cumulative XP required to reach each level (1–100) in Path of Exile 1.
 # Source: PathOfBuilding community repo / poewiki.net/wiki/Experience
 _XP_TABLE: dict[int, int] = {
@@ -27,10 +31,6 @@ _XP_TABLE: dict[int, int] = {
     91: 2094900291, 92: 2268549086, 93: 2455921256, 94: 2658074992, 95: 2876116901,
     96: 3111280300, 97: 3364828162, 98: 3638186694, 99: 3932818530, 100: 4250334444,
 }
-
-import json
-import os
-import time
 
 _PROFILE_PATH = os.path.join(os.path.dirname(__file__), "..", "state", "profile.json")
 _CURRENCY_LOG_PATH = os.path.join(os.path.dirname(__file__), "..", "state", "currency_log.json")

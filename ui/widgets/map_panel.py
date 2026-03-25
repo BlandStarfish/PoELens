@@ -57,6 +57,12 @@ class MapPanel(QWidget):
         layout.setContentsMargins(8, 8, 8, 8)
         layout.setSpacing(8)
 
+        # ── Campaign progress banner ──
+        self._progress_label = QLabel("")
+        self._progress_label.setStyleSheet(f"color: {DIM}; font-size: 11px; font-weight: bold;")
+        self._progress_label.hide()
+        layout.addWidget(self._progress_label)
+
         # ── Current zone card ──
         card = QWidget()
         card.setStyleSheet("background: #0f0f23; border-radius: 6px; border: 1px solid #2a2a4a;")
@@ -144,10 +150,14 @@ class MapPanel(QWidget):
             if zone_type == "atlas":
                 tier = info.get("tier", "?")
                 self._zone_meta.setText(f"Tier {tier} Map  •  Area level {lvl}  •  {wp}")
+                self._progress_label.setText("Endgame Atlas")
+                self._progress_label.setStyleSheet(f"color: {TEAL}; font-size: 11px; font-weight: bold;")
+                self._progress_label.show()
             else:
                 act = info.get("act", "?")
                 type_str = "  •  Town" if zone_type == "town" else ""
                 self._zone_meta.setText(f"Act {act}  •  Area level {lvl}  •  {wp}{type_str}")
+                self._update_campaign_progress(act)
 
             boss = info.get("boss")
             if boss:
@@ -168,6 +178,26 @@ class MapPanel(QWidget):
             self._zone_meta.setText("(zone not in database)")
             self._boss_label.hide()
             self._notes_label.hide()
+            self._progress_label.hide()
+
+    def _update_campaign_progress(self, act):
+        """
+        Update the campaign progress banner showing Act N / 10.
+        act — the act number (int) from zones.json, or '?' if unknown.
+        """
+        try:
+            act_n = int(act)
+        except (TypeError, ValueError):
+            self._progress_label.hide()
+            return
+        if not (1 <= act_n <= 10):
+            self._progress_label.hide()
+            return
+        filled = "━" * act_n
+        empty  = "─" * (10 - act_n)
+        self._progress_label.setText(f"Campaign   Act {act_n} / 10   [{filled}{empty}]")
+        self._progress_label.setStyleSheet(f"color: {ACCENT}; font-size: 11px; font-weight: bold;")
+        self._progress_label.show()
 
     def _refresh_history(self):
         self._history_list.clear()
