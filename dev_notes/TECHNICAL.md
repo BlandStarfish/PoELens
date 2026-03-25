@@ -581,8 +581,33 @@ No official standalone PoE2 passive tree JSON exists as of 2026-03.
 Only source: extract from game client GGPK (as PathOfBuilding-PoE2 does).
 PoE2 passive tree support BLOCKED until GGG publishes official export.
 
-### Tab indices (Session 23)
-Quests=0, Tree=1, Price=2, Currency=3, Crafting=4, Map=5, XP=6, Recipe=7,
-Notes=8, Settings=9, Divs=10, Atlas=11, Bestiary=12, Heist=13, Gems=14, MapStash=15
+### Tab indices (Session 24)
 Outer groups: Character(0) / Loot(1) / Endgame(2) / Info(3)
+Character inner: Quests(0) / Tree(1) / XP(2) / Notes(3) / Lab(4)
+Loot inner: Price(0) / Currency(1) / Recipe(2) / Divs(3) / Flip(4)
 Endgame inner: Map(0) / Atlas(1) / Crafting(2) / Heist(3) / Gems(4) / MapStash(5)
+Info inner: Bestiary(0) / Expedition(1) / Settings(2)
+
+### poe_ninja.py: raw cache for currency flip (Session 24)
+_raw_cache: dict[str, tuple[float, list]] stores full JSON lines from currencyoverview.
+Populated in _fetch() when endpoint == "currencyoverview" alongside the price dict.
+TTL re-check is implicit: _get_category("Currency") is called by get_currency_flip_data()
+before reading _raw_cache, ensuring stale data is re-fetched.
+set_league() clears both _cache and _raw_cache for consistency.
+get_currency_flip_data() returns [] if _raw_cache is empty (network failure path).
+
+### Currency flip semantics (Session 24)
+receive.value = chaos you pay to acquire 1 unit of this currency (buy price)
+pay.value = chaos you receive when selling 1 unit of this currency (sell price)
+margin_pct = (pay - receive) / receive * 100
+Positive margins arise during price discovery or temporary supply/demand imbalances.
+In an efficient market, margins are typically negative (bid-ask spread works against you).
+_EXCLUDE set in currency_flip.py filters trivial low-value currencies that show
+artifically high % margins due to near-zero absolute chaos values.
+
+### LabTracker state file (Session 24)
+state/lab.json -- covered by existing state/ .gitignore glob.
+Format: {"Normal": bool, "Cruel": bool, "Merciless": bool, "Eternal": bool}
+on_update callbacks are no-arg (unlike QuestTracker which passes status list).
+LabPanel calls tracker.get_status() directly in _refresh() rather than receiving
+data via callback, which avoids coupling the callback signature to the UI refresh logic.

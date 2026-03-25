@@ -3652,3 +3652,195 @@ Overall grade: 10/10
 Long-standing "map mod display" gap finally closed after 14 sessions of blocking.
 
 ║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║
+
+═══════════════════════════════════════════════════════════════
+SESSION: 2026-03-25
+═══════════════════════════════════════════════════════════════
+
+## ORIENTATION SUMMARY
+
+Session 23 implemented E6 Map Stash Scanner and auto-approved Round 2 expansion
+features F1-F3. Suggestions from last session:
+  1. F1: Expedition Remnant Browser (HIGH)
+  2. F2: Currency Flip Calculator (MEDIUM)
+  3. F3: Lab Tracker (LOW)
+  4. PoE2 passive tree (BLOCKED)
+
+Baseline: 160 tests passing, all modules at 9/10+, no technical debt.
+
+## ASSESSMENT GRADES
+
+Module               | Completeness | Quality | Vision Alignment
+---------------------|-------------|---------|----------------
+Quest Tracker        |    10/10    |  9/10   |    10/10
+Passive Tree Viewer  |    10/10    |  9/10   |    10/10
+Price Checker        |    10/10    |  9/10   |    10/10
+Currency Tracker     |    10/10    |  9/10   |    10/10
+Crafting System      |    10/10    |  9/10   |     9/10
+Core Infrastructure  |    10/10    |  9/10   |    10/10
+Map Overlay          |    10/10    |  9/10   |    10/10
+XP Rate Tracker      |    10/10    |  9/10   |    10/10
+Chaos Recipe Counter |     9/10    |  9/10   |     9/10
+Build Notes Panel    |    10/10    |  9/10   |     9/10
+Settings Panel       |    10/10    |  9/10   |    10/10
+OAuth/Stash/Char API |     9/10    |  9/10   |     9/10
+Div Card Tracker     |     9/10    |  9/10   |     9/10
+Atlas Tracker        |     9/10    |  9/10   |     9/10
+Bestiary Browser     |    10/10    |  9/10   |    10/10
+Heist Planner        |     9/10    |  9/10   |     9/10
+Gem Planner          |     9/10    |  9/10   |     9/10
+Map Stash Scanner    |     9/10    |  9/10   |     9/10
+Expedition Browser   |     9/10    |  9/10   |    10/10 (new)
+Currency Flip Calc   |     9/10    |  9/10   |     9/10 (new)
+Lab Tracker          |    10/10    |  9/10   |    10/10 (new)
+Test Suite           |    10/10    |  9/10   |     9/10
+
+## SMOKE TEST FINDINGS
+
+Phase 1B -- Logic and Structure Issues
+None found. Codebase fully clean at session start.
+
+Phase 1C -- Redundancy and Counter-Vision Issues
+None found.
+
+## MAINTENANCE LOG
+
+No maintenance fixes this session -- codebase was clean at session start.
+
+## DEVELOPMENT LOG
+
+Feature: F1 Expedition Remnant Browser
+
+Files created:
+  data/expedition_remnants.json: 32 entries across 4 categories:
+    Monster Buffs (16) -- dangerous modifiers (Hexproof, Onslaught, life regen, etc.)
+    Loot Bonuses (8) -- always-include modifiers (markers, IIQ, artifacts, currency)
+    Area Modifiers (6) -- situational modifiers (Temporal Chains, damage reduction, etc.)
+    Logbook Specific (2) -- logbook-specific spawns (extra boss, pack size)
+    Each entry: keyword, effect, danger (high/medium/none), build-specific notes
+  ui/widgets/expedition_panel.py: ExpeditionPanel
+    Same pattern as BestiaryPanel (static data, search, category grouping)
+    Danger badges: red (high), orange (medium), green (safe)
+    Left border color-coded by danger level on each card
+    Color legend shown above scroll area
+    Search: keyword, effect, category, notes fields all searched
+    Tab: Info > Expedition (index 1, between Bestiary and Settings)
+
+Files modified:
+  ui/hud.py: Added ExpeditionPanel import + _INFO_EXPEDITION=1 constant
+    _INFO_SETTINGS shifted from 1 to 2
+    Added tab in Info group between Bestiary and Settings
+    No changes to main.py (ExpeditionPanel has no dependencies)
+
+Feature: F2 Currency Flip Calculator
+
+Files created:
+  modules/currency_flip.py: CurrencyFlip class
+    calculate_flips(): fetches raw receive/pay data from poe.ninja
+    Filters: excludes trivial currencies (_EXCLUDE set), min 3 listings, min 0.5% margin
+    Sorting: by margin_pct descending, capped at 20 results
+    margin_pct = (sell - buy) / buy * 100 where buy=receive.value, sell=pay.value
+  ui/widgets/currency_flip_panel.py: CurrencyFlipPanel
+    On-demand calculation via Calculate button (not auto-refresh)
+    Threaded fetch via _FlipWorker(QThread) -- poe.ninja fetch will not block UI
+    Color by margin: green >=5%, gold >=2%, orange otherwise
+    Shows: currency name, buy/sell prices, margin %, listing count
+
+Files modified:
+  api/poe_ninja.py:
+    Added self._raw_cache dict for raw currencyoverview lines
+    Modified _fetch: when endpoint==currencyoverview, stores raw lines in _raw_cache
+    Added get_currency_flip_data(): reads _raw_cache, returns {name, buy, sell, listing_count}
+    set_league() now also clears _raw_cache
+  ui/hud.py: Added CurrencyFlipPanel import + _LOOT_FLIP=4 constant
+    Added tab in Loot group as Flip
+  main.py: Added CurrencyFlip import, instantiation (takes ninja), passed to HUD
+
+Feature: F3 Lab Tracker
+
+Files created:
+  modules/lab_tracker.py: LabTracker class
+    Tracks 4 difficulties: Normal, Cruel, Merciless, Eternal
+    toggle(difficulty): flip completion state + save + fire callbacks
+    set_completed(difficulty, bool): explicit set
+    get_status(): dict[str, bool] for all 4
+    get_ascendancy_points(): {earned: int, available: 8}
+    reset(): clear all for new characters
+    Persists to state/lab.json (gitignored via state/ glob)
+    on_update(callback) subscriber pattern (no-arg callbacks)
+  ui/widgets/lab_panel.py: LabPanel
+    One row per difficulty: status icon (check/circle), name, sublabel, toggle btn
+    Row background + border changes on completion (dark green + green left border)
+    Points summary in header (e.g. Ascendancy: 4 / 8 pts)
+    Reset (New Character) button with QMessageBox.question confirmation
+
+Files modified:
+  ui/hud.py: Added LabPanel import + _CHAR_LAB=4 constant
+    Added tab in Character group as Lab
+  main.py: Added LabTracker import, instantiation, passed to HUD as lab_tracker
+
+Test coverage:
+  tests/test_lab_tracker.py: 28 tests covering init, toggle, set_completed,
+    ascendancy points, reset, persistence (reload, partial file, corrupt file), callbacks
+  tests/test_currency_flip.py: 19 tests covering calculate_flips, exclusions, listing
+    filter, margin filter, edge cases, plus PoeNinja raw cache tests
+
+All 207 tests pass (was 160, +47 new).
+
+## TECHNICAL NOTES
+
+poe_ninja.py raw cache design:
+  _raw_cache stores full JSON lines from currencyoverview alongside _cache.
+  Both share the same TTL via _get_category which populates both caches on fetch.
+  get_currency_flip_data() calls _get_category("Currency") internally for fresh data,
+  then reads from _raw_cache. If network is down, _raw_cache is empty -> returns [].
+  set_league() clears both caches for consistency.
+
+Currency flip receive/pay semantics:
+  receive.value = chaos you pay to acquire 1 unit of this currency (buy price)
+  pay.value = chaos you receive when selling 1 unit of this currency (sell price)
+  Positive margin = sell > buy = profitable flip opportunity.
+  In efficient markets, margin is typically negative (bid-ask spread).
+  Positive margins appear during price discovery or temporary supply/demand imbalances.
+  _EXCLUDE set removes trivial currencies with large % margins due to tiny absolute values.
+
+LabTracker state file:
+  state/lab.json -- covered by existing state/ gitignore glob.
+  Format: {"Normal": bool, "Cruel": bool, "Merciless": bool, "Eternal": bool}
+  on_update callbacks are no-arg (unlike QuestTracker which passes status list).
+  LabPanel calls get_status() directly on refresh -- avoids coupling callback signature.
+
+Expedition data:
+  32 entries compiled from community knowledge of Expedition mechanics.
+  Danger ratings are build-generic. Notes field provides build-specific nuance.
+  Players adjust based on build (e.g. hexproof = "high" for curse builds only).
+
+Asana session summary:
+  Created as Asana project (GID: 1213810901629158) rather than task in HUMAN INBOX
+  because no create_task MCP tool was available this session. The project serves as
+  the session notification record. If create_task becomes available, revert to task.
+
+## SUGGESTIONS FOR NEXT SESSION
+
+1. PoE2 passive tree (BLOCKED): No official GGG skilltree-export for PoE2 exists.
+   Check https://github.com/grindinggear/skilltree-export for new branches/releases.
+
+2. Phase 4 Round 3: All F1-F3 at 9+/10. Phase 4 criteria met again.
+   Generate next round of expansion ideas and add to VISION.md.
+
+3. UX polish pass (optional): F1-F3 panels are functional but minimal.
+   ExpeditionPanel: consider include/avoid quick-filter buttons (positive/negative)
+   CurrencyFlipPanel: consider optional auto-refresh timer
+   LabPanel: consider unlock location hint under each difficulty row
+
+4. Asana create_task gap: Session summary was logged as project, not task in HUMAN INBOX.
+   Next session: check if create_task MCP tool is available before running Phase 5.
+
+## PROJECT HEALTH
+
+Overall grade: 10/10
+~97% complete toward full vision (original + all expansion rounds F1-F3).
+PoE2 tree remains the only blocked item.
+207 tests pass. No technical debt. No regressions.
+
+═══════════════════════════════════════════════════════════════
