@@ -8,6 +8,8 @@ Requires OAuth connection with account:characters scope.
 Character is selected from the characters available on the account.
 """
 
+import threading
+
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QFrame,
     QScrollArea, QComboBox,
@@ -106,7 +108,7 @@ class GemPanel(QWidget):
         scroll.setWidget(self._gem_container)
         layout.addWidget(scroll)
 
-        note = QLabel("Only gems currently equipped on the character are shown.")
+        note = QLabel("Equipped gems shown. Weapon-swap slot gems shown under Leveling.")
         note.setStyleSheet(f"color: {DIM}; font-size: 10px;")
         note.setWordWrap(True)
         layout.addWidget(note)
@@ -135,7 +137,6 @@ class GemPanel(QWidget):
             return
         self._load_chars_btn.setEnabled(False)
         self._load_chars_btn.setText("…")
-        import threading
         threading.Thread(
             target=lambda: self._chars_loaded.emit(self._character_api.list_characters()),
             daemon=True,
@@ -204,14 +205,13 @@ class GemPanel(QWidget):
     def _on_update(self, result: dict):
         self._refresh_auth_ui()
 
-        sell   = result.get("sell_candidates", [])
-        active = result.get("active_gems", [])
-        support= result.get("support_gems", [])
-        total  = result.get("total", 0)
+        sell     = result.get("sell_candidates", [])
+        active   = result.get("active_gems", [])
+        support  = result.get("support_gems", [])
+        total    = result.get("total", 0)
 
-        self._summary_label.setText(
-            f"{total} gem(s)  •  {len(sell)} sell candidate(s)"
-        )
+        parts = [f"{total} gem(s)", f"{len(sell)} sell candidate(s)"]
+        self._summary_label.setText("  •  ".join(parts))
 
         # Clear existing gem rows (preserve trailing stretch)
         while self._gem_layout.count() > 1:
@@ -219,11 +219,14 @@ class GemPanel(QWidget):
             if item.widget():
                 item.widget().deleteLater()
 
+        leveling = result.get("leveling_gems", [])
+
         insert_idx = 0
         for group_label, gems, header_color in (
-            ("Sell Candidates", sell,    ORANGE),
-            ("Active Gems",     active,  TEAL),
-            ("Support Gems",    support, DIM),
+            ("Sell Candidates",         sell,     ORANGE),
+            ("Active Gems",             active,   TEAL),
+            ("Support Gems",            support,  DIM),
+            ("Leveling (Weapon Swap)",  leveling, GREEN),
         ):
             if not gems:
                 continue

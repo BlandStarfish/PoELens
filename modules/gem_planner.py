@@ -48,13 +48,19 @@ def _extract_gem_level_quality(properties: list) -> tuple[int, int]:
     return level, quality
 
 
+_WEAPON_SWAP_SLOTS = frozenset({"Weapon2", "Offhand2"})
+
+
 def _collect_gems(items: list) -> list[dict]:
     """
     Walk equipped items and collect all socketed gems.
-    Returns a list of gem dicts with name, level, quality, support, sell_candidate.
+    Returns a list of gem dicts with name, level, quality, support,
+    sell_candidate, and weapon_swap (True if in the secondary weapon set).
     """
     gems = []
     for item in items:
+        inventory_id = item.get("inventoryId", "")
+        in_weapon_swap = inventory_id in _WEAPON_SWAP_SLOTS
         for gem in item.get("socketedItems", []):
             if gem.get("frameType") != _GEM_FRAME:
                 continue
@@ -68,6 +74,7 @@ def _collect_gems(items: list) -> list[dict]:
                 "quality":        quality,
                 "support":        support,
                 "sell_candidate": sell_candidate,
+                "weapon_swap":    in_weapon_swap,
             })
     return gems
 
@@ -138,27 +145,34 @@ def _build_result(gems: list[dict]) -> dict:
     """
     Organise gems into a structured result dict.
       {
-        "sell_candidates": [gem_dict, ...]  — sorted by level desc, name asc
-        "active_gems":     [gem_dict, ...]  — non-support, non-sell-candidate
-        "support_gems":    [gem_dict, ...]  — support gems only
-        "total":           int
+        "sell_candidates":  [gem_dict, ...]  — sorted by level desc, name asc
+        "active_gems":      [gem_dict, ...]  — non-support, non-sell-candidate, not weapon-swap
+        "support_gems":     [gem_dict, ...]  — support gems only (not weapon-swap)
+        "leveling_gems":    [gem_dict, ...]  — gems in weapon-swap set (secondary weapon slots)
+        "total":            int
       }
     """
     sell_candidates = sorted(
         [g for g in gems if g["sell_candidate"]],
         key=lambda g: (-g["level"], g["name"]),
     )
+    # Weapon-swap gems are in their own group (they're being passively leveled)
+    leveling_gems = sorted(
+        [g for g in gems if g["weapon_swap"] and not g["sell_candidate"]],
+        key=lambda g: (-g["level"], g["name"]),
+    )
     active_gems = sorted(
-        [g for g in gems if not g["support"] and not g["sell_candidate"]],
+        [g for g in gems if not g["support"] and not g["sell_candidate"] and not g["weapon_swap"]],
         key=lambda g: (-g["level"], g["name"]),
     )
     support_gems = sorted(
-        [g for g in gems if g["support"] and not g["sell_candidate"]],
+        [g for g in gems if g["support"] and not g["sell_candidate"] and not g["weapon_swap"]],
         key=lambda g: (-g["level"], g["name"]),
     )
     return {
         "sell_candidates": sell_candidates,
         "active_gems":     active_gems,
         "support_gems":    support_gems,
+        "leveling_gems":   leveling_gems,
         "total":           len(gems),
     }

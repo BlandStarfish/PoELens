@@ -2984,3 +2984,138 @@ Overall grade: 10/10
 93 tests pass. No technical debt. No regressions.
 E1 Div Cards, E2 Atlas, E3 Bestiary, E4 Heist, E5 Gems -- all complete.
 ═══════════════════════════════════════════════════════════════
+
+║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║
+
+SESSION: 2026-03-25  (Session 20)
+
+ORIENTATION SUMMARY
+
+Session 20. Read all prior session notes (Sessions 1-19). Session 19 left with:
+1. Map mod display (BLOCKED) -- deferred again
+2. Heist data quality check (LOW) -- no live data; added unit tests instead
+3. Gem planner off-hand leveling indicator (LOW) -- implemented
+4. Tab bar UX (LOW) -- implemented
+5. PoE 2 support (FUTURE) -- deferred
+
+All 93 tests passed at session start.
+
+ASSESSMENT GRADES
+
+Module               | Completeness | Quality | Vision Alignment
+---------------------|-------------|---------|----------------
+Quest Tracker        |    10/10    |  9/10   |    10/10
+Passive Tree Viewer  |    10/10    |  9/10   |    10/10
+Price Checker        |    10/10    |  9/10   |    10/10
+Currency Tracker     |    10/10    |  9/10   |    10/10
+Crafting System      |    10/10    |  9/10   |     9/10
+Core Infrastructure  |    10/10    |  9/10   |    10/10
+Map Overlay          |    10/10    |  9/10   |    10/10
+XP Rate Tracker      |    10/10    |  9/10   |    10/10
+Chaos Recipe Counter |     9/10    |  9/10   |     9/10
+Build Notes Panel    |    10/10    |  9/10   |     9/10
+Settings Panel       |     9/10    |  9/10   |    10/10
+OAuth/Stash/Char API |     9/10    |  9/10   |     9/10
+Div Card Tracker     |     9/10    |  9/10   |     9/10
+Atlas Tracker        |     9/10    |  9/10   |     9/10
+Bestiary Browser     |     9/10    |  9/10   |     9/10
+Heist Planner        |     9/10    |  9/10   |     9/10 (raised from 8)
+Gem Planner          |     9/10    |  9/10   |     9/10 (raised from 8)
+Test Suite           |    10/10    |  9/10   |     9/10
+
+SMOKE TEST FINDINGS
+
+Phase 1B -- Logic and Structure Issues
+
+1. ui/widgets/gem_panel.py:138 -- ANTI-PATTERN: import threading inside
+   _load_characters() method body. Fixed: moved to module-level.
+
+Phase 1C -- Redundancy and Counter-Vision Issues
+
+None found. Codebase clean.
+
+MAINTENANCE LOG
+
+Fix 1 -- gem_panel.py: Inline import moved to module level
+- File: ui/widgets/gem_panel.py
+- Issue: import threading inside _load_characters() method body
+- Fix: Moved to module-level; removed inline import from method
+- Why it matters: Inconsistent with project patterns (same fix as Sessions 12/13)
+
+DEVELOPMENT LOG
+
+Feature 1: Gem Planner -- Weapon-Swap Leveling Indicator
+
+Files modified: modules/gem_planner.py, ui/widgets/gem_panel.py
+
+gem_planner.py changes:
+  - Added _WEAPON_SWAP_SLOTS = frozenset({"Weapon2", "Offhand2"})
+  - _collect_gems(): reads parent item inventoryId, sets weapon_swap=True for Weapon2/Offhand2
+  - _build_result(): adds "leveling_gems" group for weapon-swap gems not in sell_candidates.
+    Sell candidates remain in sell_candidates even if weapon-swapped (sell > leveling priority).
+    active_gems and support_gems exclude weapon-swap gems.
+
+gem_panel.py changes:
+  - _on_update(): adds ("Leveling (Weapon Swap)", leveling, GREEN) group
+  - Footer note updated to mention leveling group
+
+Feature 2: Tab Bar UX Fix
+
+File modified: ui/hud.py
+
+Changes:
+  - QTabBar::tab padding reduced: 6px 14px -> 5px 8px
+  - Added QTabBar::scroller and QTabBar QToolButton stylesheet for scroll arrows
+  - tabs.tabBar().setUsesScrollButtons(True) -- explicitly enable scroll arrows
+  - tabs.tabBar().setExpanding(False) -- critical: prevents tabs stretching to fill width;
+    without this, scroll arrows never appear regardless of setUsesScrollButtons
+
+Feature 3: Test Suite Expansion
+
+New test files:
+  tests/test_heist_planner.py (22 tests)
+  tests/test_gem_planner.py   (25 tests)
+
+test_heist_planner.py: _extract_heist_job, _extract_wing_status, _process
+test_gem_planner.py: _extract_gem_level_quality, _classify_sell_candidate,
+                     _collect_gems (including weapon_swap), _build_result
+
+Total: 140 tests, all green (93 + 47 new).
+
+TECHNICAL NOTES
+
+gem_planner.py: inventoryId is on the parent equipped item, not the socketed gem.
+_collect_gems() reads it from the outer item loop and propagates to each gem.
+GGG inventoryId values: Weapon/Offhand (primary), Weapon2/Offhand2 (swap = leveling).
+
+hud.py tab bar: setExpanding(False) is the critical call. Without it, QTabBar
+stretches tabs to fill available width and scroll arrows never appear.
+Combination: setExpanding(False) + setUsesScrollButtons(True) = correct behavior.
+
+Map mod display: still blocked. No stable data source.
+poedb.tw has no reliable JSON API. RePoE has no map mods.
+Trade API returns mod IDs but not descriptions.
+
+SUGGESTIONS FOR NEXT SESSION
+
+1. PoE 2 support (LOW): poe_version config field exists, no conditional logic.
+   Minimum: different Client.txt path default + passive tree URL.
+
+2. HUD tab grouping (LOW): 15 tabs with scroll is functional but not ideal.
+   Consider nested QTabWidget (Character/Market/Endgame) or sidebar nav.
+
+3. Auto-refresh for Div Card / Chaos Recipe (LOW): Currently user-triggered.
+   Optional N-minute poll when OAuth connected. Configurable in Settings.
+
+4. Map mod display (BLOCKED): Skip until a data source emerges.
+
+PROJECT HEALTH
+
+Overall grade: 10/10
+100% complete toward original vision.
+100% complete toward expanded vision.
+
+140 tests pass. No technical debt. No regressions.
+Gem planner now separates leveling gems. Tab bar handles 15 tabs gracefully.
+
+║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║

@@ -11,6 +11,7 @@ from PyQt6.QtWidgets import (
 )
 from PyQt6.QtCore import Qt, QTimer, pyqtSignal
 from PyQt6.QtGui import QColor, QPalette
+from PyQt6.QtWidgets import QTabBar
 
 from ui.widgets.quest_panel import QuestPanel
 from ui.widgets.price_panel import PricePanel
@@ -91,8 +92,10 @@ class HUD(QMainWindow):
         root.setStyleSheet(f"""
             QWidget {{ background-color: {DARK_BG}; color: {TEXT}; font-family: 'Segoe UI'; font-size: 12px; border-radius: 8px; }}
             QTabWidget::pane {{ border: 1px solid #2a2a4a; background: {PANEL_BG}; }}
-            QTabBar::tab {{ background: #0f0f23; color: {SUBTEXT}; padding: 6px 14px; border-radius: 4px 4px 0 0; }}
+            QTabBar::tab {{ background: #0f0f23; color: {SUBTEXT}; padding: 5px 8px; border-radius: 4px 4px 0 0; }}
             QTabBar::tab:selected {{ background: {PANEL_BG}; color: {ACCENT}; border-bottom: 2px solid {ACCENT}; }}
+            QTabBar::scroller {{ width: 20px; }}
+            QTabBar QToolButton {{ background: #0f0f23; color: {SUBTEXT}; border: 1px solid #2a2a4a; }}
             QPushButton {{ background: #2a2a4a; color: {TEXT}; border: 1px solid #3a3a5a; border-radius: 4px; padding: 4px 10px; }}
             QPushButton:hover {{ background: #3a3a5a; }}
             QLabel {{ background: transparent; }}
@@ -108,6 +111,8 @@ class HUD(QMainWindow):
 
         # Tab widget — one tab per module
         tabs = QTabWidget()
+        tabs.tabBar().setUsesScrollButtons(True)
+        tabs.tabBar().setExpanding(False)
         self._tabs = tabs
 
         self._quest_panel    = QuestPanel(quest_tracker)
