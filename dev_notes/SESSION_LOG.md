@@ -3979,3 +3979,137 @@ PoE2 tree remains the only blocked item. G2 and G3 are straightforward.
 224 tests pass. No technical debt. No regressions.
 
 ═══════════════════════════════════════════════════════════════
+
+═══════════════════════════════════════════════════════════════
+SESSION: 2026-03-25 (Session 26)
+═══════════════════════════════════════════════════════════════
+
+## ORIENTATION SUMMARY
+
+Session 25 completed G1 (Syndicate Member Planner) and auto-approved G2/G3.
+Suggestions from Session 25:
+  1. G2: Vendor Recipe Browser (primary target this session)
+  2. G3: Scarab Browser (secondary target)
+  3. CurrencyFlipPanel auto-refresh timer (UX polish)
+  4. PoE2 passive tree (blocked)
+Baseline: 224 tests passing, no technical debt.
+
+## ASSESSMENT GRADES
+
+Module                  | Completeness | Quality | Vision Alignment
+------------------------|-------------|---------|----------------
+Quest Tracker           |    10/10    |  9/10   |    10/10
+Passive Tree Viewer     |    10/10    |  9/10   |    10/10
+Price Checker           |    10/10    |  9/10   |    10/10
+Currency Tracker        |    10/10    |  9/10   |    10/10
+Crafting System         |    10/10    |  9/10   |     9/10
+Core Infrastructure     |    10/10    |  9/10   |    10/10
+Map Overlay             |    10/10    |  9/10   |    10/10
+XP Rate Tracker         |    10/10    |  9/10   |    10/10
+Chaos Recipe Counter    |     9/10    |  9/10   |     9/10
+Build Notes Panel       |    10/10    |  9/10   |     9/10
+Div Card Tracker        |     9/10    |  9/10   |     9/10
+Atlas Tracker           |     9/10    |  9/10   |     9/10
+Bestiary Browser        |    10/10    |  9/10   |    10/10
+Heist Planner           |     9/10    |  9/10   |     9/10
+Gem Planner             |     9/10    |  9/10   |     9/10
+Map Stash Scanner       |     9/10    |  9/10   |     9/10
+Expedition Browser      |    10/10    |  9/10   |    10/10
+Currency Flip Calc      |     9/10    |  9/10   |     9/10
+Lab Tracker             |    10/10    |  9/10   |    10/10
+Syndicate Planner       |     9/10    |  9/10   |    10/10
+Vendor Recipe Browser   |     9/10    |  9/10   |    10/10 (new)
+Scarab Browser          |     9/10    |  9/10   |    10/10 (new)
+Test Suite              |    10/10    |  9/10   |     9/10
+
+## SMOKE TEST FINDINGS
+
+Phase 1B -- Logic and Structure Issues
+None found. Codebase fully clean at session start.
+
+Phase 1C -- Redundancy and Counter-Vision Issues
+None found.
+
+## MAINTENANCE LOG
+
+No maintenance fixes this session -- codebase was clean at session start.
+
+## DEVELOPMENT LOG
+
+### UX Polish: CurrencyFlipPanel auto-refresh timer
+File modified: ui/widgets/currency_flip_panel.py
+  Added QCheckBox Auto-refresh every 5 min below header
+  Added QTimer (5-minute interval) owned by panel
+  _on_auto_toggle(enabled): starts/stops timer; True fires immediate calculate
+  Imports added: QCheckBox, QTimer
+
+### Feature: G2 Vendor Recipe Browser
+Files created:
+  data/vendor_recipes.json: 21 recipes across 4 categories
+    Currency (7): Chromatic, Jewellers, Fusing, Portal Scroll, Transmutation, Augmentation, Alteration
+    Quality (5): Whetstone, Scrap, Bauble, Chisel, GCP
+    Leveling (5): Flask upgrade, Magic flask reroll, Elemental rings, Two-Stone Ring, ailment flask
+    Unique (4): 3x unique reroll, Chance Orb from uniques, Regal from unids, Map tier upgrade
+    Schema: {name, category, ingredients, result, notes}
+  ui/widgets/vendor_recipes_panel.py: VendorRecipesPanel
+    Category filter buttons: All / Currency / Quality / Leveling / Unique
+    Color: Currency=ACCENT, Quality=GREEN, Leveling=TEAL, Unique=PURPLE
+    Full-text search across name + ingredients + result + notes + category
+    Card per recipe: badge, separator, ingredients, result, notes
+  tests/test_vendor_recipes_panel.py: 16 tests
+
+Files modified:
+  ui/hud.py: Added VendorRecipesPanel import + _INFO_VENDOR_RECIPES=3
+    _INFO_SCARABS=4, _INFO_SETTINGS shifted to 5
+    Added Vendor and Scarabs tabs to Info group
+
+### Feature: G3 Scarab Browser
+Files created:
+  data/scarabs.json: 52 scarabs -- 13 mechanics x 4 tiers each
+    Mechanics: Ambush, Breach, Delirium, Expedition, Harbinger, Legion, Bestiary,
+               Abyss, Blight, Ritual, Harvest, Metamorph, Incursion, Cartography, Torment
+    Schema: {name, mechanic, tier, effect, atlas_passive}
+  ui/widgets/scarab_panel.py: ScarabPanel
+    Tier filter buttons (Rusted/Polished/Gilded/Winged) color-coded
+    Full-text search: mechanic, effect, atlas_passive, tier, name
+    Grouped display: one card per mechanic, tier rows within
+    _group_by_mechanic(): groups + sorts by tier_order
+    Atlas passive shown once per mechanic group
+  tests/test_scarab_panel.py: 16 tests
+
+Files modified:
+  ui/hud.py: Added ScarabPanel import + _INFO_SCARABS=4
+  dev_notes/VISION.md: Marked G2 and G3 as IMPLEMENTED (Session 26)
+
+Test count: 224 -> 256 (+32 new tests, all pass)
+
+## TECHNICAL NOTES
+
+ScarabPanel grouping vs flat:
+  Scarabs have parent-child structure (mechanic -> tiers). Grouping avoids 52 cards.
+  _group_by_mechanic() is reusable for any tiered data in future panels.
+
+CurrencyFlipPanel timer: QTimer(self) ensures cleanup with panel. 5-min constant.
+
+Asana create_task gap: Still no tool. Session summary as project GID: 1213811942331435.
+
+Info group tab index: Settings shifted from 3 to 5. Users see index reset cosmetically.
+
+## SUGGESTIONS FOR NEXT SESSION
+
+1. Phase 4 Round 4: G1-G3 all complete at 9+/10. Run Phase 4 again.
+   Generate 3-5 new expansion ideas. Auto-approve and add to VISION.md.
+
+2. PoE2 passive tree (BLOCKED): No official GGG export yet.
+   Check https://github.com/grindinggear/skilltree-export for new branches.
+
+3. UX polish: Scarab panel poe.ninja price per tier (low priority).
+
+## PROJECT HEALTH
+
+Overall grade: 10/10
+~99% complete (original + E1-E6, F1-F3, G1-G3 all implemented).
+Only remaining item: PoE2 passive tree (blocked).
+256 tests pass. No technical debt. No regressions.
+
+═══════════════════════════════════════════════════════════════

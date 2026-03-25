@@ -190,20 +190,21 @@ These features were auto-approved after all F1–F3 items reached completion. Im
 - ui/widgets/syndicate_panel.py; add to Info group
 - **Rationale:** Betrayal is permanent; players frequently need to look up "which member gives which reward" and plan their division placements. Having it in the overlay eliminates alt-tabbing to the wiki mid-encounter.
 
-### G2. Vendor Recipe Browser (MEDIUM)
+### G2. Vendor Recipe Browser ✅ IMPLEMENTED (Session 26)
 - Static reference for all important PoE vendor recipes
 - Categories: Currency recipes (chromatics, fusings, etc.), Leveling recipes (flasks, links), Quality recipes (whetstones, scraps), Unique recipes (specific uniques from vendor)
 - Search by ingredient or result
-- Data source: data/vendor_recipes.json (static, curated)
-- ui/widgets/vendor_recipes_panel.py; add to Info group
+- Data source: data/vendor_recipes.json (static, curated, 21 recipes)
+- ui/widgets/vendor_recipes_panel.py; added to Info group as "Vendor" tab
 - **Rationale:** Vendor recipes are an always-available resource optimization; players frequently look up "what do I vendor for X?" Having it in the overlay during play is more convenient than alt-tabbing.
 
-### G3. Scarab Browser (LOW)
+### G3. Scarab Browser ✅ IMPLEMENTED (Session 26)
 - Static reference for all PoE scarab types and their effects
-- Shows: scarab name, tier (Rusted/Polished/Gilded/Winged), effect description, which Atlas passive cluster synergizes
-- Search by mechanic name or effect
-- Data source: data/scarabs.json (static, curated)
-- ui/widgets/scarab_panel.py; add to Info group
+- Shows: scarab mechanic, tier (Rusted/Polished/Gilded/Winged), effect description, which Atlas passive cluster synergizes
+- Filter by tier; search by mechanic, effect, or atlas passive
+- Grouped by mechanic (one card per mechanic, tiers listed within)
+- Data source: data/scarabs.json (static, curated, 13 mechanics × 4 tiers = 52 scarabs)
+- ui/widgets/scarab_panel.py; added to Info group as "Scarabs" tab
 - **Rationale:** Scarabs replaced maps as the primary Atlas economy driver; players choosing which scarabs to run benefit from a quick effect reference without leaving the game window.
 
 ---

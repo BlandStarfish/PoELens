@@ -1,0 +1,151 @@
+{
+  "recipes": [
+    {
+      "name": "Chromatic Orb",
+      "category": "Currency",
+      "ingredients": "Any item with 3 linked sockets of 3 different colors (R+G+B)",
+      "result": "1 Chromatic Orb",
+      "notes": "Works at any item level and rarity. Off-color items (e.g. high Str/Int gear with green sockets) are most cost-efficient to vendor."
+    },
+    {
+      "name": "Jeweller's Orbs (bulk)",
+      "category": "Currency",
+      "ingredients": "Any item with 6 sockets",
+      "result": "7 Jeweller's Orbs",
+      "notes": "Most 6-socket items are worth more sold to vendor for jewellers than on trade. Exception: 6-linked items — vendor those instead."
+    },
+    {
+      "name": "Orbs of Fusing (bulk)",
+      "category": "Currency",
+      "ingredients": "Any item with 6 linked sockets",
+      "result": "20 Orbs of Fusing",
+      "notes": "Only worthwhile if the item itself has no trade value. 6-linked whites and rares with bad mods are prime candidates."
+    },
+    {
+      "name": "Portal Scroll",
+      "category": "Currency",
+      "ingredients": "3 Scroll Fragments",
+      "result": "1 Scroll of Wisdom",
+      "notes": "Scroll Fragments drop from vendors when selling items. Collect them from junk vendors early in acts."
+    },
+    {
+      "name": "Orb of Transmutation",
+      "category": "Currency",
+      "ingredients": "5 Scrolls of Wisdom",
+      "result": "1 Orb of Transmutation",
+      "notes": "Only useful if desperately short on transmutes. In practice, transmutes are plentiful from drops."
+    },
+    {
+      "name": "Orb of Augmentation",
+      "category": "Currency",
+      "ingredients": "3 Orbs of Transmutation",
+      "result": "1 Orb of Augmentation",
+      "notes": "Useful to know but augmentations drop frequently enough that this is rarely needed."
+    },
+    {
+      "name": "Orb of Alteration",
+      "category": "Currency",
+      "ingredients": "4 Orbs of Augmentation",
+      "result": "1 Orb of Alteration",
+      "notes": "Alteration recipe is a useful sink for excess augments. Alterations are a common early-game craft currency."
+    },
+    {
+      "name": "Blacksmith's Whetstone",
+      "category": "Quality",
+      "ingredients": "Any weapon with 20% quality",
+      "result": "1 Blacksmith's Whetstone",
+      "notes": "Vendor any white/magic/rare weapon that has been quality-maxed. More efficient than selling low-value weapons for nothing."
+    },
+    {
+      "name": "Armourer's Scrap",
+      "category": "Quality",
+      "ingredients": "Any armour piece with 20% quality",
+      "result": "1 Armourer's Scrap",
+      "notes": "Same principle as whetstone recipe. Any slot counts: helmet, chest, gloves, boots, shield."
+    },
+    {
+      "name": "Glassblower's Bauble",
+      "category": "Quality",
+      "ingredients": "Any flask with 20% quality",
+      "result": "1 Glassblower's Bauble",
+      "notes": "Flask vendors in acts often sell magic flasks you can quality-up and vendor back for baubles."
+    },
+    {
+      "name": "Cartographer's Chisel",
+      "category": "Quality",
+      "ingredients": "Any map with 20% quality",
+      "result": "1 Cartographer's Chisel",
+      "notes": "Best chisel recipe: use Chisels on a white map, brick it, vendor. Or buy low-tier white maps and quality them with baubles first."
+    },
+    {
+      "name": "Gemcutter's Prism",
+      "category": "Quality",
+      "ingredients": "White (normal) gems totaling 40% or more combined quality",
+      "result": "1 Gemcutter's Prism",
+      "notes": "Use Gemcutter's Prism on white copies of cheap gems (e.g. Clarity, Rejuvenation Totem). Combine 4× 10%q gems or 2× 20%q gems."
+    },
+    {
+      "name": "Flask (upgraded tier)",
+      "category": "Leveling",
+      "ingredients": "3 flasks of the same base type and rarity",
+      "result": "1 flask of the next higher tier (same type and rarity)",
+      "notes": "Excellent early-leveling recipe. Combine 3 Small Life Flasks → Medium Life Flask, etc. Works for mana and hybrid flasks too."
+    },
+    {
+      "name": "Magic flask (reroll mods)",
+      "category": "Leveling",
+      "ingredients": "1 magic flask + 1 Orb of Alteration",
+      "result": "1 magic flask with new random mods",
+      "notes": "Vendor-rerolls the magic flask. Faster than looting new flasks for specific mods like Surgeon's or Experimenter's."
+    },
+    {
+      "name": "Ruby/Sapphire/Topaz Ring",
+      "category": "Leveling",
+      "ingredients": "1 Iron Ring + 1 Red/Blue/Green gem",
+      "result": "1 Ruby/Sapphire/Topaz Ring respectively",
+      "notes": "Ruby = fire resist, Sapphire = cold resist, Topaz = lightning resist. Essential for capping resistance while leveling."
+    },
+    {
+      "name": "Two-Stone Ring",
+      "category": "Leveling",
+      "ingredients": "1 Ruby Ring + 1 Sapphire Ring, or other elemental ring combos",
+      "result": "1 Two-Stone Ring",
+      "notes": "Ruby + Sapphire → fire/cold Two-Stone Ring. Ruby + Topaz → fire/lightning. Sapphire + Topaz → cold/lightning."
+    },
+    {
+      "name": "Warding/Grounding/Dousing/Heat flask",
+      "category": "Leveling",
+      "ingredients": "1 magic Quicksilver/Silver/Diamond flask + specific gem",
+      "result": "Flask with curse removal or elemental ailment removal",
+      "notes": "Vendor a utility flask with a matching-color gem to add relevant ailment/curse removal suffix. Exact combos vary by flask type."
+    },
+    {
+      "name": "Unique — 3× Same Unique",
+      "category": "Unique",
+      "ingredients": "3 copies of the same unique item",
+      "result": "1 copy of that unique with new random rolls",
+      "notes": "Rerolls the unique's numeric values. Useful for chasing perfect rolls on a budget unique. Works on any rarity."
+    },
+    {
+      "name": "Chance Orb (from uniques)",
+      "category": "Unique",
+      "ingredients": "Any identified unique item (most uniques)",
+      "result": "1–2 Orbs of Chance",
+      "notes": "Most worthless uniques vendor for Orbs of Chance. Better to bulk-vendor than trash. Exception: some uniques vendor for specific currency."
+    },
+    {
+      "name": "Regal Orb (from uniques)",
+      "category": "Unique",
+      "ingredients": "Specific unidentified rare uniques (base-type dependent)",
+      "result": "1 Regal Orb",
+      "notes": "Some unique bases vendor for Regals when unidentified. Less common in modern PoE — verify in poe.wiki before relying on this."
+    },
+    {
+      "name": "Maps (upgrade tier)",
+      "category": "Unique",
+      "ingredients": "3 maps of the same base type and rarity",
+      "result": "1 map of the next tier (same type and rarity)",
+      "notes": "Core map sustain mechanic. 3× T1 → 1× T2, etc. White maps: 3 whites → 1 white next tier. Same rules apply for magic and rare maps."
+    }
+  ]
+}

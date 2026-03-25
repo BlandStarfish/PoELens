@@ -639,3 +639,31 @@ Catarina (Research), Vorici (Transportation), Elreon (Research), Aisling (Transp
 
 Tab placement: Info group, index 2 (between Expedition and Settings).
 _INFO_SETTINGS shifted from 2 to 3 in hud.py.
+
+## Session 26 Additions
+
+### New data files
+- data/vendor_recipes.json — 21 vendor recipes, 4 categories (Currency/Quality/Leveling/Unique)
+  Schema: {name, category, ingredients, result, notes}
+- data/scarabs.json — 52 scarabs (13 mechanics × 4 tiers)
+  Schema: {name, mechanic, tier, effect, atlas_passive}
+  Tiers: Rusted < Polished < Gilded < Winged
+
+### ScarabPanel grouping design
+  Scarabs are grouped by mechanic (not listed flat) for readability.
+  _group_by_mechanic() builds dict[mechanic, list[scarab]] sorted by tier_order.
+  The panel renders one QWidget card per mechanic with tier rows inside.
+  This avoids 52 individual cards scrolled separately — much better UX.
+  Compare to BestiaryPanel (flat cards) vs SyndicatePanel (flat cards):
+  Scarab grouping is appropriate here because tiers belong conceptually together.
+
+### CurrencyFlipPanel auto-refresh
+  QTimer(_AUTO_REFRESH_INTERVAL_MS=5min) starts/stops via QCheckBox toggled signal.
+  Checking the box triggers _start_calculate() immediately and starts the timer.
+  _on_auto_toggle() handles both start and stop.
+  Timer is owned by the panel (self._auto_timer) so it lives as long as the panel.
+
+### VendorRecipesPanel / ScarabPanel follow established patterns
+  Both follow: _load_*() → QVBoxLayout with filter row + legend row + QScrollArea.
+  Filter button active state: btn.setProperty("active",...) + unpolish/polish cycle.
+  This is now the standard pattern for all static-data Info panels.

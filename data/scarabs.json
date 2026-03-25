@@ -1,0 +1,424 @@
+{
+  "scarabs": [
+    {
+      "name": "Rusted Ambush Scarab",
+      "mechanic": "Ambush",
+      "tier": "Rusted",
+      "effect": "Area contains an additional Strongbox",
+      "atlas_passive": "Ambush & Assassins cluster (Windfall, Smuggler's Cache)"
+    },
+    {
+      "name": "Polished Ambush Scarab",
+      "mechanic": "Ambush",
+      "tier": "Polished",
+      "effect": "Area contains 2 additional Strongboxes",
+      "atlas_passive": "Ambush & Assassins cluster (Windfall, Smuggler's Cache)"
+    },
+    {
+      "name": "Gilded Ambush Scarab",
+      "mechanic": "Ambush",
+      "tier": "Gilded",
+      "effect": "Area contains 3 additional Strongboxes; Strongboxes are Corrupted",
+      "atlas_passive": "Ambush & Assassins cluster (Windfall, Smuggler's Cache)"
+    },
+    {
+      "name": "Winged Ambush Scarab",
+      "mechanic": "Ambush",
+      "tier": "Winged",
+      "effect": "Area contains 4 additional Strongboxes; Strongboxes contain additional Magic and Rare items",
+      "atlas_passive": "Ambush & Assassins cluster (Windfall, Smuggler's Cache)"
+    },
+    {
+      "name": "Rusted Breach Scarab",
+      "mechanic": "Breach",
+      "tier": "Rusted",
+      "effect": "Area contains a Breach",
+      "atlas_passive": "Breach cluster (Dimensional Barrier, Void-touched)"
+    },
+    {
+      "name": "Polished Breach Scarab",
+      "mechanic": "Breach",
+      "tier": "Polished",
+      "effect": "Area contains 2 Breaches",
+      "atlas_passive": "Breach cluster (Dimensional Barrier, Void-touched)"
+    },
+    {
+      "name": "Gilded Breach Scarab",
+      "mechanic": "Breach",
+      "tier": "Gilded",
+      "effect": "Area contains 3 Breaches; Breaches contain additional Splinters",
+      "atlas_passive": "Breach cluster (Dimensional Barrier, Void-touched)"
+    },
+    {
+      "name": "Winged Breach Scarab",
+      "mechanic": "Breach",
+      "tier": "Winged",
+      "effect": "Area contains 4 Breaches; Breachstones can drop from Breach monsters",
+      "atlas_passive": "Breach cluster (Dimensional Barrier, Void-touched)"
+    },
+    {
+      "name": "Rusted Delirium Scarab",
+      "mechanic": "Delirium",
+      "tier": "Rusted",
+      "effect": "Area is affected by Delirium",
+      "atlas_passive": "Delirium cluster (Heart of the Delirium, Paranoia)"
+    },
+    {
+      "name": "Polished Delirium Scarab",
+      "mechanic": "Delirium",
+      "tier": "Polished",
+      "effect": "Area is affected by Delirium; rewards have a chance to be Simulacrum Splinters",
+      "atlas_passive": "Delirium cluster (Heart of the Delirium, Paranoia)"
+    },
+    {
+      "name": "Gilded Delirium Scarab",
+      "mechanic": "Delirium",
+      "tier": "Gilded",
+      "effect": "Area has 2 Delirium layers; Cluster Jewel drops are more common",
+      "atlas_passive": "Delirium cluster (Heart of the Delirium, Paranoia)"
+    },
+    {
+      "name": "Winged Delirium Scarab",
+      "mechanic": "Delirium",
+      "tier": "Winged",
+      "effect": "Area has 3 Delirium layers; Delirium rewards are significantly enhanced",
+      "atlas_passive": "Delirium cluster (Heart of the Delirium, Paranoia)"
+    },
+    {
+      "name": "Rusted Expedition Scarab",
+      "mechanic": "Expedition",
+      "tier": "Rusted",
+      "effect": "Area contains an Expedition encounter",
+      "atlas_passive": "Expedition cluster (Cassia's Pride, Deadly Evolution)"
+    },
+    {
+      "name": "Polished Expedition Scarab",
+      "mechanic": "Expedition",
+      "tier": "Polished",
+      "effect": "Area contains 2 Expedition encounters",
+      "atlas_passive": "Expedition cluster (Cassia's Pride, Deadly Evolution)"
+    },
+    {
+      "name": "Gilded Expedition Scarab",
+      "mechanic": "Expedition",
+      "tier": "Gilded",
+      "effect": "Area contains 3 Expedition encounters; Tujenin may appear",
+      "atlas_passive": "Expedition cluster (Cassia's Pride, Deadly Evolution)"
+    },
+    {
+      "name": "Winged Expedition Scarab",
+      "mechanic": "Expedition",
+      "tier": "Winged",
+      "effect": "Area contains 4 Expedition encounters with additional artifacts",
+      "atlas_passive": "Expedition cluster (Cassia's Pride, Deadly Evolution)"
+    },
+    {
+      "name": "Rusted Harbinger Scarab",
+      "mechanic": "Harbinger",
+      "tier": "Rusted",
+      "effect": "Area contains 2 additional Harbingers",
+      "atlas_passive": "Harbinger cluster (Harbinger's Orb, Far From Shore)"
+    },
+    {
+      "name": "Polished Harbinger Scarab",
+      "mechanic": "Harbinger",
+      "tier": "Polished",
+      "effect": "Area contains 4 additional Harbingers",
+      "atlas_passive": "Harbinger cluster (Harbinger's Orb, Far From Shore)"
+    },
+    {
+      "name": "Gilded Harbinger Scarab",
+      "mechanic": "Harbinger",
+      "tier": "Gilded",
+      "effect": "Area contains 6 additional Harbingers; Beachhead Portals can appear",
+      "atlas_passive": "Harbinger cluster (Harbinger's Orb, Far From Shore)"
+    },
+    {
+      "name": "Winged Harbinger Scarab",
+      "mechanic": "Harbinger",
+      "tier": "Winged",
+      "effect": "Area contains 8 additional Harbingers; currency shard drops are enhanced",
+      "atlas_passive": "Harbinger cluster (Harbinger's Orb, Far From Shore)"
+    },
+    {
+      "name": "Rusted Legion Scarab",
+      "mechanic": "Legion",
+      "tier": "Rusted",
+      "effect": "Area contains a Legion encounter",
+      "atlas_passive": "Legion cluster (Domain of Timeless Conflict, Monumental)"
+    },
+    {
+      "name": "Polished Legion Scarab",
+      "mechanic": "Legion",
+      "tier": "Polished",
+      "effect": "Area contains a Legion encounter with additional generals",
+      "atlas_passive": "Legion cluster (Domain of Timeless Conflict, Monumental)"
+    },
+    {
+      "name": "Gilded Legion Scarab",
+      "mechanic": "Legion",
+      "tier": "Gilded",
+      "effect": "Area contains a Legion encounter; more emblems and splinters drop",
+      "atlas_passive": "Legion cluster (Domain of Timeless Conflict, Monumental)"
+    },
+    {
+      "name": "Winged Legion Scarab",
+      "mechanic": "Legion",
+      "tier": "Winged",
+      "effect": "Area contains a Legion encounter with greatly enhanced splinter and emblem drops",
+      "atlas_passive": "Legion cluster (Domain of Timeless Conflict, Monumental)"
+    },
+    {
+      "name": "Rusted Bestiary Scarab",
+      "mechanic": "Bestiary",
+      "tier": "Rusted",
+      "effect": "Area contains additional Beasts; a Red Beast is guaranteed",
+      "atlas_passive": "Bestiary cluster (Einhar's Menagerie, Prized Capture)"
+    },
+    {
+      "name": "Polished Bestiary Scarab",
+      "mechanic": "Bestiary",
+      "tier": "Polished",
+      "effect": "Area contains additional Beasts; a Yellow Beast is guaranteed",
+      "atlas_passive": "Bestiary cluster (Einhar's Menagerie, Prized Capture)"
+    },
+    {
+      "name": "Gilded Bestiary Scarab",
+      "mechanic": "Bestiary",
+      "tier": "Gilded",
+      "effect": "Area contains additional Beasts; a Red and Yellow Beast are guaranteed",
+      "atlas_passive": "Bestiary cluster (Einhar's Menagerie, Prized Capture)"
+    },
+    {
+      "name": "Winged Bestiary Scarab",
+      "mechanic": "Bestiary",
+      "tier": "Winged",
+      "effect": "Area contains abundant Beasts; chance for a Legendary Beast",
+      "atlas_passive": "Bestiary cluster (Einhar's Menagerie, Prized Capture)"
+    },
+    {
+      "name": "Rusted Abyss Scarab",
+      "mechanic": "Abyss",
+      "tier": "Rusted",
+      "effect": "Area contains an additional Abyss",
+      "atlas_passive": "Abyss cluster (Swallowed Whole, Depths of Despair)"
+    },
+    {
+      "name": "Polished Abyss Scarab",
+      "mechanic": "Abyss",
+      "tier": "Polished",
+      "effect": "Area contains 2 additional Abysses",
+      "atlas_passive": "Abyss cluster (Swallowed Whole, Depths of Despair)"
+    },
+    {
+      "name": "Gilded Abyss Scarab",
+      "mechanic": "Abyss",
+      "tier": "Gilded",
+      "effect": "Area contains 3 additional Abysses; Abyssal Depths can open",
+      "atlas_passive": "Abyss cluster (Swallowed Whole, Depths of Despair)"
+    },
+    {
+      "name": "Winged Abyss Scarab",
+      "mechanic": "Abyss",
+      "tier": "Winged",
+      "effect": "Area contains 4 additional Abysses; Stygian Vises and Jewels drop more frequently",
+      "atlas_passive": "Abyss cluster (Swallowed Whole, Depths of Despair)"
+    },
+    {
+      "name": "Rusted Blight Scarab",
+      "mechanic": "Blight",
+      "tier": "Rusted",
+      "effect": "Area contains a Blight encounter",
+      "atlas_passive": "Blight cluster (Cassia's Bane, Blighted Maps)"
+    },
+    {
+      "name": "Polished Blight Scarab",
+      "mechanic": "Blight",
+      "tier": "Polished",
+      "effect": "Area contains a Blight encounter; Oils drop more frequently",
+      "atlas_passive": "Blight cluster (Cassia's Bane, Blighted Maps)"
+    },
+    {
+      "name": "Gilded Blight Scarab",
+      "mechanic": "Blight",
+      "tier": "Gilded",
+      "effect": "Area contains a Blight encounter; Blighted Maps have a chance to drop",
+      "atlas_passive": "Blight cluster (Cassia's Bane, Blighted Maps)"
+    },
+    {
+      "name": "Winged Blight Scarab",
+      "mechanic": "Blight",
+      "tier": "Winged",
+      "effect": "Area contains a Blight encounter with significantly more pumps and richer Oil drops",
+      "atlas_passive": "Blight cluster (Cassia's Bane, Blighted Maps)"
+    },
+    {
+      "name": "Rusted Ritual Scarab",
+      "mechanic": "Ritual",
+      "tier": "Rusted",
+      "effect": "Area contains an additional Ritual",
+      "atlas_passive": "Ritual cluster (Blood Offering, Firstborn)"
+    },
+    {
+      "name": "Polished Ritual Scarab",
+      "mechanic": "Ritual",
+      "tier": "Polished",
+      "effect": "Area contains 2 additional Rituals",
+      "atlas_passive": "Ritual cluster (Blood Offering, Firstborn)"
+    },
+    {
+      "name": "Gilded Ritual Scarab",
+      "mechanic": "Ritual",
+      "tier": "Gilded",
+      "effect": "Area contains 3 additional Rituals; Tribute costs are reduced",
+      "atlas_passive": "Ritual cluster (Blood Offering, Firstborn)"
+    },
+    {
+      "name": "Winged Ritual Scarab",
+      "mechanic": "Ritual",
+      "tier": "Winged",
+      "effect": "Area contains 4 additional Rituals; unique items appear more often in Ritual shop",
+      "atlas_passive": "Ritual cluster (Blood Offering, Firstborn)"
+    },
+    {
+      "name": "Rusted Harvest Scarab",
+      "mechanic": "Harvest",
+      "tier": "Rusted",
+      "effect": "Area contains the Sacred Grove",
+      "atlas_passive": "Harvest cluster (Bumper Crop, Wandering Path)"
+    },
+    {
+      "name": "Polished Harvest Scarab",
+      "mechanic": "Harvest",
+      "tier": "Polished",
+      "effect": "Area contains the Sacred Grove; higher-tier crops are more common",
+      "atlas_passive": "Harvest cluster (Bumper Crop, Wandering Path)"
+    },
+    {
+      "name": "Gilded Harvest Scarab",
+      "mechanic": "Harvest",
+      "tier": "Gilded",
+      "effect": "Area contains the Sacred Grove; yellow and purple crops have increased presence",
+      "atlas_passive": "Harvest cluster (Bumper Crop, Wandering Path)"
+    },
+    {
+      "name": "Winged Harvest Scarab",
+      "mechanic": "Harvest",
+      "tier": "Winged",
+      "effect": "Area contains the Sacred Grove with abundant high-tier crops and crafts",
+      "atlas_passive": "Harvest cluster (Bumper Crop, Wandering Path)"
+    },
+    {
+      "name": "Rusted Metamorph Scarab",
+      "mechanic": "Metamorph",
+      "tier": "Rusted",
+      "effect": "Monsters are accompanied by Metamorph parts; a Metamorph spawns in the area",
+      "atlas_passive": "Metamorph cluster (Tainted Flesh, Unstable Cargo)"
+    },
+    {
+      "name": "Polished Metamorph Scarab",
+      "mechanic": "Metamorph",
+      "tier": "Polished",
+      "effect": "More monsters drop Metamorph samples; the Metamorph is more rewarding",
+      "atlas_passive": "Metamorph cluster (Tainted Flesh, Unstable Cargo)"
+    },
+    {
+      "name": "Gilded Metamorph Scarab",
+      "mechanic": "Metamorph",
+      "tier": "Gilded",
+      "effect": "Metamorph has a chance to be a Unique Metamorph; Catalyst drops more frequently",
+      "atlas_passive": "Metamorph cluster (Tainted Flesh, Unstable Cargo)"
+    },
+    {
+      "name": "Winged Metamorph Scarab",
+      "mechanic": "Metamorph",
+      "tier": "Winged",
+      "effect": "Numerous Metamorph parts; greatly increased Catalyst and unique Metamorph chance",
+      "atlas_passive": "Metamorph cluster (Tainted Flesh, Unstable Cargo)"
+    },
+    {
+      "name": "Rusted Incursion Scarab",
+      "mechanic": "Incursion",
+      "tier": "Rusted",
+      "effect": "Area contains 2 additional Incursions",
+      "atlas_passive": "Incursion cluster (Time Compression, Contested Development)"
+    },
+    {
+      "name": "Polished Incursion Scarab",
+      "mechanic": "Incursion",
+      "tier": "Polished",
+      "effect": "Area contains 3 additional Incursions; Architect items drop more",
+      "atlas_passive": "Incursion cluster (Time Compression, Contested Development)"
+    },
+    {
+      "name": "Gilded Incursion Scarab",
+      "mechanic": "Incursion",
+      "tier": "Gilded",
+      "effect": "Area contains 4 additional Incursions; chance of extra Omnitect",
+      "atlas_passive": "Incursion cluster (Time Compression, Contested Development)"
+    },
+    {
+      "name": "Winged Incursion Scarab",
+      "mechanic": "Incursion",
+      "tier": "Winged",
+      "effect": "Area contains 5 Incursions; Temple rooms are fully developed more often",
+      "atlas_passive": "Incursion cluster (Time Compression, Contested Development)"
+    },
+    {
+      "name": "Rusted Cartography Scarab",
+      "mechanic": "Cartography",
+      "tier": "Rusted",
+      "effect": "Area has 30% increased Map Item Quantity",
+      "atlas_passive": "Cartography cluster (Master Cartographer, Wandering Path)"
+    },
+    {
+      "name": "Polished Cartography Scarab",
+      "mechanic": "Cartography",
+      "tier": "Polished",
+      "effect": "Area has 60% increased Map Item Quantity; maps dropped are one tier higher",
+      "atlas_passive": "Cartography cluster (Master Cartographer, Wandering Path)"
+    },
+    {
+      "name": "Gilded Cartography Scarab",
+      "mechanic": "Cartography",
+      "tier": "Gilded",
+      "effect": "Area has 100% increased Map Item Quantity; maps have a chance to be magic or rare",
+      "atlas_passive": "Cartography cluster (Master Cartographer, Wandering Path)"
+    },
+    {
+      "name": "Winged Cartography Scarab",
+      "mechanic": "Cartography",
+      "tier": "Winged",
+      "effect": "Greatly increased map drops; maps have a chance to be Corrupted or have additional modifiers",
+      "atlas_passive": "Cartography cluster (Master Cartographer, Wandering Path)"
+    },
+    {
+      "name": "Rusted Torment Scarab",
+      "mechanic": "Torment",
+      "tier": "Rusted",
+      "effect": "Area contains 3 additional Tormented Spirits",
+      "atlas_passive": "Torment cluster (Hauntingly Rich, Vessel of Hatred)"
+    },
+    {
+      "name": "Polished Torment Scarab",
+      "mechanic": "Torment",
+      "tier": "Polished",
+      "effect": "Area contains 5 additional Tormented Spirits",
+      "atlas_passive": "Torment cluster (Hauntingly Rich, Vessel of Hatred)"
+    },
+    {
+      "name": "Gilded Torment Scarab",
+      "mechanic": "Torment",
+      "tier": "Gilded",
+      "effect": "Area contains 7 additional Tormented Spirits; Tormented Spirits drop more items",
+      "atlas_passive": "Torment cluster (Hauntingly Rich, Vessel of Hatred)"
+    },
+    {
+      "name": "Winged Torment Scarab",
+      "mechanic": "Torment",
+      "tier": "Winged",
+      "effect": "Area is filled with Tormented Spirits; items they possess are greatly enhanced",
+      "atlas_passive": "Torment cluster (Hauntingly Rich, Vessel of Hatred)"
+    }
+  ]
+}

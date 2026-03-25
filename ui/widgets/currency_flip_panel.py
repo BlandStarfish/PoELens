@@ -9,8 +9,9 @@ No API calls beyond what poe.ninja already fetches for price checking.
 
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QLabel, QPushButton, QScrollArea, QHBoxLayout, QFrame,
+    QCheckBox,
 )
-from PyQt6.QtCore import Qt, QThread, pyqtSignal
+from PyQt6.QtCore import Qt, QThread, QTimer, pyqtSignal
 
 ACCENT = "#e2b96f"
 TEXT   = "#d4c5a9"
@@ -45,6 +46,9 @@ class _FlipWorker(QThread):
         self.done.emit(results)
 
 
+_AUTO_REFRESH_INTERVAL_MS = 5 * 60 * 1000  # 5 minutes
+
+
 class CurrencyFlipPanel(QWidget):
     def __init__(self, currency_flip):
         """
@@ -53,6 +57,9 @@ class CurrencyFlipPanel(QWidget):
         super().__init__()
         self._flip   = currency_flip
         self._worker = None
+        self._auto_timer = QTimer(self)
+        self._auto_timer.setInterval(_AUTO_REFRESH_INTERVAL_MS)
+        self._auto_timer.timeout.connect(self._start_calculate)
         self._build_ui()
 
     def _build_ui(self):
@@ -72,6 +79,16 @@ class CurrencyFlipPanel(QWidget):
         self._refresh_btn.clicked.connect(self._start_calculate)
         header_row.addWidget(self._refresh_btn)
         layout.addLayout(header_row)
+
+        # Auto-refresh checkbox
+        auto_row = QHBoxLayout()
+        auto_row.setSpacing(6)
+        self._auto_cb = QCheckBox("Auto-refresh every 5 min")
+        self._auto_cb.setStyleSheet(f"color: {DIM}; font-size: 10px;")
+        self._auto_cb.toggled.connect(self._on_auto_toggle)
+        auto_row.addWidget(self._auto_cb)
+        auto_row.addStretch()
+        layout.addLayout(auto_row)
 
         # Status label
         self._status = QLabel("Press Calculate to find profitable flips.")
@@ -98,6 +115,13 @@ class CurrencyFlipPanel(QWidget):
         note.setStyleSheet(f"color: {DIM}; font-size: 10px;")
         note.setWordWrap(True)
         layout.addWidget(note)
+
+    def _on_auto_toggle(self, enabled: bool):
+        if enabled:
+            self._auto_timer.start()
+            self._start_calculate()
+        else:
+            self._auto_timer.stop()
 
     def _start_calculate(self):
         if self._worker and self._worker.isRunning():

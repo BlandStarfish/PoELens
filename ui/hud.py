@@ -35,6 +35,8 @@ from ui.widgets.expedition_panel import ExpeditionPanel
 from ui.widgets.currency_flip_panel import CurrencyFlipPanel
 from ui.widgets.lab_panel import LabPanel
 from ui.widgets.syndicate_panel import SyndicatePanel
+from ui.widgets.vendor_recipes_panel import VendorRecipesPanel
+from ui.widgets.scarab_panel import ScarabPanel
 
 
 DARK_BG = "#1a1a2e"
@@ -69,10 +71,12 @@ _END_HEIST     = 3
 _END_GEMS      = 4
 _END_MAP_STASH = 5
 
-_INFO_BESTIARY    = 0
-_INFO_EXPEDITION  = 1
-_INFO_SYNDICATE   = 2
-_INFO_SETTINGS    = 3
+_INFO_BESTIARY        = 0
+_INFO_EXPEDITION      = 1
+_INFO_SYNDICATE       = 2
+_INFO_VENDOR_RECIPES  = 3
+_INFO_SCARABS         = 4
+_INFO_SETTINGS        = 5
 
 
 class HUD(QMainWindow):
@@ -216,10 +220,12 @@ class HUD(QMainWindow):
             stash_api=self._stash_api,
             league=league,
         ) if map_scanner else QWidget()
-        self._expedition_panel   = ExpeditionPanel()
-        self._syndicate_panel    = SyndicatePanel()
-        self._currency_flip_panel = CurrencyFlipPanel(currency_flip) if currency_flip else QWidget()
-        self._lab_panel = LabPanel(lab_tracker) if lab_tracker else QWidget()
+        self._expedition_panel       = ExpeditionPanel()
+        self._syndicate_panel        = SyndicatePanel()
+        self._vendor_recipes_panel   = VendorRecipesPanel()
+        self._scarab_panel           = ScarabPanel()
+        self._currency_flip_panel    = CurrencyFlipPanel(currency_flip) if currency_flip else QWidget()
+        self._lab_panel              = LabPanel(lab_tracker) if lab_tracker else QWidget()
 
         # ── Outer tab widget (4 categories, evenly spaced) ─────────────
         outer_tabs = QTabWidget()
@@ -268,14 +274,16 @@ class HUD(QMainWindow):
         self._inner_tabs.append(end_tabs)
         outer_tabs.addTab(end_tabs, "Endgame")             # _GRP_ENDGAME   = 2
 
-        # Info group: Bestiary · Expedition · Syndicate · Settings
+        # Info group: Bestiary · Expedition · Syndicate · Vendor · Scarabs · Settings
         info_tabs = _make_inner()
-        info_tabs.addTab(self._bestiary_panel,   "Bestiary")   # _INFO_BESTIARY   = 0
-        info_tabs.addTab(self._expedition_panel, "Expedition") # _INFO_EXPEDITION = 1
-        info_tabs.addTab(self._syndicate_panel,  "Syndicate")  # _INFO_SYNDICATE  = 2
-        info_tabs.addTab(self._settings_panel,   "Settings")   # _INFO_SETTINGS   = 3
+        info_tabs.addTab(self._bestiary_panel,       "Bestiary")   # _INFO_BESTIARY       = 0
+        info_tabs.addTab(self._expedition_panel,     "Expedition") # _INFO_EXPEDITION     = 1
+        info_tabs.addTab(self._syndicate_panel,      "Syndicate")  # _INFO_SYNDICATE      = 2
+        info_tabs.addTab(self._vendor_recipes_panel, "Vendor")     # _INFO_VENDOR_RECIPES = 3
+        info_tabs.addTab(self._scarab_panel,         "Scarabs")    # _INFO_SCARABS        = 4
+        info_tabs.addTab(self._settings_panel,       "Settings")   # _INFO_SETTINGS       = 5
         self._inner_tabs.append(info_tabs)
-        outer_tabs.addTab(info_tabs, "Info")                   # _GRP_INFO        = 3
+        outer_tabs.addTab(info_tabs, "Info")                       # _GRP_INFO            = 3
 
         # Restore last active tabs from config (saved on tab-change)
         outer_tabs.setCurrentIndex(self._config.get("last_group", 0))
