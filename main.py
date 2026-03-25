@@ -46,6 +46,7 @@ from modules.div_cards import DivCardTracker
 from modules.atlas_tracker import AtlasTracker
 from modules.heist_planner import HeistPlanner
 from modules.gem_planner import GemPlanner
+from modules.map_stash import MapStashScanner
 
 # Lazy UI import — avoids loading Qt before QApplication exists
 import ui.hud as hud_module
@@ -94,6 +95,7 @@ def main():
     atlas_tracker    = AtlasTracker()
     heist_planner    = HeistPlanner(stash_api)
     gem_planner      = GemPlanner(character_api)
+    map_scanner      = MapStashScanner(stash_api)
 
     # Client.txt watcher
     log_watcher = ClientLogWatcher(conf["client_log_path"])
@@ -121,6 +123,7 @@ def main():
         atlas_tracker=atlas_tracker,
         heist_planner=heist_planner,
         gem_planner=gem_planner,
+        map_scanner=map_scanner,
         config=conf,
         oauth_manager=oauth_manager,
         stash_api=stash_api,

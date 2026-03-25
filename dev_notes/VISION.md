@@ -136,6 +136,45 @@ These features were auto-approved by the development agent after all original ro
 - Requires parsing the `items` field from character API response (already uses account:characters)
 - **Rationale:** Leveling valuable gems in off-hand slots is a passive income source; a quick summary surfaces gems that are ready to sell without opening the character sheet
 
+### E6. Map Stash Scanner ✅ IMPLEMENTED (Session 23)
+- Scan MapStash tab via OAuth Stash API for all maps with rolled mod information
+- Display: name, tier, rarity, IIQ/IIR/Pack Size bonus %, and full explicit mod list
+- Grouped by tier descending, maps sorted alphabetically within each tier
+- Unidentified maps shown with "(Unidentified)" indicator (no mod list)
+- stash_api.get_map_items() + modules/map_stash.py + ui/widgets/map_stash_panel.py
+- Tab: Endgame > MapStash
+- **Rationale:** Closes the long-standing "map mod display" gap; players can scan their map stash and see exactly what affixes are on each map without opening the game stash
+
+---
+
+## Expansion Roadmap Round 2 (Auto-Approved 2026-03-25)
+
+These features were auto-approved after all E1–E6 items reached completion. Implement in priority order listed.
+
+### F1. Expedition Remnant Browser (HIGH)
+- Static reference tool: browse all Expedition remnant keywords and what they do
+- Search by keyword name or effect (e.g., "which keyword gives extra currency?")
+- Data source: data/expedition_remnants.json (curated from GGG data / community sources)
+- No API calls — purely static data, zero latency, always accurate
+- ui/widgets/expedition_panel.py; add to Info group alongside Bestiary
+- **Rationale:** Expedition is a permanent mechanic; players constantly need to look up what each remnant keyword does. Having it in the overlay is more convenient than alt-tabbing to the wiki during mapping.
+
+### F2. Currency Flip Calculator (MEDIUM)
+- Calculate the most profitable currency exchange opportunities using poe.ninja data
+- Show top N flip pairs sorted by profit margin (e.g., "Buy 100 Chaos → sell as Alchs → +X% profit")
+- Respects poe.ninja bulk exchange endpoint (already wired in poe_ninja.py)
+- Pure calculation — no new API calls, reuses price data already in memory
+- modules/currency_flip.py + ui/widgets/currency_flip_panel.py; add to Loot group
+- **Rationale:** Currency flipping is a passive income activity many players do; surfacing profitable flips directly in the overlay saves time vs checking external tools
+
+### F3. Lab Tracker (LOW)
+- Track Normal/Cruel/Merciless/Eternal lab completion status for the current character
+- Uses Client.txt zone_change events for lab area entries (same passive reading pattern as quest_tracker)
+- Manual override toggle for each difficulty (for lab-runner characters or offline tracking)
+- Shows Pantheon minor gods unlocked (passive note-taking, not automated)
+- modules/lab_tracker.py + ui/widgets/lab_panel.py; add to Character group
+- **Rationale:** Lab is required for ascendancy points every league; a quick checklist of which difficulties have been completed prevents accidentally running a lab you already cleared
+
 ---
 
 ### 6. Map Overlay ✅ IMPLEMENTED (v3)

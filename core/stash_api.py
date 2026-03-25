@@ -91,6 +91,46 @@ def _extract_wing_status(additional_properties: list) -> tuple[int, int]:
     return 0, 0
 
 
+def _parse_map_item(item: dict) -> dict:
+    """
+    Parse a single stash API map item dict into a normalized display dict.
+
+    Extracts Map Tier, Item Quantity, Item Rarity, and Monster Pack Size from
+    the GGG item properties array. Each property has the form:
+      {"name": "Map Tier", "values": [["14", 0]], ...}
+    where values[0][0] is the display string.
+    """
+    props: dict[str, str] = {}
+    for p in item.get("properties", []):
+        name   = p.get("name", "")
+        values = p.get("values", [])
+        if values and values[0]:
+            props[name] = str(values[0][0])
+
+    def _pct(key: str) -> int:
+        raw = props.get(key, "0")
+        try:
+            return int(raw.strip("+% "))
+        except ValueError:
+            return 0
+
+    try:
+        tier = int(props.get("Map Tier", "0").strip())
+    except ValueError:
+        tier = 0
+
+    return {
+        "name":       item.get("typeLine", "Unknown"),
+        "tier":       tier,
+        "rarity":     item.get("rarity", "Normal"),
+        "identified": item.get("identified", True),
+        "iiq":        _pct("Item Quantity"),
+        "iir":        _pct("Item Rarity"),
+        "pack_size":  _pct("Monster Pack Size"),
+        "mods":       item.get("explicitMods", []),
+    }
+
+
 class StashAPI:
     def __init__(self, oauth_manager, realm: str = "pc"):
         self._oauth = oauth_manager
@@ -235,6 +275,45 @@ class StashAPI:
                     })
 
         return {"contracts": contracts, "blueprints": blueprints}
+
+    def get_map_items(self, league: str) -> list[dict]:
+        """
+        Scan MapStash tabs and return map item data with rolled mod info.
+
+        Returns a list of dicts:
+          name:        map name (typeLine)
+          tier:        int (from Map Tier property, 0 if unknown)
+          rarity:      str ("Normal", "Magic", "Rare", "Unique")
+          identified:  bool
+          iiq:         int (item quantity bonus %)
+          iir:         int (item rarity bonus %)
+          pack_size:   int (monster pack size bonus %)
+          mods:        list[str] (explicit mod strings, human-readable)
+
+        Sorted by tier descending, then map name ascending.
+        Returns [] on error or if no MapStash tab exists.
+        """
+        tabs = self.list_tabs(league)
+        if tabs is None:
+            return []
+
+        map_tabs = [t for t in tabs if t.get("type") == "MapStash"]
+        if not map_tabs:
+            return []
+
+        results: list[dict] = []
+        for tab in map_tabs:
+            tab_id = tab.get("id")
+            if not tab_id:
+                continue
+            tab_data = self.get_tab(league, tab_id)
+            if tab_data is None:
+                continue
+            for item in tab_data.get("stash", {}).get("items", []):
+                results.append(_parse_map_item(item))
+
+        results.sort(key=lambda m: (-m["tier"], m["name"]))
+        return results
 
     def get_divination_items(self, league: str) -> dict[str, int]:
         """

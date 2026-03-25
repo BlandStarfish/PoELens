@@ -30,6 +30,7 @@ from ui.widgets.atlas_panel import AtlasPanel
 from ui.widgets.bestiary_panel import BestiaryPanel
 from ui.widgets.heist_panel import HeistPanel
 from ui.widgets.gem_panel import GemPanel
+from ui.widgets.map_stash_panel import MapStashPanel
 
 
 DARK_BG = "#1a1a2e"
@@ -55,11 +56,12 @@ _LOOT_CURRENCY = 1
 _LOOT_RECIPE   = 2
 _LOOT_DIVS     = 3
 
-_END_MAP     = 0
-_END_ATLAS   = 1
-_END_CRAFT   = 2
-_END_HEIST   = 3
-_END_GEMS    = 4
+_END_MAP       = 0
+_END_ATLAS     = 1
+_END_CRAFT     = 2
+_END_HEIST     = 3
+_END_GEMS      = 4
+_END_MAP_STASH = 5
 
 _INFO_BESTIARY = 0
 _INFO_SETTINGS = 1
@@ -69,7 +71,7 @@ class HUD(QMainWindow):
     def __init__(self, state, quest_tracker, price_checker, currency_tracker, crafting,
                  map_overlay, xp_tracker, chaos_recipe, config,
                  div_tracker=None, atlas_tracker=None,
-                 heist_planner=None, gem_planner=None,
+                 heist_planner=None, gem_planner=None, map_scanner=None,
                  oauth_manager=None, stash_api=None, character_api=None):
         super().__init__()
         self._state = state
@@ -81,7 +83,7 @@ class HUD(QMainWindow):
         self._setup_window()
         self._build_ui(quest_tracker, price_checker, currency_tracker, crafting,
                        map_overlay, xp_tracker, chaos_recipe,
-                       div_tracker, atlas_tracker, heist_planner, gem_planner)
+                       div_tracker, atlas_tracker, heist_planner, gem_planner, map_scanner)
 
         # Wire price checker results to price panel
         price_checker.on_result(self._price_panel.show_result)
@@ -115,7 +117,7 @@ class HUD(QMainWindow):
     def _build_ui(self, quest_tracker, price_checker, currency_tracker, crafting,
                   map_overlay, xp_tracker, chaos_recipe,
                   div_tracker=None, atlas_tracker=None,
-                  heist_planner=None, gem_planner=None):
+                  heist_planner=None, gem_planner=None, map_scanner=None):
         root = QWidget()
         root.setStyleSheet(f"""
             QWidget {{ background-color: {DARK_BG}; color: {TEXT}; font-family: 'Segoe UI'; font-size: 12px; border-radius: 8px; }}
@@ -197,6 +199,12 @@ class HUD(QMainWindow):
             oauth_manager=self._oauth_manager,
             league=league,
         ) if gem_planner else QWidget()
+        self._map_stash_panel = MapStashPanel(
+            map_scanner,
+            oauth_manager=self._oauth_manager,
+            stash_api=self._stash_api,
+            league=league,
+        ) if map_scanner else QWidget()
 
         # ── Outer tab widget (4 categories, evenly spaced) ─────────────
         outer_tabs = QTabWidget()
@@ -234,11 +242,12 @@ class HUD(QMainWindow):
 
         # Endgame group: Map · Atlas · Crafting · Heist · Gems
         end_tabs = _make_inner()
-        end_tabs.addTab(self._map_panel,      "Map")      # _END_MAP   = 0
-        end_tabs.addTab(self._atlas_panel,    "Atlas")    # _END_ATLAS = 1
-        end_tabs.addTab(self._crafting_panel, "Crafting") # _END_CRAFT = 2
-        end_tabs.addTab(self._heist_panel,    "Heist")    # _END_HEIST = 3
-        end_tabs.addTab(self._gem_panel,      "Gems")     # _END_GEMS  = 4
+        end_tabs.addTab(self._map_panel,        "Map")       # _END_MAP       = 0
+        end_tabs.addTab(self._atlas_panel,      "Atlas")     # _END_ATLAS     = 1
+        end_tabs.addTab(self._crafting_panel,   "Crafting")  # _END_CRAFT     = 2
+        end_tabs.addTab(self._heist_panel,      "Heist")     # _END_HEIST     = 3
+        end_tabs.addTab(self._gem_panel,        "Gems")      # _END_GEMS      = 4
+        end_tabs.addTab(self._map_stash_panel,  "MapStash")  # _END_MAP_STASH = 5
         self._inner_tabs.append(end_tabs)
         outer_tabs.addTab(end_tabs, "Endgame")             # _GRP_ENDGAME   = 2
 

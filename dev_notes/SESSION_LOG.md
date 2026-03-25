@@ -3480,3 +3480,175 @@ Tab memory and instant auto-scan reload close the last two UX gaps
 flagged in Sessions 20-21.
 
 ║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║
+
+║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║
+
+SESSION: 2026-03-25  (Session 23)
+
+ORIENTATION SUMMARY
+
+Session 23. Read all prior session notes (Sessions 1-22). Session 22 left with:
+1. PoE2 passive tree URL (BLOCKED) -- GGG repo has no PoE2 data yet
+2. Map mod display (BLOCKED on data source) -- UNBLOCKED this session
+3. Phase 4 evaluation -- all features at 9+/10, new expansion ideas generated
+
+PoE2 research confirmed: no official PoE2 passive tree JSON (GGG docs reference
+the skilltree-export repo but it has no poe2 branch). Still blocked.
+
+Map mod display UNBLOCKED: GGG stash API confirmed to return explicitMods as
+human-readable strings on all identified map items. No scraping needed.
+MapStash Scanner feature implemented as E6.
+
+All 140 tests passed at session start. 160 tests pass at session end (+20).
+
+ASSESSMENT GRADES
+
+Module               | Completeness | Quality | Vision Alignment
+---------------------|-------------|---------|----------------
+Quest Tracker        |    10/10    |  9/10   |    10/10
+Passive Tree Viewer  |    10/10    |  9/10   |    10/10
+Price Checker        |    10/10    |  9/10   |    10/10
+Currency Tracker     |    10/10    |  9/10   |    10/10
+Crafting System      |    10/10    |  9/10   |     9/10
+Core Infrastructure  |    10/10    |  9/10   |    10/10
+Map Overlay          |    10/10    |  9/10   |    10/10
+XP Rate Tracker      |    10/10    |  9/10   |    10/10
+Chaos Recipe Counter |     9/10    |  9/10   |     9/10
+Build Notes Panel    |    10/10    |  9/10   |     9/10
+Settings Panel       |    10/10    |  9/10   |    10/10
+OAuth/Stash/Char API |     9/10    |  9/10   |     9/10
+Div Card Tracker     |     9/10    |  9/10   |     9/10
+Atlas Tracker        |     9/10    |  9/10   |     9/10
+Bestiary Browser     |     9/10    |  9/10   |     9/10
+Heist Planner        |     9/10    |  9/10   |     9/10
+Gem Planner          |     9/10    |  9/10   |     9/10
+Map Stash Scanner    |     9/10    |  9/10   |     9/10 (new)
+Test Suite           |    10/10    |  9/10   |     9/10
+
+All modules at 9/10 or above. No flags.
+
+SMOKE TEST FINDINGS
+
+Phase 1B -- Logic and Structure Issues
+
+None found. Codebase fully clean at session start.
+
+Phase 1C -- Redundancy and Counter-Vision Issues
+
+None found.
+
+MAINTENANCE LOG
+
+No maintenance fixes this session -- codebase was clean at session start.
+
+DEVELOPMENT LOG
+
+Research: PoE2 passive tree URL
+Confirmed from GGG developer docs + github.com/grindinggear/skilltree-export:
+No PoE2 passive tree JSON export exists. The docs page references the repo but
+it contains only PoE1 data (master, royale branches). Still blocked. Community
+alternative (PathOfBuilding-PoE2) extracts from GGPK but is not a clean JSON export.
+
+Research: Map mod display via stash API
+Confirmed from GGG developer docs API reference:
+The stash API Item object includes:
+  explicitMods: list[str] -- human-readable mod strings (e.g. "Players have -10% to all Resistances")
+  properties: list[ItemProperty] -- Map Tier, IIQ, IIR, Pack Size as display strings
+  identified: bool -- present/absent = identified, false = unidentified
+  rarity: str -- "Normal"/"Magic"/"Rare"/"Unique"
+No scraping needed. All map affix data is directly accessible via the existing
+OAuth stash API infrastructure. BLOCKED status removed.
+
+Feature: E6 Map Stash Scanner
+
+Problem: "Map mod display" had been BLOCKED for 14+ sessions (Sessions 9-22) due
+to no stable data source. Now confirmed: stash API returns full mod data.
+
+Files created:
+  core/stash_api.py: Added _parse_map_item() module-level helper + get_map_items() method
+    _parse_map_item(): extracts tier/rarity/identified/IIQ/IIR/pack_size/mods from item dict
+    get_map_items(): scans MapStash tabs, builds list of parsed map dicts, sorts tier-desc/name-asc
+  modules/map_stash.py: MapStashScanner class
+    scan(league, on_done): background thread, calls stash_api.get_map_items()
+    on_update(callback): subscriber pattern (matches DivCardTracker, ChaosRecipe)
+    get_last_result(): returns last scan result
+  ui/widgets/map_stash_panel.py: MapStashPanel
+    OAuth auth status display (same pattern as DivPanel, HeistPanel)
+    "Scan Map Stash" button (user-triggered, not auto-refresh)
+    Scrollable list grouped by tier; each map shows name, IIQ/IIR/Pack stats, mod list
+    Rarity color-coded: Normal=text, Magic=blue, Rare=gold, Unique=orange
+    Unidentified maps show "(Unidentified)" instead of stats+mods
+    Tier headers with count (e.g. "Tier 14  (3)")
+  tests/test_map_stash.py: 20 tests covering _parse_map_item, get_map_items, MapStashScanner
+
+Files modified:
+  ui/hud.py: Added MapStashPanel import, _END_MAP_STASH=5 constant, panel instantiation,
+    and "MapStash" tab in Endgame group; map_scanner optional param threaded through
+  main.py: Added MapStashScanner import, instantiation, and HUD wiring
+
+Tab: Endgame > MapStash (index 5 in Endgame inner group)
+
+Post-implementation review:
+  All new code follows established project patterns (scan/on_update/pyqtSignal)
+  No changes to existing logic -- purely additive
+  stash_api.py changes: one new module-level function + one new method (no behavior changes to existing methods)
+  160 tests pass (was 140, +20 new tests)
+
+Phase 4 Round 2 -- New Expansion Features Auto-Approved
+
+All features at 9+/10. Phase 4 criteria met. Three new features added to VISION.md:
+
+F1. Expedition Remnant Browser (HIGH): Static reference for Expedition remnant keywords.
+    Like Bestiary Browser but for Expedition. data/expedition_remnants.json + ui/widgets/expedition_panel.py.
+    Add to Info group. Zero API calls.
+
+F2. Currency Flip Calculator (MEDIUM): Calculate profitable currency exchange opportunities
+    using poe.ninja data already in memory. modules/currency_flip.py + ui/widgets/currency_flip_panel.py.
+    Add to Loot group alongside Currency tab. Pure math, no new API calls.
+
+F3. Lab Tracker (LOW): Track Normal/Cruel/Merciless/Eternal lab completion for current character.
+    Client.txt zone_change for lab areas + manual toggle. modules/lab_tracker.py + ui/widgets/lab_panel.py.
+    Add to Character group.
+
+TECHNICAL NOTES
+
+stash_api.py: _parse_map_item is module-level (not a method) for clean unit testability.
+  Same pattern as _extract_heist_job and _extract_wing_status.
+  Property values[0][0] is always a display string. Strip "+% " for IIQ/IIR/pack_size.
+  Map Tier has no prefix/suffix -- direct int() conversion after .strip().
+
+map_stash_panel.py: No auto-refresh timer (unlike DivPanel/ChaosPanel).
+  Map stash changes less frequently than div cards or chaos recipe sets.
+  User-triggered scan is sufficient; auto-refresh would add API noise.
+  Can be added later if users request it.
+
+PoE2 passive tree: see TECHNICAL.md for confirmed blocked status.
+  Only unblock path: wait for GGG to publish official PoE2 skilltree-export.
+
+SUGGESTIONS FOR NEXT SESSION
+
+1. F1: Expedition Remnant Browser (HIGH): data/expedition_remnants.json with all
+   Expedition remnant keywords and effects. ui/widgets/expedition_panel.py similar to
+   BestiaryPanel. Add to Info group (_INFO_EXPEDITION = 2). ~50 lines of UI code.
+
+2. F2: Currency Flip Calculator (MEDIUM): poe.ninja currency overview already has
+   buy/sell ratios. modules/currency_flip.py sorts by profit margin.
+   ui/widgets/currency_flip_panel.py shows top flips. Add to Loot group.
+
+3. F3: Lab Tracker (LOW): Simpler than quest_tracker.py. Track 4 lab difficulties.
+   No API calls. Add to Character group.
+
+4. PoE2 passive tree (BLOCKED): Wait for GGG to publish PoE2 tree export.
+
+PROJECT HEALTH
+
+Overall grade: 10/10
+100% complete toward original vision.
+100% complete toward first expansion round (E1-E5).
+100% complete toward E6 (Map Stash Scanner).
+0% toward Round 2 expansion (F1-F3 queued).
+
+160 tests pass. No technical debt. No regressions.
+Long-standing "map mod display" gap finally closed after 14 sessions of blocking.
+
+║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║║

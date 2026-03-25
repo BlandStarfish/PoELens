@@ -559,3 +559,30 @@ _process() groups contracts by job type, sorts each group by ilvl desc.
 Blueprints sorted by ilvl desc, wings_unlocked desc.
 ROGUE_JOBS list defines canonical display order in HeistPanel.
 Unknown job contracts (no matching requirement) grouped under "Unknown" at end.
+
+### stash_api.py: get_map_items() + _parse_map_item() (Session 23)
+MapStash tab items expose full map mod data via the official stash API.
+The GGG Item object schema (confirmed from developer docs):
+  explicitMods: list[str]  — human-readable explicit mod strings (e.g. "Players have -10% to all Resistances")
+  properties: list[{name, values}]  — item stats including "Map Tier", "Item Quantity", "Item Rarity", "Monster Pack Size"
+  rarity: str  — "Normal", "Magic", "Rare", or "Unique"
+  identified: bool  — absent or True = identified; False = unidentified
+  typeLine: str  — map name (without "Map" suffix in zone name)
+
+Property values format: properties[N]["values"] = [[display_string, type], ...]
+  display_string for IIQ/IIR/Pack: "+45%" (strip "+%") to get integer
+  display_string for Map Tier: "14" (plain integer string)
+_parse_map_item() is a module-level function in stash_api.py for clean testability.
+
+### PoE2 passive tree data (confirmed Session 23)
+GGG developer docs reference grindinggear/skilltree-export for both PoE1 and PoE2,
+but the repo only has PoE1 data (master/royale branches, no poe2 branch).
+No official standalone PoE2 passive tree JSON exists as of 2026-03.
+Only source: extract from game client GGPK (as PathOfBuilding-PoE2 does).
+PoE2 passive tree support BLOCKED until GGG publishes official export.
+
+### Tab indices (Session 23)
+Quests=0, Tree=1, Price=2, Currency=3, Crafting=4, Map=5, XP=6, Recipe=7,
+Notes=8, Settings=9, Divs=10, Atlas=11, Bestiary=12, Heist=13, Gems=14, MapStash=15
+Outer groups: Character(0) / Loot(1) / Endgame(2) / Info(3)
+Endgame inner: Map(0) / Atlas(1) / Crafting(2) / Heist(3) / Gems(4) / MapStash(5)
