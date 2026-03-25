@@ -409,9 +409,11 @@ class Installer(tk.Tk):
             if not subdirs:
                 raise RuntimeError("App archive has unexpected structure — no directory found.")
             extracted = os.path.join(tmp, subdirs[0])
+            # Preserve user state and wipe old install if this is a reinstall.
+            state_backup = None
             if os.path.exists(dest):
                 # Terminate any running PoELens processes before wiping the folder.
-                # If python.exe has files open under dest, rmtree will silently fail
+                # If python.exe has files open under dest, rmtree will fail
                 # and the subsequent copytree will crash with FileExistsError.
                 self.after(0, lambda: self._log("Stopping any running PoELens processes..."))
                 subprocess.run(
@@ -424,12 +426,41 @@ class Installer(tk.Tk):
                     ["taskkill", "/F", "/IM", "PoELens.exe"],
                     capture_output=True,
                 )
-                time.sleep(1)   # let OS release file handles after process termination
+                time.sleep(2)  # let OS release file handles after process termination
 
-                shutil.rmtree(dest, ignore_errors=False)
+                # Preserve user state (config, progress, notes) across reinstalls
+                state_src = os.path.join(dest, "state")
+                if os.path.exists(state_src):
+                    state_backup = os.path.join(tmp, "_state_backup")
+                    shutil.copytree(state_src, state_backup)
+                    self.after(0, lambda: self._log("User settings preserved for reinstall."))
 
-            shutil.copytree(extracted, dest)
+                # Wipe old install — retry once if a file handle is briefly lingering
+                for attempt in range(2):
+                    try:
+                        shutil.rmtree(dest)
+                        break
+                    except OSError:
+                        if attempt == 0:
+                            self.after(0, lambda: self._log(
+                                "File handles still held — waiting to retry..."))
+                            time.sleep(4)
+                        else:
+                            raise RuntimeError(
+                                "Could not remove the existing installation.\n"
+                                "A file in the install folder is still in use.\n"
+                                "Please close PoELens completely and click Retry."
+                            )
+
+            # dirs_exist_ok=True handles any partial-wipe edge cases gracefully
+            shutil.copytree(extracted, dest, dirs_exist_ok=True)
             self.after(0, lambda: self._log(f"App files installed to: {dest}"))
+
+            # Restore preserved user state so settings and progress survive reinstalls
+            if state_backup and os.path.exists(state_backup):
+                state_dst = os.path.join(dest, "state")
+                shutil.copytree(state_backup, state_dst, dirs_exist_ok=True)
+                self.after(0, lambda: self._log("User settings and progress restored."))
 
             # ── Move runtime into dest now that the app tree is in place ──
             runtime = os.path.join(dest, ".runtime")
@@ -486,6 +517,9 @@ class Installer(tk.Tk):
                 self._make_shortcut(dest, "Desktop")
             if self._startmenu.get():
                 self._make_shortcut(dest, "StartMenu")
+
+            # ── 8. Uninstaller ────────────────────────────────────────
+            self._write_uninstaller(dest)
 
             self._install_dest = dest
 
@@ -585,6 +619,61 @@ class Installer(tk.Tk):
             self.after(0, lambda: self._log(f"Shortcut: {sc}"))
         except Exception as e:
             self.after(0, lambda: self._log(f"Warning: shortcut failed ({location}): {e}"))
+
+    def _write_uninstaller(self, dest: str):
+        """Write 'Uninstall PoELens.bat' to the install directory.
+
+        The bat copies itself to %TEMP% before running so it can safely delete
+        its own parent folder — a self-deleting script that runs inside the dir
+        it is removing would be blocked by Windows.
+        """
+        try:
+            shortcut_desktop = os.path.join(
+                os.path.expanduser("~"), "Desktop", f"{APP_NAME}.bat"
+            )
+            shortcut_startmenu = os.path.join(
+                os.environ.get("APPDATA", ""),
+                "Microsoft", "Windows", "Start Menu", "Programs", f"{APP_NAME}.bat"
+            )
+            uninstall_path = os.path.join(dest, f"Uninstall {APP_NAME}.bat")
+            script = (
+                "@echo off\n"
+                "echo.\n"
+                f"echo {APP_NAME} Uninstaller\n"
+                "echo ==================\n"
+                "echo.\n"
+                f"set /p CONFIRM=This will remove {APP_NAME} and all its files. Continue? (Y/N): \n"
+                'if /i not "%CONFIRM%"=="Y" (\n'
+                "    echo Cancelled.\n"
+                "    pause\n"
+                "    exit /b\n"
+                ")\n"
+                "echo.\n"
+                "echo Stopping processes...\n"
+                f'taskkill /F /IM python.exe /FI "WINDOWTITLE eq {APP_NAME}*" /T >nul 2>&1\n'
+                f"taskkill /F /IM {APP_NAME}.exe /T >nul 2>&1\n"
+                "timeout /t 2 /nobreak >nul\n"
+                "echo Removing shortcuts...\n"
+                f'del "{shortcut_desktop}" >nul 2>&1\n'
+                f'del "{shortcut_startmenu}" >nul 2>&1\n'
+                "echo Removing install folder...\n"
+                "set INSTALL_DIR=%~dp0\n"
+                'if "%INSTALL_DIR:~-1%"=="\\" set INSTALL_DIR=%INSTALL_DIR:~0,-1%\n'
+                "set CLEANUP=%TEMP%\\poenls_cleanup_%RANDOM%.bat\n"
+                'echo @echo off > "%CLEANUP%"\n'
+                'echo timeout /t 2 /nobreak ^>nul >> "%CLEANUP%"\n'
+                'echo rd /s /q "%INSTALL_DIR%" >> "%CLEANUP%"\n'
+                'echo del "%%~f0" >> "%CLEANUP%"\n'
+                f"echo {APP_NAME} has been uninstalled.\n"
+                "timeout /t 2 /nobreak >nul\n"
+                'start "" /b cmd /c "%CLEANUP%"\n'
+                "exit\n"
+            )
+            with open(uninstall_path, "w") as f:
+                f.write(script)
+            self.after(0, lambda: self._log(f"Uninstaller created: {uninstall_path}"))
+        except Exception as e:
+            self.after(0, lambda: self._log(f"Warning: could not write uninstaller: {e}"))
 
     def _done(self):
         self._status.configure(text="Installation complete!", fg=GREEN)
