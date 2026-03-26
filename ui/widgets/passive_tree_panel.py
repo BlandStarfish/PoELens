@@ -23,7 +23,7 @@ from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit,
     QPushButton, QGraphicsView, QGraphicsScene, QGraphicsEllipseItem,
     QGraphicsLineItem, QGraphicsTextItem, QGraphicsItem,
-    QProgressBar, QFrame, QSizePolicy,
+    QProgressBar, QFrame, QSizePolicy, QComboBox, QSpinBox,
 )
 import threading
 
@@ -155,6 +155,21 @@ class NodeItem(QGraphicsEllipseItem):
 
 
 # ─────────────────────────────────────────────────────────────────────────────
+# Meta build loader
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _load_meta_builds() -> list:
+    """Load meta build definitions from data/meta_builds.json."""
+    import json, os
+    path = os.path.join(os.path.dirname(__file__), "..", "..", "data", "meta_builds.json")
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)["builds"]
+    except Exception:
+        return []
+
+
+# ─────────────────────────────────────────────────────────────────────────────
 # Main panel
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -174,6 +189,9 @@ class PassiveTreePanel(QWidget):
         self._node_items: dict[str, NodeItem] = {}
         self._pinned_node = None
         self._allocated_ids: set[str] = set()   # node IDs from loaded build code
+        self._meta_builds = _load_meta_builds()
+        self._active_build_nodes: set[str] = set()   # currently previewed build nodes
+        self._compare_build_nodes: set[str] = set()  # comparison build nodes
         self._build_ui()
         self._start_loading()
 
@@ -254,6 +272,9 @@ class PassiveTreePanel(QWidget):
         if self._oauth and self._oauth.is_configured:
             self._build_char_sync_row(layout)
 
+        # ── Meta build preview ──
+        self._build_meta_row(layout)
+
         # ── Progress / status ──
         self._status = QLabel("Loading passive tree data...")
         self._status.setStyleSheet("color: #8a7a65; font-size: 11px;")
@@ -307,6 +328,156 @@ class PassiveTreePanel(QWidget):
 
         layout.addLayout(sync_row)
         self._update_sync_status()
+
+    def _build_meta_row(self, layout):
+        """Add the meta build preview row."""
+        row1 = QHBoxLayout()
+        row1.setSpacing(4)
+
+        meta_lbl = QLabel("Meta:")
+        meta_lbl.setStyleSheet("color: #8a7a65; font-size: 10px;")
+        meta_lbl.setFixedWidth(32)
+        row1.addWidget(meta_lbl)
+
+        self._meta_combo = QComboBox()
+        self._meta_combo.setStyleSheet(
+            "QComboBox { background: #0f0f23; color: #d4c5a9; border: 1px solid #2a2a4a;"
+            " border-radius: 3px; padding: 2px 4px; font-size: 10px; }"
+            "QComboBox::drop-down { border: none; }"
+        )
+        self._meta_combo.addItem("— select build —", None)
+        for build in self._meta_builds:
+            self._meta_combo.addItem(build["name"], build)
+        row1.addWidget(self._meta_combo, 2)
+
+        lv_lbl = QLabel("Lv:")
+        lv_lbl.setStyleSheet("color: #8a7a65; font-size: 10px;")
+        lv_lbl.setFixedWidth(16)
+        row1.addWidget(lv_lbl)
+
+        self._meta_level = QSpinBox()
+        self._meta_level.setRange(1, 100)
+        self._meta_level.setValue(90)
+        self._meta_level.setFixedWidth(46)
+        self._meta_level.setStyleSheet(
+            "QSpinBox { background: #0f0f23; color: #ffd700; border: 1px solid #2a2a4a;"
+            " border-radius: 3px; padding: 2px; font-size: 10px; }"
+        )
+        row1.addWidget(self._meta_level)
+
+        preview_btn = QPushButton("Preview")
+        preview_btn.setFixedWidth(56)
+        preview_btn.setStyleSheet(
+            "QPushButton { color: #ffd700; font-size: 10px; padding: 2px 4px; }"
+        )
+        preview_btn.clicked.connect(self._preview_meta_build)
+        row1.addWidget(preview_btn)
+        layout.addLayout(row1)
+
+        # Compare row
+        row2 = QHBoxLayout()
+        row2.setSpacing(4)
+
+        vs_lbl = QLabel("vs:")
+        vs_lbl.setStyleSheet("color: #8a7a65; font-size: 10px;")
+        vs_lbl.setFixedWidth(20)
+        row2.addWidget(vs_lbl)
+
+        self._compare_combo = QComboBox()
+        self._compare_combo.setStyleSheet(self._meta_combo.styleSheet())
+        self._compare_combo.addItem("— compare build —", None)
+        for build in self._meta_builds:
+            self._compare_combo.addItem(build["name"], build)
+        row2.addWidget(self._compare_combo, 2)
+
+        compare_btn = QPushButton("Respec Cost")
+        compare_btn.setFixedWidth(80)
+        compare_btn.setStyleSheet(
+            "QPushButton { color: #4ae8c8; font-size: 10px; padding: 2px 4px; }"
+        )
+        compare_btn.clicked.connect(self._show_respec_cost)
+        row2.addWidget(compare_btn)
+
+        self._respec_label = QLabel("")
+        self._respec_label.setStyleSheet("color: #e05050; font-size: 10px;")
+        row2.addWidget(self._respec_label, 1)
+        layout.addLayout(row2)
+
+    def _preview_meta_build(self):
+        """Preview the selected meta build on the tree."""
+        if not self._tree:
+            self._status.setText("Tree not loaded yet — wait for load to complete.")
+            return
+
+        build = self._meta_combo.currentData()
+        if build is None:
+            self._status.setText("Select a meta build first.")
+            return
+
+        from modules import build_path
+        level = self._meta_level.value()
+        available = build_path.calc_available_points(level)
+
+        nodes = build_path.simulate_build(
+            self._tree,
+            build["class_index"],
+            build.get("keystones", []),
+            build.get("notable_search", []),
+            build.get("fill_search", []),
+            available,
+        )
+
+        self._active_build_nodes = nodes
+        self._allocated_ids = nodes
+        self._apply_allocation()
+        self._build_input.clear()
+        self._respec_label.setText("")
+
+        in_tree = sum(1 for n in nodes if n in self._node_items)
+        self._status.setText(
+            f"{build['name']} — Lv{level} ({available} pts) — "
+            f"{in_tree} nodes highlighted"
+        )
+
+    def _show_respec_cost(self):
+        """Show how many regret orbs are needed to swap from current to compare build."""
+        if not self._tree:
+            self._status.setText("Tree not loaded yet.")
+            return
+        if not self._active_build_nodes:
+            self._status.setText("Preview a build first (click Preview).")
+            return
+
+        build_b = self._compare_combo.currentData()
+        if build_b is None:
+            self._respec_label.setText("Select a comparison build.")
+            return
+
+        from modules import build_path
+        level = self._meta_level.value()
+        available = build_path.calc_available_points(level)
+
+        nodes_b = build_path.simulate_build(
+            self._tree,
+            build_b["class_index"],
+            build_b.get("keystones", []),
+            build_b.get("notable_search", []),
+            build_b.get("fill_search", []),
+            available,
+        )
+
+        self._compare_build_nodes = nodes_b
+        cost = build_path.respec_cost(self._active_build_nodes, nodes_b)
+        shared = len(self._active_build_nodes & nodes_b)
+
+        build_a_name = (self._meta_combo.currentData() or {}).get("name", "Current")
+        self._respec_label.setText(
+            f"  {cost} regret orbs  ({shared} pts shared)"
+        )
+        self._status.setText(
+            f"Respec {build_a_name} → {build_b['name']}: {cost} Regret Orbs needed"
+            f" ({shared} nodes kept)"
+        )
 
     def _update_sync_status(self):
         """Reflect current OAuth auth state in the sync row label."""

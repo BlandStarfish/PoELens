@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "builds": [
+    {
+      "id": "rf_jugg",
+      "name": "RF Juggernaut",
+      "class_name": "Marauder",
+      "class_index": 1,
+      "description": "Righteous Fire — max life as DPS, permanent burning aura",
+      "color": "#e06030",
+      "keystones": ["Resolute Technique", "Unwavering Stance"],
+      "notable_search": ["life regeneration", "endurance charge", "armour", "strength"],
+      "fill_search": ["maximum life", "melee damage"]
+    },
+    {
+      "id": "ci_occultist",
+      "name": "CI Occultist",
+      "class_name": "Witch",
+      "class_index": 3,
+      "description": "Chaos Inoculation — immune to chaos damage, large energy shield pool",
+      "color": "#8040c0",
+      "keystones": ["Chaos Inoculation", "Wicked Ward"],
+      "notable_search": ["energy shield", "spell damage", "chaos"],
+      "fill_search": ["maximum energy shield", "intelligence"]
+    },
+    {
+      "id": "gc_sabo",
+      "name": "Glacial Cascade Saboteur",
+      "class_name": "Shadow",
+      "class_index": 6,
+      "description": "Glacial Cascade mines — high burst cold damage via traps and mines",
+      "color": "#40b0e0",
+      "keystones": ["Acrobatics"],
+      "notable_search": ["mine", "cold damage", "critical strike"],
+      "fill_search": ["cold damage", "critical multiplier"]
+    },
+    {
+      "id": "tr_pathfinder",
+      "name": "Toxic Rain Pathfinder",
+      "class_name": "Ranger",
+      "class_index": 2,
+      "description": "Toxic Rain — chaos damage over time via bow and projectiles",
+      "color": "#60c040",
+      "keystones": [],
+      "notable_search": ["chaos damage", "bow", "projectile", "life"],
+      "fill_search": ["damage over time", "dexterity"]
+    },
+    {
+      "id": "srs_necro",
+      "name": "SRS Necromancer",
+      "class_name": "Witch",
+      "class_index": 3,
+      "description": "Summon Raging Spirits — minion-based caster, scales minion damage and life",
+      "color": "#c060a0",
+      "keystones": ["Necromantic Aegis"],
+      "notable_search": ["minion damage", "spirit", "life"],
+      "fill_search": ["minion life", "intelligence"]
+    },
+    {
+      "id": "bleed_glad",
+      "name": "Bleed Gladiator",
+      "class_name": "Duelist",
+      "class_index": 4,
+      "description": "Lacerate or Sunder — high bleed damage, strong physical scaling with attack speed",
+      "color": "#c03030",
+      "keystones": ["Resolute Technique"],
+      "notable_search": ["bleed", "physical damage", "attack speed"],
+      "fill_search": ["melee damage", "strength"]
+    },
+    {
+      "id": "storm_brand_inq",
+      "name": "Storm Brand Inquisitor",
+      "class_name": "Templar",
+      "class_index": 5,
+      "description": "Storm Brand — high lightning spell damage, Elemental Overload for consistent crits",
+      "color": "#f0e020",
+      "keystones": ["Elemental Overload"],
+      "notable_search": ["lightning damage", "cast speed", "spell"],
+      "fill_search": ["spell damage", "intelligence"]
+    },
+    {
+      "id": "ll_rf",
+      "name": "LL Righteous Fire",
+      "class_name": "Marauder",
+      "class_index": 1,
+      "description": "Low Life Righteous Fire — Blood Magic for mana-free casting, fire/totem hybrid",
+      "color": "#e08020",
+      "keystones": ["Blood Magic", "Resolute Technique"],
+      "notable_search": ["fire damage", "life regeneration", "totem"],
+      "fill_search": ["maximum life", "strength"]
+    }
+  ]
+}
