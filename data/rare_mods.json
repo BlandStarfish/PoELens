@@ -1,0 +1,213 @@
+{
+  "how_it_works": "Rare and Unique monsters in PoE can roll special modifiers that grant them powerful abilities. Originally introduced as Archnemesis mods (3.17), these were integrated into the core game as standard rare monster modifiers in 3.19. Knowing what each modifier does lets you react appropriately instead of dying to unexpected mechanics.",
+  "tips": [
+    "Proximity Shield + Necromancer: Get melee range on the Necromancer first, or kill adds before they reach crit mass.",
+    "Temporal Bubble + Rejuvenating: Monster heals while you are slowed — use ground DoTs or ranged attacks from outside the bubble.",
+    "Vampiric: Hitting it heals it. Use DoT (Poison, Bleed, Ignite) to kill it without dealing hit damage, or burst it down faster than it heals.",
+    "Mirror Image: Kill the mirror first or ignore the original — only one of them can drop loot.",
+    "Sentinel + Necromancer: An extremely dangerous combo — adds gain energy shield and keep being raised. Clear adds first.",
+    "Magma Barrier: The projectiles have travel time — sidestep them. The barrier itself is a hazard zone to avoid."
+  ],
+  "mods": [
+    {
+      "name": "Necromancer",
+      "effect": "Continually raises nearby corpses as Spectres that fight for it.",
+      "danger": "extreme",
+      "category": "Summons",
+      "combo_warning": "Sentinel, Temporal Bubble",
+      "notes": "Can stack dozens of Spectres if given time. Rush the Necromancer before adds accumulate. Clear corpses away or use Unearth to deny corpse access."
+    },
+    {
+      "name": "Vampiric",
+      "effect": "Drains Life from nearby players on hit. Heals for a portion of all damage it deals.",
+      "danger": "extreme",
+      "category": "Defense",
+      "combo_warning": "Rejuvenating, Magma Barrier",
+      "notes": "Hitting it heals it proportionally. DoT sources (Poison, Bleed, Ignite, Burning Ground) bypass this. Alternatively burst it before it can sustain."
+    },
+    {
+      "name": "Proximity Shield",
+      "effect": "Projects a barrier that deflects and absorbs incoming projectiles near the monster.",
+      "danger": "high",
+      "category": "Defense",
+      "combo_warning": "Necromancer, Sentinel",
+      "notes": "All ranged attacks deflect off the shield. Must fight at melee range, use AOE that hits through, or use Totems/Mines that bypass the geometry."
+    },
+    {
+      "name": "Temporal Bubble",
+      "effect": "Creates an area around itself that heavily slows players caught inside.",
+      "danger": "high",
+      "category": "Area",
+      "combo_warning": "Rejuvenating, Vampiric",
+      "notes": "Being inside the bubble drastically reduces your attack/cast/movement speed. Fight from range outside the bubble whenever possible."
+    },
+    {
+      "name": "Magma Barrier",
+      "effect": "Surrounded by a ring of Magma projectiles that fire outward periodically.",
+      "danger": "high",
+      "category": "Offense",
+      "combo_warning": "Vampiric, Rejuvenating",
+      "notes": "The magma projectiles deal heavy fire damage. Sidestep them by circling the monster during its firing pattern."
+    },
+    {
+      "name": "Mirror Image",
+      "effect": "Creates a Mirror Image of itself when hit while above 50% life. The original becomes immune while the image exists.",
+      "danger": "high",
+      "category": "Defense",
+      "combo_warning": "Necromancer, Rejuvenating",
+      "notes": "Kill the Mirror Image quickly — the original is immune until it dies. Only the original drops loot. Mirror Images can also use the monster's abilities."
+    },
+    {
+      "name": "Corrupter",
+      "effect": "Deals Chaos Damage and periodically creates patches of Corrupted Ground (Chaos DoT).",
+      "danger": "high",
+      "category": "Offense",
+      "combo_warning": "Temporal Bubble",
+      "notes": "Corrupted Ground deals significant Chaos DoT. High Chaos resistance mitigates the DoT. Avoid standing in the ground patches."
+    },
+    {
+      "name": "Sentinel",
+      "effect": "Grants Energy Shield to itself and nearby allies periodically.",
+      "danger": "high",
+      "category": "Defense",
+      "combo_warning": "Necromancer",
+      "notes": "The ES grant can be applied to Spectres (if combined with Necromancer), making adds much tankier. Prioritize killing the Sentinel first."
+    },
+    {
+      "name": "Volatile Blood",
+      "effect": "Releases Volatile Blood orbs periodically that deal heavy area damage on contact.",
+      "danger": "high",
+      "category": "Offense",
+      "combo_warning": "Gargantuan, Hasted",
+      "notes": "The orbs target your location. Keep moving to avoid them. They can be destroyed before reaching you by hitting them."
+    },
+    {
+      "name": "Infected",
+      "effect": "Nearby monsters gain a copy of this monster's modifiers over time.",
+      "danger": "high",
+      "category": "Summons",
+      "combo_warning": "Necromancer, Vampiric",
+      "notes": "Can rapidly spread dangerous mods to all nearby monsters. Kill the Infected monster before it contaminates the pack."
+    },
+    {
+      "name": "Frenzied",
+      "effect": "Gains Frenzy Charges as it takes damage. Each charge increases damage, attack speed, and movement speed.",
+      "danger": "high",
+      "category": "Offense",
+      "combo_warning": "Hasted, Assassin",
+      "notes": "More dangerous at low life. Burst it down quickly — the longer the fight, the more deadly it becomes."
+    },
+    {
+      "name": "Kitava's Herald",
+      "effect": "Summons a wave of additional monsters when its life drops below a threshold.",
+      "danger": "moderate",
+      "category": "Summons",
+      "combo_warning": "Necromancer",
+      "notes": "Expect a sudden influx of monsters at roughly 50% health. Have AOE clear ready for the spawn wave."
+    },
+    {
+      "name": "Treant Horde",
+      "effect": "Periodically summons Oak Treants that charge players and create roots on hit.",
+      "danger": "moderate",
+      "category": "Summons",
+      "combo_warning": "Sentinel, Necromancer",
+      "notes": "Treants are tanky and deal significant physical damage. Kill them before they overwhelm your defenses."
+    },
+    {
+      "name": "Hexer",
+      "effect": "Applies random Curses to players on hit.",
+      "danger": "moderate",
+      "category": "Debuff",
+      "combo_warning": "Corrupter, Frenzied",
+      "notes": "Curses can drastically reduce your resistances or slow you. Curse immunity (Annointment/Pantheon) mitigates this significantly."
+    },
+    {
+      "name": "Overcharged",
+      "effect": "Constantly has maximum Elemental Charges, granting increased Elemental damage and resistances.",
+      "danger": "moderate",
+      "category": "Defense",
+      "combo_warning": "Gargantuan",
+      "notes": "Significantly more resistant to Elemental damage. Physical or Chaos damage is more effective. Decoy Totem can help draw attention."
+    },
+    {
+      "name": "Rejuvenating",
+      "effect": "Rapidly regenerates a large amount of Life per second.",
+      "danger": "moderate",
+      "category": "Defense",
+      "combo_warning": "Vampiric, Temporal Bubble",
+      "notes": "Can regenerate faster than you deal damage with low DPS. DoT and high burst bypasses regeneration speed. Check if Immortal Ambition applies."
+    },
+    {
+      "name": "Juggernaut",
+      "effect": "Has greatly increased Armour and Elemental Resistances, reducing all incoming damage significantly.",
+      "danger": "moderate",
+      "category": "Defense",
+      "combo_warning": "Gargantuan",
+      "notes": "Very tanky against both Physical and Elemental damage. Armour Penetration, Chaos damage, or DoT that bypasses mitigation are most effective."
+    },
+    {
+      "name": "Hasted",
+      "effect": "Has greatly increased Movement Speed and Attack/Cast Speed.",
+      "danger": "moderate",
+      "category": "Offense",
+      "combo_warning": "Frenzied, Assassin",
+      "notes": "Extremely fast and can close distance instantly. Have reliable defensive layers or distance-creating abilities ready."
+    },
+    {
+      "name": "Gargantuan",
+      "effect": "Massively increased maximum Life, damage, and area of effect on all abilities.",
+      "danger": "moderate",
+      "category": "Offense",
+      "combo_warning": "Juggernaut, Overcharged",
+      "notes": "A scaling modifier that makes everything worse. Combined with defensive mods it can create near-unkillable enemies."
+    },
+    {
+      "name": "Assassin",
+      "effect": "Deals extremely high burst damage on strike attacks with a short ramp-up period.",
+      "danger": "moderate",
+      "category": "Offense",
+      "combo_warning": "Hasted, Frenzied",
+      "notes": "Heavily telegraphed — the monster pauses briefly before the burst. Dodge or use Immortal Call/guard skills during the pause."
+    },
+    {
+      "name": "Flame Strider",
+      "effect": "Perpetually Ignited, leaves a trail of burning ground on its movement path.",
+      "danger": "moderate",
+      "category": "Area",
+      "combo_warning": "Hasted",
+      "notes": "Burning ground trails restrict movement options. Fire resistance and Ignite immunity help. Chase it cautiously to avoid walking into trails."
+    },
+    {
+      "name": "Crystal-Skinned",
+      "effect": "Periodically applies auras that grant nearby monsters immunity to one or more damage types.",
+      "danger": "moderate",
+      "category": "Defense",
+      "combo_warning": "Sentinel, Overcharged",
+      "notes": "If your main damage type is being immunized by the aura, switch to another source temporarily. DoT already applied continues to deal damage."
+    },
+    {
+      "name": "Corpse Detonator",
+      "effect": "Detonates nearby corpses, dealing heavy area damage based on the base monster's life.",
+      "danger": "moderate",
+      "category": "Offense",
+      "combo_warning": "Necromancer",
+      "notes": "Prevents corpse-based skills (Raise Zombie, Detonate Dead) from being used safely. Move away from corpses immediately after killing monsters."
+    },
+    {
+      "name": "Savage Haste",
+      "effect": "Grants nearby monsters an aura that increases their attack and movement speed.",
+      "danger": "low",
+      "category": "Summons",
+      "combo_warning": null,
+      "notes": "The aura affects all monsters in range, not just the Rare itself. Kill the Rare quickly to remove the speed boost from the pack."
+    },
+    {
+      "name": "Opulent",
+      "effect": "Has greatly increased item quantity drops but does not share its loot freely.",
+      "danger": "low",
+      "category": "Misc",
+      "combo_warning": null,
+      "notes": "A purely economic modifier — more loot, no additional danger. The ideal rare modifier from a risk/reward perspective."
+    }
+  ]
+}

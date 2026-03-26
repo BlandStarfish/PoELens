@@ -1,0 +1,185 @@
+{
+  "how_it_works": "Blight Oils are drops from Blight encounters. They are used to Anoint items — applying a Notable passive skill to an Amulet (3 oils) or a small passive bonus to a Ring (2 oils). Oils are also used to upgrade Blighted Maps with additional rewards. Higher-tier oils produce more powerful anointments.",
+  "anoint_rules": {
+    "amulet": "Combines 3 oils to anoint any Notable passive skill directly onto the amulet. The passive is granted without needing to path to it on the Skill Tree.",
+    "ring": "Combines 2 oils to add a small passive bonus (life, resistances, damage) to a ring. Weaker than amulet anoints.",
+    "blighted_map": "Upgrading a Blighted Map with oils increases its rewards and enemy difficulty. Higher oils grant more dangerous but more lucrative maps."
+  },
+  "tips": [
+    "Notable anoints from Cassia (the Blight NPC) let you skip long paths on the Skill Tree — high-value for late-game keystones.",
+    "The exact 3-oil combination for each Notable passive can be looked up on poe.trade or the Anoint Calculator.",
+    "Clear and Sepia Oils are extremely common — save Silver, Golden, and Opalescent Oils for high-value anoints.",
+    "Opalescent Oil is the rarest — only used for the most powerful Notable passives (e.g. Eldritch Battery, Resolute Technique, Glancing Blows).",
+    "Anointing a Blighted Map with Golden Oil gives guaranteed Blight-ravaged Maps and increased rewards, making it the best investment for dedicated Blight farming.",
+    "Rings can be anointed multiple times — each anoint consumes both oils and removes the previous anoint."
+  ],
+  "oils": [
+    {
+      "name": "Clear Oil",
+      "tier": 1,
+      "color_hint": "White / Clear",
+      "rarity": "Very Common",
+      "market_value": "negligible",
+      "notes": "The most common drop from Blight. Used in the cheapest amulet anointments (small stats) and very basic ring anoints."
+    },
+    {
+      "name": "Sepia Oil",
+      "tier": 2,
+      "color_hint": "Brown",
+      "rarity": "Very Common",
+      "market_value": "negligible",
+      "notes": "Almost as common as Clear Oil. Slightly higher-tier anoints. Often dropped in bulk — use freely."
+    },
+    {
+      "name": "Amber Oil",
+      "tier": 3,
+      "color_hint": "Yellow",
+      "rarity": "Common",
+      "market_value": "very low",
+      "notes": "Begins to appear in medium-tier Notable anoints. Still drops frequently enough that most players accumulate surplus."
+    },
+    {
+      "name": "Verdant Oil",
+      "tier": 4,
+      "color_hint": "Green",
+      "rarity": "Common",
+      "market_value": "low",
+      "notes": "Notable anoints requiring Verdant Oil are moderate-tier (e.g. basic life cluster passives). Constitution anoint uses 3× Verdant."
+    },
+    {
+      "name": "Teal Oil",
+      "tier": 5,
+      "color_hint": "Teal / Cyan",
+      "rarity": "Uncommon",
+      "market_value": "low",
+      "notes": "Mid-tier oil used for meaningful defensive and offensive Notable anoints."
+    },
+    {
+      "name": "Violet Oil",
+      "tier": 6,
+      "color_hint": "Purple",
+      "rarity": "Uncommon",
+      "market_value": "medium",
+      "notes": "Starts to appear in high-demand anoints. Balance stockpiling vs. spending on anoints you actually need."
+    },
+    {
+      "name": "Crimson Oil",
+      "tier": 7,
+      "color_hint": "Red",
+      "rarity": "Uncommon",
+      "market_value": "medium",
+      "notes": "Frequently required for powerful damage Notable anoints. Used in Blighted Map upgrades for mid-tier rewards."
+    },
+    {
+      "name": "Black Oil",
+      "tier": 8,
+      "color_hint": "Black",
+      "rarity": "Rare",
+      "market_value": "medium-high",
+      "notes": "Used in high-value Notable anoints. Drops much less frequently — trade for them if needed for a specific build."
+    },
+    {
+      "name": "Silver Oil",
+      "tier": 9,
+      "color_hint": "Silver",
+      "rarity": "Rare",
+      "market_value": "high",
+      "notes": "High-tier anointments only. Required for strong keystones like Zealot's Oath. Worth purchasing from trade for key anoints."
+    },
+    {
+      "name": "Golden Oil",
+      "tier": 10,
+      "color_hint": "Gold",
+      "rarity": "Very Rare",
+      "market_value": "very high",
+      "notes": "Near-top tier. Used for the strongest accessible Notable passives. Also the go-to oil for upgrading Blighted Maps to maximum rewards."
+    },
+    {
+      "name": "Opalescent Oil",
+      "tier": 11,
+      "color_hint": "Iridescent / Rainbow",
+      "rarity": "Extremely Rare",
+      "market_value": "very high",
+      "notes": "The rarest oil. Required for the most powerful Notable passives — Eldritch Battery, Resolute Technique, Glancing Blows, Iron Reflexes. Trade for specific builds if needed."
+    }
+  ],
+  "notable_anoints": [
+    {
+      "name": "Constitution",
+      "effect": "+40 to maximum Life",
+      "oils": ["Verdant", "Verdant", "Verdant"],
+      "value": "high",
+      "notes": "Best life anoint for low-to-mid budget builds. 3× Verdant Oils are cheap."
+    },
+    {
+      "name": "Zealot's Oath",
+      "effect": "Life Regeneration applies to Energy Shield instead of Life",
+      "oils": ["Teal", "Teal", "Black"],
+      "value": "high",
+      "notes": "Core anoint for Energy Shield builds that want Life Regeneration to heal their ES pool."
+    },
+    {
+      "name": "Eldritch Battery",
+      "effect": "Spend Energy Shield before Mana for Skill Costs. Energy Shield does not recharge during Flask Effect.",
+      "oils": ["Opalescent", "Opalescent", "Golden"],
+      "value": "high",
+      "notes": "Core keystone for some ES-based Mana builds. Extremely expensive to anoint — buy the amulet with it already if possible."
+    },
+    {
+      "name": "Resolute Technique",
+      "effect": "Your hits can never be Evaded. Never deal Critical Strikes.",
+      "oils": ["Opalescent", "Opalescent", "Opalescent"],
+      "value": "high",
+      "notes": "Max cost (3× Opalescent). Core for melee builds that struggle with accuracy but do not rely on crits."
+    },
+    {
+      "name": "Iron Reflexes",
+      "effect": "Converts all Evasion Rating to Armour. Dexterity no longer provides bonus Evasion.",
+      "oils": ["Opalescent", "Golden", "Silver"],
+      "value": "high",
+      "notes": "Transforms Evasion stackers into extreme Armour builds. Core for specific Determination + Grace hybrid builds."
+    },
+    {
+      "name": "Glancing Blows",
+      "effect": "Chance to Block Attack Damage and Spell Damage is doubled, but Blocks only prevent 50% of damage.",
+      "oils": ["Opalescent", "Silver", "Silver"],
+      "value": "high",
+      "notes": "Key for block-capped builds that can tolerate taking 50% of blocked hits. Enables near 100% effective block."
+    },
+    {
+      "name": "Divine Flesh",
+      "effect": "50% of Elemental Damage you take is taken as Chaos Damage instead",
+      "oils": ["Silver", "Silver", "Silver"],
+      "value": "high",
+      "notes": "Requires very high Chaos resistance (usually 75%+) to be safe. Core for certain tanky defensive builds."
+    },
+    {
+      "name": "Practical Application",
+      "effect": "Grants a Curse Socket (can apply an additional Curse on enemies)",
+      "oils": ["Black", "Black", "Black"],
+      "value": "high",
+      "notes": "Effectively a free curse slot (equivalent to Doedre's Damning ring). Frees up a ring slot or enables triple-curse builds."
+    },
+    {
+      "name": "Hired Killer",
+      "effect": "Minions deal 40% increased damage",
+      "oils": ["Violet", "Black", "Crimson"],
+      "value": "medium",
+      "notes": "Best damage anoint for Minion builds at a reasonable oil cost."
+    },
+    {
+      "name": "Persistence",
+      "effect": "20% chance to gain a Flask Charge when you deal a Killing Blow",
+      "oils": ["Clear", "Sepia", "Verdant"],
+      "value": "medium",
+      "notes": "Cheap anoint for flask-dependent builds that clear large packs."
+    },
+    {
+      "name": "Alira's Reward",
+      "effect": "Regenerate 3 Mana per second; +15% to all Elemental Resistances; 5% increased Mana Regeneration",
+      "oils": ["Clear", "Sepia", "Amber"],
+      "value": "low",
+      "notes": "Very cheap anoint providing a small but useful resistance and mana bonus. Good for new characters needing resistance caps."
+    }
+  ]
+}

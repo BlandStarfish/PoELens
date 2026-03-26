@@ -1,0 +1,240 @@
+{
+  "how_it_works": "The Sanctum (Trial of the Sekhemas) uses Resolve as your health pool. Losing all Resolve fails the current floor. Afflictions are penalties accumulated from room chests, floor modifiers, or Corrupted Virtue. Boons are bonuses from Boon rooms, Divine Fonts, and specific rooms.",
+  "tips": [
+    "Blind Devotion and Corrupted Virtue are run-killers — only accept if already stacked with Boons.",
+    "Eroding Soul reduces your maximum Resolve permanently each room — Fortified Soul (Boon) counters it.",
+    "Looming Presence stacks with other Resolve-loss sources — becomes lethal if combined with Devout Offering.",
+    "Foul Prescriptions turns all future Boons into Afflictions — essentially a Blind Devotion variant.",
+    "Heretical Rites prevents healing via Divine Font — track remaining rooms before accepting it.",
+    "Dead Weight can strip your most valuable Boon — assess which Boon you would most hate to lose.",
+    "Familiar Sting is only dangerous for non-Chaos-immune builds — less relevant with high Chaos res."
+  ],
+  "afflictions": [
+    {
+      "name": "Blind Devotion",
+      "effect": "Cannot gain Boons for the rest of this Sanctum run.",
+      "severity": "critical",
+      "category": "Boon Interference",
+      "notes": "Effectively makes all Boon rooms worthless for the entire run. Treat as a run-ender unless you already have strong Boons."
+    },
+    {
+      "name": "Corrupted Virtue",
+      "effect": "Gain Afflictions from Boon rooms instead of Boons.",
+      "severity": "critical",
+      "category": "Boon Interference",
+      "notes": "Same impact as Blind Devotion but actively hurts you by adding Afflictions. Avoid at nearly all costs."
+    },
+    {
+      "name": "Foul Prescriptions",
+      "effect": "All Boons you gain are Afflictions instead.",
+      "severity": "critical",
+      "category": "Boon Interference",
+      "notes": "Functionally identical to Corrupted Virtue — Boon rooms become Affliction rooms. Run-ending in most cases."
+    },
+    {
+      "name": "Eroding Soul",
+      "effect": "Lose a portion of your maximum Resolve after each room.",
+      "severity": "dangerous",
+      "category": "Resolve Drain",
+      "notes": "Maximum Resolve loss compounds over the floor. Counter with Fortified Soul (Boon) or Encouraging Devotion."
+    },
+    {
+      "name": "Looming Presence",
+      "effect": "Resolve loss from all sources is increased.",
+      "severity": "dangerous",
+      "category": "Resolve Drain",
+      "notes": "Multiplicative with all other Resolve loss — stacks badly with Devout Offering or Eroding Soul."
+    },
+    {
+      "name": "Devout Offering",
+      "effect": "Lose Resolve at the end of each completed room.",
+      "severity": "dangerous",
+      "category": "Resolve Drain",
+      "notes": "Consistent drain each room. More dangerous on longer floors with many rooms. Combine with Looming Presence is very bad."
+    },
+    {
+      "name": "Dead Weight",
+      "effect": "Lose a random Boon when you are Hit.",
+      "severity": "dangerous",
+      "category": "Boon Interference",
+      "notes": "Can strip your best Boon unexpectedly. More dangerous if you have few Boons with high variance."
+    },
+    {
+      "name": "Distant Memory",
+      "effect": "Lose a Relic at the start of each floor.",
+      "severity": "dangerous",
+      "category": "Relic",
+      "notes": "Destroys Relics (your passive bonuses for the run). Very bad if you have high-value Relics equipped."
+    },
+    {
+      "name": "Heretical Rites",
+      "effect": "Cannot use the Divine Font or Blacksmith's Bench.",
+      "severity": "dangerous",
+      "category": "Room Restriction",
+      "notes": "Divine Font restores Resolve and provides Boons. Losing access removes a key recovery mechanism."
+    },
+    {
+      "name": "Defiled Shrine",
+      "effect": "Shrines are Defiled — interacting with them deals damage and has harmful effects.",
+      "severity": "moderate",
+      "category": "Room Restriction",
+      "notes": "Avoid interacting with Shrines when afflicted. Some Shrines are unavoidable room paths — check layout first."
+    },
+    {
+      "name": "Dark Pit",
+      "effect": "Lose Resolve when you land a Critical Strike.",
+      "severity": "moderate",
+      "category": "Resolve Drain",
+      "notes": "Significantly impacts Critical Strike builds. Non-crit builds can ignore this almost entirely."
+    },
+    {
+      "name": "Guilt-Ridden",
+      "effect": "Lose Resolve when you pick up Aureus coins.",
+      "severity": "moderate",
+      "category": "Resolve Drain",
+      "notes": "Forces a trade-off: Aureus funds Boons and room purchases. Skip high coin clusters when low on Resolve."
+    },
+    {
+      "name": "Dishonoured Invitation",
+      "effect": "Cannot collect Aureus coins.",
+      "severity": "moderate",
+      "category": "Room Restriction",
+      "notes": "Aureus is used to buy Boons and access Merchant rooms. Without it you lose access to optional upgrades."
+    },
+    {
+      "name": "Familiar Sting",
+      "effect": "Poison does not wear off for the rest of this Sanctum run.",
+      "severity": "moderate",
+      "category": "Damage",
+      "notes": "Stacking poison from multiple sources can deal lethal damage. Chaos resistance and flask poison removal help significantly."
+    },
+    {
+      "name": "Lethal Presence",
+      "effect": "Enemies deal increased damage when close to you.",
+      "severity": "moderate",
+      "category": "Damage",
+      "notes": "Disproportionately punishes melee builds. Ranged characters can maintain safe distance to minimize the effect."
+    },
+    {
+      "name": "Expropriation",
+      "effect": "Monsters steal your Aureus coins on hit.",
+      "severity": "moderate",
+      "category": "Room Restriction",
+      "notes": "Combines badly with Dishonoured Invitation. Avoid taking many hits; the Aureus loss is not directly dangerous but limits your Boon economy."
+    },
+    {
+      "name": "Fleeting Endurance",
+      "effect": "Endurance charges expire 50% faster.",
+      "severity": "minor",
+      "category": "Damage",
+      "notes": "Only impacts builds that rely on Endurance charges for mitigation. Most builds can ignore this."
+    },
+    {
+      "name": "Lethal Concoctions",
+      "effect": "Monsters drop volatile flasks on death that explode for damage.",
+      "severity": "minor",
+      "category": "Damage",
+      "notes": "Move away from dying monsters to avoid the flask explosion. The damage is significant but avoidable."
+    },
+    {
+      "name": "Grasping Shadows",
+      "effect": "Rare monsters pull you toward them on their attacks.",
+      "severity": "minor",
+      "category": "Movement",
+      "notes": "Can pull you into hazards or dense monster packs. Keep movement skills ready to escape."
+    },
+    {
+      "name": "Living Terror",
+      "effect": "Rare and Unique monsters revive once when slain.",
+      "severity": "minor",
+      "category": "Defense",
+      "notes": "Effectively doubles Rare monster durability. Plan for extended fights and avoid lingering near dying Rares."
+    }
+  ],
+  "boons": [
+    {
+      "name": "Fortified Soul",
+      "effect": "Maximum Resolve increased by 25%.",
+      "value": "high",
+      "category": "Resolve",
+      "notes": "Directly counters Eroding Soul. Provides a larger safety buffer for the entire floor."
+    },
+    {
+      "name": "Encouraging Devotion",
+      "effect": "Gain more Resolve from all sources.",
+      "value": "high",
+      "category": "Resolve",
+      "notes": "Multiplies the value of every other Resolve restoration source. Scales well with other Resolve Boons."
+    },
+    {
+      "name": "Catharsis",
+      "effect": "Gain Resolve when you complete a room.",
+      "value": "high",
+      "category": "Resolve",
+      "notes": "Passive Resolve recovery every room — one of the most consistently valuable Boons in the game."
+    },
+    {
+      "name": "Opportune Timing",
+      "effect": "Gain Resolve when you kill a Rare or Unique monster.",
+      "value": "high",
+      "category": "Resolve",
+      "notes": "Strong in floors with many Rare monsters. Rare rooms and Boss rooms provide the biggest gains."
+    },
+    {
+      "name": "Invigorating Inscription",
+      "effect": "Gain Resolve when you complete a room without losing any Resolve.",
+      "value": "high",
+      "category": "Resolve",
+      "notes": "Difficult to trigger consistently but very powerful when achieved. Combos well with dodge and evasion builds."
+    },
+    {
+      "name": "Living by the Sword",
+      "effect": "Gain Resolve on killing blows.",
+      "value": "medium",
+      "category": "Resolve",
+      "notes": "Provides consistent Resolve recovery for builds with fast kill speed. Less effective in rooms with few monsters."
+    },
+    {
+      "name": "Bronze Shrine",
+      "effect": "Non-Defiled Shrines grant 2 effects instead of 1.",
+      "value": "medium",
+      "category": "Room Bonus",
+      "notes": "Doubles Shrine value. Particularly strong if you have many Shrines remaining on the floor. Countered by Defiled Shrine affliction."
+    },
+    {
+      "name": "Dousing Elixir",
+      "effect": "Automatically use a Flask when entering a new room.",
+      "value": "medium",
+      "category": "Defensive",
+      "notes": "Provides a free flask activation per room. Works especially well with Life/Hybrid flasks and Quicksilver flasks."
+    },
+    {
+      "name": "Life Insurance",
+      "effect": "The first time you would lose Resolve in each room, restore a large amount of Resolve instead.",
+      "value": "medium",
+      "category": "Resolve",
+      "notes": "Functions as a safety net per room — the first hit doesn't cost Resolve. Very strong on rooms with dangerous opening attacks."
+    },
+    {
+      "name": "Divine Guidance",
+      "effect": "Gain a random Relic at the start of the floor.",
+      "value": "medium",
+      "category": "Relic",
+      "notes": "Free Relic slot. Value depends on what Relic is awarded. Counters Distant Memory affliction partially."
+    },
+    {
+      "name": "Champion of the Cause",
+      "effect": "Consecrated Ground effects last longer and have increased area.",
+      "value": "low",
+      "category": "Defensive",
+      "notes": "Useful for builds that use Consecrated Ground (Consecrated Path, Holy Flame Totem). Niche but free."
+    },
+    {
+      "name": "Gilded Fortune",
+      "effect": "Gain bonus Aureus from all sources.",
+      "value": "low",
+      "category": "Economy",
+      "notes": "More Aureus means more Boon purchases from Merchants. The value is indirect — only strong if you have rooms to spend it in."
+    }
+  ]
+}

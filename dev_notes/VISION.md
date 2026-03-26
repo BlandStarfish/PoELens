@@ -269,6 +269,38 @@ These features were auto-approved after all I1–I3 items reached 9+/10 completi
 
 ---
 
+## Expansion Roadmap Round 7 (Auto-Approved 2026-03-25)
+
+These features were auto-approved after all J1–J3 items reached 9+/10 completion. Implement in priority order listed.
+
+### K1. Sanctum Affliction & Boon Reference ✅ IMPLEMENTED (Session 30)
+- Static reference for all major Sanctum afflictions (penalties) and boons (bonuses)
+- Each affliction shows: severity (Critical/Dangerous/Moderate/Minor), category, effect, and strategic notes
+- Each boon shows: value tier (High/Medium/Low), category, effect, and usage notes
+- Section toggle (Both/Afflictions/Boons) + full-text search
+- Data source: data/sanctum_afflictions.json (20 afflictions, 12 boons, curated)
+- ui/widgets/sanctum_panel.py; added to Info group as "Sanctum" tab
+- **Rationale:** The Sanctum is a permanent mechanic with a complex affliction/boon system. Players frequently need "what does Blind Devotion do?" or "which boon counters Eroding Soul?" during active runs. An in-overlay reference replaces alt-tabbing to the wiki mid-floor.
+
+### K2. Rare Mod Reference ✅ IMPLEMENTED (Session 30)
+- Static reference for 25 Archnemesis-style rare monster modifiers integrated into PoE core
+- Each mod shows: danger level (Extreme/High/Moderate/Low), category, effect, dangerous combo warnings, and tactical notes
+- Danger level filter buttons + full-text search
+- Data source: data/rare_mods.json (25 mods, curated)
+- ui/widgets/rare_mods_panel.py; added to Info group as "Rare Mods" tab
+- **Rationale:** Archnemesis mods (now core rare modifiers) can be lethal if the player doesn't know what they do. A quick reference ("Vampiric heals on hit — use DoT") prevents unexpected deaths to unfamiliar mod combinations.
+
+### K3. Blight Oil Reference ✅ IMPLEMENTED (Session 30)
+- Static reference for all 11 Blight oil tiers (Clear through Opalescent) with rarity, market value, and usage notes
+- Key notable anoint recipes (Constitution, Divine Flesh, Resolute Technique, etc.) with oil combinations and value tier
+- Section toggle (Both/Oils/Anoints) + full-text search
+- Anoint mechanic footer explaining amulet/ring/blighted map uses
+- Data source: data/blight_oils.json (11 oils, 11 key anoints, curated)
+- ui/widgets/blight_panel.py; added to Info group as "Blight" tab
+- **Rationale:** Blight Oil anointing is a significant character power lever. Players frequently ask "which oils do I need for X notable?" and "is Opalescent Oil worth saving?" Having it in the overlay prevents unnecessary wiki lookups during crafting sessions.
+
+---
+
 ## Expansion Roadmap Round 4 (Auto-Approved 2026-03-25)
 
 These features were auto-approved after all G1–G3 items reached 9+/10 completion. Implement in priority order listed.

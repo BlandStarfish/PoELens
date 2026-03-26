@@ -46,6 +46,9 @@ from ui.widgets.maven_panel import MavenPanel
 from ui.widgets.metamorph_panel import MetamorphPanel
 from ui.widgets.harvest_panel import HarvestPanel
 from ui.widgets.heist_rogues_panel import HeistRoguesPanel
+from ui.widgets.sanctum_panel import SanctumPanel
+from ui.widgets.rare_mods_panel import RareModsPanel
+from ui.widgets.blight_panel import BlightPanel
 
 
 DARK_BG = "#1a1a2e"
@@ -94,7 +97,10 @@ _INFO_MAVEN           = 10
 _INFO_METAMORPH       = 11
 _INFO_HARVEST         = 12
 _INFO_HEIST_ROGUES    = 13
-_INFO_SETTINGS        = 14
+_INFO_SANCTUM         = 14
+_INFO_RARE_MODS       = 15
+_INFO_BLIGHT          = 16
+_INFO_SETTINGS        = 17
 
 
 class HUD(QMainWindow):
@@ -251,6 +257,9 @@ class HUD(QMainWindow):
         self._metamorph_panel        = MetamorphPanel()
         self._harvest_panel          = HarvestPanel()
         self._heist_rogues_panel     = HeistRoguesPanel()
+        self._sanctum_panel          = SanctumPanel()
+        self._rare_mods_panel        = RareModsPanel()
+        self._blight_panel           = BlightPanel()
         self._currency_flip_panel    = CurrencyFlipPanel(currency_flip) if currency_flip else QWidget()
         self._lab_panel              = LabPanel(lab_tracker) if lab_tracker else QWidget()
 
@@ -301,7 +310,7 @@ class HUD(QMainWindow):
         self._inner_tabs.append(end_tabs)
         outer_tabs.addTab(end_tabs, "Endgame")             # _GRP_ENDGAME   = 2
 
-        # Info group: Bestiary · Expedition · Syndicate · Vendor · Scarabs · Breach · Delirium · Currency · Incursion · Fossils · Maven · Metamorph · Harvest · Rogues · Settings
+        # Info group: Bestiary · Expedition · Syndicate · Vendor · Scarabs · Breach · Delirium · Currency · Incursion · Fossils · Maven · Metamorph · Harvest · Rogues · Sanctum · Rare Mods · Blight · Settings
         info_tabs = _make_inner()
         info_tabs.addTab(self._bestiary_panel,       "Bestiary")   # _INFO_BESTIARY       = 0
         info_tabs.addTab(self._expedition_panel,     "Expedition") # _INFO_EXPEDITION     = 1
@@ -317,7 +326,10 @@ class HUD(QMainWindow):
         info_tabs.addTab(self._metamorph_panel,      "Metamorph")  # _INFO_METAMORPH      = 11
         info_tabs.addTab(self._harvest_panel,        "Harvest")    # _INFO_HARVEST        = 12
         info_tabs.addTab(self._heist_rogues_panel,   "Rogues")     # _INFO_HEIST_ROGUES   = 13
-        info_tabs.addTab(self._settings_panel,       "Settings")   # _INFO_SETTINGS       = 14
+        info_tabs.addTab(self._sanctum_panel,        "Sanctum")    # _INFO_SANCTUM        = 14
+        info_tabs.addTab(self._rare_mods_panel,      "Rare Mods")  # _INFO_RARE_MODS      = 15
+        info_tabs.addTab(self._blight_panel,         "Blight")     # _INFO_BLIGHT         = 16
+        info_tabs.addTab(self._settings_panel,       "Settings")   # _INFO_SETTINGS       = 17
         self._inner_tabs.append(info_tabs)
         outer_tabs.addTab(info_tabs, "Info")                       # _GRP_INFO            = 3
 
