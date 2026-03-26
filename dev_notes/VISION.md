@@ -365,6 +365,36 @@ These features were auto-approved after all L1–L3 items reached 9+/10 completi
 
 ---
 
+## Expansion Roadmap Round 11 (Auto-Approved 2026-03-26)
+
+These features were auto-approved after all N1–N3 items reached 9+/10 completion. Implement in priority order listed.
+
+### O1. League Mechanic Primer ✅ IMPLEMENTED (Session 34)
+- Quick reference for all 14 permanent league mechanics — how to trigger, what to do, key rewards, and tips
+- Category filter: Combat / Management / Exploration
+- Full-text search across mechanic name, rewards, and notes
+- Data source: data/league_mechanics.json (14 mechanics, curated)
+- ui/widgets/league_mechanics_panel.py; added to Info group as "Leagues" tab
+- **Rationale:** Returning players frequently forget how a mechanic works ("do I loot on the way in or out of Heist?", "how do I upgrade a Breach?"). A single-tab reference replaces repeated wiki trips during active play.
+
+### O2. Build Archetype Primer ✅ IMPLEMENTED (Session 34)
+- Foundational guide to 7 core build archetypes: Attack, Spell, Minion, DoT, Trigger, Aura Support, Hit-based Elemental
+- Each entry shows: category, entry difficulty, how it works, primary scaling stats, defensive layers, and example skills
+- Category filter + full-text search
+- Data source: data/build_archetypes.json (7 archetypes, curated)
+- ui/widgets/build_archetypes_panel.py; added to Info group as "Archetypes" tab
+- **Rationale:** New and returning players frequently don't know where to start building a character, or which stats matter for their chosen playstyle. A primer that explains "this is what a DoT build cares about" is more actionable than a wiki article.
+
+### O3. Status Ailment Reference ✅ IMPLEMENTED (Session 34)
+- Reference for all 14 major status ailments: Ignite, Chill, Freeze, Shock, Scorch, Brittle, Sap, Poison, Bleed, Corrupted Blood, Maim, Hinder, Taunt, Intimidate, Exposure
+- Category filter: Elemental / Physical & Poison / Debuff
+- Each entry shows: element, effect, how applied, how to cure (player perspective), and offensive use
+- Data source: data/status_ailments.json (14 ailments, curated)
+- ui/widgets/status_ailments_panel.py; added to Info group as "Ailments" tab
+- **Rationale:** Status ailments are frequently misunderstood ("does Maim stack with Hinder?", "what flask removes Corrupted Blood?"). An in-overlay reference is especially valuable mid-combat and during build planning.
+
+---
+
 ## Expansion Roadmap Round 10 (Auto-Approved 2026-03-25)
 
 These features were auto-approved after all M1–M3 items reached 9+/10 completion. Implement in priority order listed.

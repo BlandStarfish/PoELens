@@ -1,0 +1,81 @@
+{
+  "how_it_works": "Build archetypes describe the fundamental scaling strategy of a character. Most builds fit one primary archetype, though hybrids exist. Understanding your archetype determines which stats to prioritize on gear.",
+  "tips": [
+    "Attack builds need to check accuracy rating — Resolute Technique eliminates this but locks out crits.",
+    "Spell builds ignore accuracy but must convert or scale added damage type correctly.",
+    "DoT builds care only about the first hit's damage for scaling — not the number of hits."
+  ],
+  "difficulty_order": ["Beginner", "Intermediate", "Advanced", "Expert"],
+  "archetypes": [
+    {
+      "name": "Attack",
+      "category": "Attack",
+      "primary_stats": ["Physical/Elemental damage", "Attack speed", "Accuracy rating", "Critical strike chance & multiplier (optional)"],
+      "defensive_layers": ["Armour or Evasion (Strength or Dexterity base)", "Life or hybrid Life/ES", "Fortify (melee)", "Block (Gladiator/Shield)"],
+      "how_it_works": "Deals damage through weapon hits. Scales weapon damage, attack speed, and added damage. Accuracy must exceed enemy evasion or you miss — aim for 90%+ chance to hit. Crits are optional but powerful: needs Crit Chance and Crit Multiplier investment.",
+      "example_skills": ["Cyclone", "Splitting Steel", "Flicker Strike", "Tornado Shot", "Lightning Arrow", "Lacerate", "Earthquake"],
+      "entry_difficulty": "Beginner",
+      "notes": "Most beginner-friendly archetype. Gear drops (weapon damage) directly translate to power. Melee attacks benefit from Fortify for reliable damage reduction."
+    },
+    {
+      "name": "Spell",
+      "category": "Spell",
+      "primary_stats": ["Spell damage %", "Elemental/Chaos damage %", "Cast speed", "Critical strike chance & multiplier (optional)", "Added spell damage (from wand/shield/jewels)"],
+      "defensive_layers": ["Energy Shield (Intelligence base)", "Evasion (Dexterity base)", "Life (Strength base)", "Spell suppression (Evasion builds)"],
+      "how_it_works": "Deals damage through spells — no accuracy needed. Scales % spell damage, % elemental damage, and specific skill modifiers. Spell builds often go critical strike for large damage multipliers. Intelligence base gear supports Energy Shield life pool.",
+      "example_skills": ["Fireball", "Freezing Pulse", "Arc", "Ball Lightning", "Armageddon Brand", "Blight", "Detonate Dead"],
+      "entry_difficulty": "Beginner",
+      "notes": "No accuracy requirement makes gearing simpler. Wand + shield or two-hand staff are typical weapon setups. Many Witch and Templar Ascendancies support spell builds."
+    },
+    {
+      "name": "Minion",
+      "category": "Minion",
+      "primary_stats": ["Minion damage %", "Minion attack/cast speed", "Minion life", "Number of minions (quantity increases power)"],
+      "defensive_layers": ["Life (Necromancer typically runs max-block or Bone Armour)", "Summoned Sentinels (Necromancer)", "Ghost Shroud (Trickster)", "Minions as meat-shields (absorb hits)"],
+      "how_it_works": "Your character summons and commands minions that deal damage on your behalf. Your own hit damage is irrelevant — only minion-specific stats matter. Minions inherit auras. The player focuses on survivability and buffing minions rather than dealing damage directly.",
+      "example_skills": ["Summon Skeletons", "Raise Zombie", "Summon Raging Spirit", "Animate Weapon", "Raise Spectre (most powerful)", "Herald of Agony"],
+      "entry_difficulty": "Intermediate",
+      "notes": "Player survivability is paramount — if you die, all minions die. Raise Spectre builds require knowing which Spectres to raise (Redemption Sentinels, Solar Guards, etc.). Necromancer Ascendancy is almost mandatory."
+    },
+    {
+      "name": "Damage over Time (DoT)",
+      "category": "DoT",
+      "primary_stats": ["DoT damage % (Ignite/Bleed/Poison/Wither)", "Damage over Time multiplier", "Hit chance (only matters for applying the DoT)", "Duration (for Ignite/Poison)"],
+      "defensive_layers": ["Life flask sustain (Ignite builds)", "Evasion + Spell suppression (Poison/Bleed)", "Chaos resistance (Poison scales off chaos damage)"],
+      "how_it_works": "Deals damage through a persistent effect (DoT) applied by a hit. The hit itself may deal little damage — only the DoT matters. DoT builds focus on maximizing damage over time multipliers and dot-specific stats. They are often immune to reflected damage since DoTs cannot be reflected.",
+      "example_skills": ["Ignite: Burning Arrow, Explosive Arrow, Scorching Ray", "Bleed: Puncture, Split Arrow, Lacerate", "Poison: Poisonous Concoction, Cobra Lash, Toxic Rain"],
+      "entry_difficulty": "Intermediate",
+      "notes": "Extremely safe against elemental reflect. Poison builds use Chaos damage scaling. Ignite builds often use Elementalist or Chieftain. Bleed builds use Gladiator. DoT is not reduced by armour or evasion of monsters."
+    },
+    {
+      "name": "Trigger / Cast on X",
+      "category": "Spell",
+      "primary_stats": ["Spell damage % (for triggered spells)", "Cooldown recovery rate (for trigger frequency)", "Attack speed (affects trigger rate in CoC builds)", "Critical strike (required for Cast on Crit)"],
+      "defensive_layers": ["Energy Shield (Inquisitor + Eldritch Battery)", "Evasion (Trickster)", "Life + Block (Gladiator)"],
+      "how_it_works": "Uses a trigger mechanic to automatically cast spells on every hit (Cast on Critical Strike), when taking a hit (Cast when Damage Taken), or on kill (Cast on Kill). These builds link an attack or spell to trigger a second spell automatically. Cooldown recovery rate controls how often spells fire.",
+      "example_skills": ["Cast on Critical Strike + Glacial Cascade/Exsanguinate", "Cyclone + Cast on Crit + Ice Nova", "Cast When Damage Taken + Immortal Call"],
+      "entry_difficulty": "Advanced",
+      "notes": "Cooldown recovery rate is a critical stat — often needs 152% from gear or Awakened gems. Mechanically complex but extremely powerful when optimized. Inquisitor (Inevitable Judgement) is the most common Ascendancy."
+    },
+    {
+      "name": "Aura Support",
+      "category": "Support",
+      "primary_stats": ["Aura effect %", "Mana reservation efficiency", "Maximum number of auras", "Buff effect multipliers"],
+      "defensive_layers": ["Energy Shield (Aurabot builds)", "High life pool", "Defensive auras (Grace, Determination, Discipline)", "Purity auras for max resistance"],
+      "how_it_works": "Dedicates the character entirely to running as many powerful auras as possible for a party. An Aurabot can run 10+ auras simultaneously, massively buffing party damage and defence. Solo viability is limited — this archetype is almost exclusively a party/duo role.",
+      "example_skills": ["Hatred", "Haste", "Grace", "Determination", "Discipline", "Wrath", "Malevolence", "Purity of Elements"],
+      "entry_difficulty": "Expert",
+      "notes": "Requires very expensive gear to reserve multiple auras efficiently. Almost exclusively played in group content. Guardian Ascendancy is the classic Aurabot class. Solo, Aurabot has mediocre damage but excellent survivability."
+    },
+    {
+      "name": "Hit-based Elemental",
+      "category": "Spell",
+      "primary_stats": ["Elemental damage %", "Penetration (bypasses enemy resistance)", "Ailment chance (Shock/Chill/Freeze)", "Added elemental damage (from flasks/buffs)"],
+      "defensive_layers": ["Energy Shield (Elementalist/Occultist)", "Evasion + Spell suppression", "Warding flasks (curse immunity)"],
+      "how_it_works": "A spell or attack build that deals elemental (Fire/Cold/Lightning) damage and scales elemental penetration to bypass monster resistances. Often applies ailments as secondary effects (Shock for more damage taken, Freeze for safety, Chill for slow). Elementalist is the premier class.",
+      "example_skills": ["Storm Brand", "Incinerate", "Ice Spear", "Crackling Lance", "Eye of Winter"],
+      "entry_difficulty": "Intermediate",
+      "notes": "Elemental Equilibrium (EE) keystone is common in elemental builds — hitting with one element reduces resistance to the other two. Elementalist Ascendancy provides unmatched elemental bonuses."
+    }
+  ]
+}

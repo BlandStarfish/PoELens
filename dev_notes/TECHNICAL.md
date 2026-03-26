@@ -81,9 +81,12 @@ install.py                   — CLI installer (Python users)
 ## Known Quirks
 
 ### Tab Index (hud.py)
-Tabs are: 0=Quests, 1=Tree, 2=Price, 3=Currency, 4=Crafting, 5=Map, 6=Settings
-`show_crafting()` uses index 4. `show_map()` uses index 5. (Map tab added Session 2)
-Settings tab added Session 12. No hotkey needed — user navigates manually.
+Outer tabs: Character=0, Loot=1, Endgame=2, Info=3.
+Info group inner tabs (Session 34): 0-25 unchanged from Session 33, then:
+  _INFO_LEAGUE_MECH=26 ("Leagues"), _INFO_BUILD_ARCH=27 ("Archetypes"),
+  _INFO_STATUS_AIL=28 ("Ailments"), _INFO_SETTINGS=29.
+Settings is always last in Info group. Shifts by +3 each expansion round.
+Map tab: _END_MAP=0 in Endgame group.
 
 ### Updater Signal (updater.py)
 Original code tried `QMetaObject.invokeMethod(app, "_show_update_dialog")` but that method

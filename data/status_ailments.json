@@ -1,0 +1,161 @@
+{
+  "how_it_works": "Status ailments are persistent effects applied to enemies (or players) by hits or skills. Offensive ailments deal damage or debuff enemies; defensive awareness of ailments prevents unexpected deaths.",
+  "tips": [
+    "Shock is the most universally valuable offensive ailment — 40–50% more damage taken stacks with everything.",
+    "Freeze completely prevents enemy actions — the gold standard for boss safety.",
+    "Corrupted Blood jewels (immunity) and Pantheon Shakari (poison immunity) are common defensive picks."
+  ],
+  "categories": ["Elemental", "Physical & Poison", "Debuff"],
+  "ailments": [
+    {
+      "name": "Ignite",
+      "category": "Elemental",
+      "element": "Fire",
+      "effect": "Burns the target for Fire damage over 4 seconds. Damage = 50% of the base hit that caused it, as Fire DoT per second. Only the strongest Ignite on a target is active at once.",
+      "how_applied": "Any hit that deals Fire damage has a chance to Ignite equal to the attacker's Ignite chance (default 0% — requires investment or Elemental Focus removal). Chieftain and Elementalist can Ignite reliably.",
+      "how_to_cure": "Flasks with 'Remove Burning' suffix (e.g. 'of Dousing'). Purity of Fire at high levels grants immunity.",
+      "offensive_use": "Core mechanic for Ignite builds (Burning Arrow, Explosive Arrow). Scales via Burning Damage, DoT Multiplier, and increased Ignite Duration. The igniting hit damage determines the DoT magnitude — not attack speed.",
+      "notes": "Elementalist (Shaper of Flames) ignites always deal at least 1% of enemy max life per second. Chieftain ignite penetrates fire resistance."
+    },
+    {
+      "name": "Chill",
+      "category": "Elemental",
+      "element": "Cold",
+      "effect": "Reduces the target's action speed (movement, attack, and cast speed) by up to 30%. Effect magnitude scales with the hit's Cold damage relative to target's maximum life.",
+      "how_applied": "Any Cold hit. Effect magnitude = min(30%, hit_cold_damage / target_max_life × 30). Minimum 10% effect if hit qualifies. Freeze also chills.",
+      "how_to_cure": "Flasks with 'Remove Chill' or immunity. Pantheon Brine King prevents Chill from reducing speed below 55% of base.",
+      "offensive_use": "Slows enemies, making them safer to fight. Elementalist (Glacial Cage) improves Chill effect. Chilled ground from Cold Snap provides persistent Chill AOE.",
+      "notes": "Chill does not prevent action — Freeze does. Chilling Presence (Templar notable) chills nearby enemies passively."
+    },
+    {
+      "name": "Freeze",
+      "category": "Elemental",
+      "element": "Cold",
+      "effect": "Completely immobilizes the target (cannot move, act, or be damaged by most skills except while frozen). Duration scales with the hit's Cold damage relative to target's life.",
+      "how_applied": "A Cold hit must deal Cold damage ≥ 10% of target's maximum life in a single hit to Freeze. Cannot Freeze enemies immune to Chill. Cannot Freeze Bosses without modifiers.",
+      "how_to_cure": "Flasks with 'Remove Freeze' ('of Heat'). Pantheon Brine King prevents Freeze entirely when you already have a flask active.",
+      "offensive_use": "Premier defensive tool for players — a frozen boss cannot attack. Flask of Heat removes Freeze from players. Bosses can only be Frozen with substantial Cold hit damage — typically needs Hypothermia support and high Cold spike.",
+      "notes": "Freeze duration scales with damage. On players, Freeze lasts 0.3–3 seconds. Brine King Pantheon (fully upgraded) prevents Freeze when you have a flask active — recommended for Hardcore."
+    },
+    {
+      "name": "Shock",
+      "category": "Elemental",
+      "element": "Lightning",
+      "effect": "Increases damage the target takes by up to 50%. Effect magnitude scales with hit Lightning damage relative to target max life. Default Shock from normal hits: 1–50% increased damage taken.",
+      "how_applied": "Any Lightning hit. Magnitude = min(50%, hit_lightning_damage / target_max_life × 50). Minimum 15% effect when Shocked (from Elementalist). Shock lasts 2 seconds by default.",
+      "how_to_cure": "Flasks with 'Remove Shock' ('of Grounding'). Pantheon Arakaali reduces Shock duration by 60%.",
+      "offensive_use": "Most universally powerful offensive ailment — increases ALL damage taken (not just Lightning). Voltaxic Rift converts Shock to 40% more damage. Inpulsa's Broken Heart causes Shocked enemies that die to explode.",
+      "notes": "Innervate support guarantees Shock on kill. Elementalist can set minimum Shock to 15%. Shocking enemies with even small Lightning hits provides a meaningful buff to all party damage."
+    },
+    {
+      "name": "Scorch",
+      "category": "Elemental",
+      "element": "Fire",
+      "effect": "Reduces the target's Fire Resistance by up to 10%. Magnitude scales with hit Fire damage relative to target life.",
+      "how_applied": "A Fire hit with Scorch chance (from Awakened Fire Damage support, Elemental Ailment threshold mods, or Elementalist Shaper of Flames).",
+      "how_to_cure": "Duration-based (expires automatically). Purity of Fire at very high levels can reduce negative resistance exposure.",
+      "offensive_use": "Valuable for Fire builds — reduces Fire resistance, stacking with Penetration for net resistance reduction. Pairs with Combustion support.",
+      "notes": "One of three 'lesser ailments' added with the Conquerors expansion. Elementalist can inflict Scorch reliably. Less common than Ignite/Shock for most builds."
+    },
+    {
+      "name": "Brittle",
+      "category": "Elemental",
+      "element": "Cold",
+      "effect": "Increases Critical Strike Chance against the target by up to 10%. Magnitude scales with hit Cold damage relative to target life.",
+      "how_applied": "A Cold hit with Brittle chance (from Awakened Cold Damage support or Elementalist Shaper of Winter).",
+      "how_to_cure": "Duration-based (expires automatically).",
+      "offensive_use": "Valuable for Cold crit builds — effectively adds 10% global crit chance against the target. Stacks multiplicatively with other crit sources.",
+      "notes": "Lesser ailment. Elementalist Shaper of Winter specializes in Brittle. Most effective in boss scenarios where sustained Cold damage is reliable."
+    },
+    {
+      "name": "Sap",
+      "category": "Elemental",
+      "element": "Lightning",
+      "effect": "Reduces the target's damage dealt by up to 10%. Magnitude scales with hit Lightning damage relative to target life.",
+      "how_applied": "A Lightning hit with Sap chance (from Awakened Lightning Damage support or Elementalist Shaper of Storms).",
+      "how_to_cure": "Duration-based (expires automatically).",
+      "offensive_use": "Primarily defensive — reduces incoming boss damage by up to 10%. Pairs well with Conductivity to combine curse + Sap debuffing.",
+      "notes": "Lesser ailment. Elementalist Shaper of Storms provides Sap. Most valuable in endgame boss encounters where incoming damage reduction is meaningful."
+    },
+    {
+      "name": "Poison",
+      "category": "Physical & Poison",
+      "element": "Chaos",
+      "effect": "Deals Chaos damage over time. Each Poison stack deals 8% of the hit's Physical + Chaos damage per second for 2 seconds. Stacks unlimited times. Total DPS = sum of all active Poison stacks.",
+      "how_applied": "Any hit that deals Physical or Chaos damage with Poison chance (default 0% — requires investment, Poison support, or Assassin/Pathfinder). Flask charges can grant temporary 100% Poison chance.",
+      "how_to_cure": "Flasks with 'Remove Poison' ('of Staunching'). Pantheon Shakari (fully upgraded) grants Poison immunity. Armor mod 'Corrupted Blood cannot be inflicted on you' does NOT remove Poison.",
+      "offensive_use": "Core mechanic for Poison builds. Stacks rapidly — a fast attack or cast skill can apply dozens of Poison stacks. Pathfinder (Master Surgeon) is the premier Poison Ascendancy for its sustained flask charges and poison damage bonus.",
+      "notes": "Poison is Chaos damage — scales with Chaos DoT Multiplier. Wither (10 stacks) reduces Chaos Resistance by 90% — best combined with Poison. Assassin's Noxious Strike provides free Poison chance on Crits."
+    },
+    {
+      "name": "Bleed",
+      "category": "Physical & Poison",
+      "element": "Physical",
+      "effect": "Deals Physical damage over time. Bleed deals 70% of the hit's Physical damage per second. While target is moving: 200% per second. Only one Bleed is active at a time (highest damage wins). Lasts until removed or expires (5 seconds base).",
+      "how_applied": "Any Physical hit with Bleed chance (default 0% — requires investment or Gladiator). Rupture (Gladiator) guarantees Bleed on Crits and stacks up to 8 Bleeds.",
+      "how_to_cure": "Flasks with 'Remove Bleeding' ('of Staunching'). Pantheon Ryslatha reduces Bleed duration. On players: moving doubles incoming Bleed damage.",
+      "offensive_use": "Core mechanic for Bleed builds. Gladiator (Gratuitous Violence) causes Bleeding enemies that die to explode for 10% of max life — exceptional for clear speed. Puncture and Lacerate are the primary Bleed-applying skills.",
+      "notes": "Bleed only benefits from the single highest-damage Bleed stack (unlike Poison which stacks). Gladiator Bloodlust support causes Attacks to deal more damage if the enemy is Bleeding. Player Bleed can be devastating — always remove it with a flask."
+    },
+    {
+      "name": "Corrupted Blood",
+      "category": "Physical & Poison",
+      "element": "Physical",
+      "effect": "A stack-based version of Bleed that stacks up to 20 times. Each stack deals a portion of Physical damage per second. Applied by specific monster abilities. Extremely dangerous at 10+ stacks.",
+      "how_applied": "Specific monster attacks (e.g. Blood Rage, certain rare monster mods). Cannot be self-applied.",
+      "how_to_cure": "Flasks with 'Remove Bleeding' ('of Staunching') removes ALL Corrupted Blood stacks. The jewel implicit 'Corrupted Blood cannot be inflicted on you' provides immunity.",
+      "offensive_use": "Players cannot apply Corrupted Blood to enemies. Defensive awareness only.",
+      "notes": "The most dangerous player-facing physical ailment in endgame. Corrupted Blood immunity jewel is highly recommended for Hardcore and any build without reliable instant flask use. 20 stacks = almost instant death for most builds."
+    },
+    {
+      "name": "Maim",
+      "category": "Debuff",
+      "element": "Physical",
+      "effect": "Reduces the target's movement speed by 30%. Applies when a Physical hit Maims.",
+      "how_applied": "Physical hits with Maim chance (from Maim support, Voidheart ring, or certain skills like Sunder at threshold). Distinct from Hinder.",
+      "how_to_cure": "Duration-based (2 seconds). Rare monsters with 'Cannot be Slowed below base speed' are immune.",
+      "offensive_use": "Primarily used as a damage multiplier — Maim support grants 12% increased Physical damage against Maimed targets, not just the speed reduction. Common in melee builds.",
+      "notes": "Does not stack with Hinder. Maim specifically comes from Physical damage sources. The Maim Support gem is one of the strongest Physical damage supports."
+    },
+    {
+      "name": "Hinder",
+      "category": "Debuff",
+      "element": "Chaos / Spell",
+      "effect": "Reduces the target's movement speed by 25%. Applied by Chaos and Spell damage sources.",
+      "how_applied": "Certain Chaos skills and spell effects. Wither applies Hinder. Distinct from Maim (Physical source).",
+      "how_to_cure": "Duration-based. Rare monsters with 'Cannot be Slowed below base speed' are immune.",
+      "offensive_use": "Utility debuff. Wither (10 stacks) also Hinders. Paired with Chaos DoT builds to slow bosses.",
+      "notes": "Hinder and Maim do not stack — only the stronger effect applies if a target has both."
+    },
+    {
+      "name": "Taunt",
+      "category": "Debuff",
+      "element": "None",
+      "effect": "Causes the enemy to target the taunting entity for 2 seconds. Taunted enemies also take 10% increased damage.",
+      "how_applied": "Sunder at threshold, Intimidating Cry war cry, certain Ascendancy abilities (Warlord's Mark curse, Juggernaut). Player characters can also be Taunted by rare monsters with Taunt mod.",
+      "how_to_cure": "Duration-based. Pantheon (Brine King) does not cure Taunt.",
+      "offensive_use": "Minion builds use Taunt to redirect boss attacks away from the player. The 10% increased damage taken is a meaningful secondary benefit.",
+      "notes": "Taunted enemies still deal normal damage — they just redirect attacks to the taunting entity. Extremely useful for Spectres and Zombies absorbing boss hits."
+    },
+    {
+      "name": "Intimidate",
+      "category": "Debuff",
+      "element": "Physical",
+      "effect": "Target takes 10% increased Attack damage. Applied by Intimidating Cry, Daresso's Defiance, and Slayer Ascendancy (Impact). Lasts 4 seconds.",
+      "how_applied": "War cry (Intimidating Cry), specific gear, or Ascendancy nodes.",
+      "how_to_cure": "Duration-based.",
+      "offensive_use": "Pure damage amplification. Intimidating Cry is the primary source — a 10% more multiplier to all Attack damage against the boss.",
+      "notes": "Only increases Attack damage, not Spell damage. Slayer Ascendancy 'Impact' Intimidates nearby enemies after using a movement skill."
+    },
+    {
+      "name": "Exposure",
+      "category": "Debuff",
+      "element": "Elemental",
+      "effect": "Reduces the target's elemental resistance by up to -25% (minimum). Applied by specific skills or uniques. Stacks with Penetration (Penetration removes resistance from your perspective; Exposure reduces the target's actual resistance).",
+      "how_applied": "Assassin's Mark (Assassin Ascendancy), Elemental Equilibrium (passive keystone), Flame Surge, Cold Snap, Storm Brand (at threshold), Combustion support, and various unique items.",
+      "how_to_cure": "Duration-based. Bosses are generally not immune.",
+      "offensive_use": "Excellent against high-resistance enemies. Combustion support applies Fire Exposure (-25% Fire Resistance). Stacks with Penetration and curses for very low effective resistance on bosses.",
+      "notes": "Exposure applies before damage calculation — unlike Penetration which is applied per-hit from the attacker's side. Both can be active simultaneously for maximum effect."
+    }
+  ]
+}

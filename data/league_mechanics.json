@@ -1,0 +1,146 @@
+{
+  "how_it_works": "Permanent league mechanics spawn in maps and campaign zones. Each mechanic has a trigger condition and rewards tied to engagement quality.",
+  "tips": [
+    "Breach and Legion benefit from high pack size and area-of-effect.",
+    "Delirium and Ritual benefit from clearing speed — kill everything before the mechanic expires.",
+    "Expedition, Harvest, Incursion, and Betrayal require quick in-encounter decisions."
+  ],
+  "categories": ["Combat", "Management", "Exploration"],
+  "mechanics": [
+    {
+      "name": "Breach",
+      "category": "Combat",
+      "how_to_trigger": "Click a glowing hand icon on the ground to open a portal. The breach expands as you kill monsters inside it.",
+      "what_to_do": "Stand in the breach and kill everything as fast as possible. The breach shrinks and closes if you stop killing. Collect Breach Splinters to form Breachstones for a dedicated boss run.",
+      "key_rewards": ["Breach Splinters (combine 100 for Breachstone)", "Breachstone (run Breach domain)", "Rare items with Breach mods", "Unique Breach items"],
+      "tips": ["Large AoE skills expand the breach faster.", "100 splinters from the same domain form one Breachstone.", "Chayula splinters and Breachstones are the most valuable."],
+      "notes": "5 Breach domains: Xoph (Fire), Tul (Cold), Esh (Lightning), Uul-Netol (Physical), Chayula (Chaos). See Breach tab for domain details."
+    },
+    {
+      "name": "Legion",
+      "category": "Combat",
+      "how_to_trigger": "Click a Legion monolith to freeze a battle scene in time. You have a short window to tag as many enemies as possible before they unfreeze.",
+      "what_to_do": "Quickly kill frozen enemies to tag them (they glow gold). After the timer ends, all tagged enemies unfreeze and attack simultaneously. Kill them for rewards.",
+      "key_rewards": ["Incubators (applied to gear for guaranteed drops)", "Legion Splinters (100 form Emblem for Conflict encounters)", "Timeless Jewels", "Rare unique items"],
+      "tips": ["High clear speed matters — tag as many monsters as possible in the freeze window.", "Generals (rare Legion enemies) drop Emblems and Timeless Jewels.", "5 factions: Eternal Empire, Karui, Maraketh, Templar, Vaal."],
+      "notes": "Timeless Jewels passively modify nearby skill tree nodes — highly sought for specific builds."
+    },
+    {
+      "name": "Delirium",
+      "category": "Combat",
+      "how_to_trigger": "Touch the fog mirror in a zone to activate Delirium. A spreading fog follows you and buffs monster density, damage, and rewards.",
+      "what_to_do": "Move into the fog and kill as many monsters as possible before the reward meter fills. Delirium spreads and eventually ends — killing quickly maximises the reward multiplier.",
+      "key_rewards": ["Simulacrum Splinters (300 form Simulacrum)", "Delirium Orbs (apply to maps)", "Cluster Jewels", "Large/Medium/Small Jewel Bases"],
+      "tips": ["Delirium fog has a timer — don't backtrack.", "Delirium Orbs applied to maps stack up to 5×.", "Cluster Jewels from Delirium are core crafting materials for many builds."],
+      "notes": "Simulacrum is a 20-wave Delirium arena with exceptional rewards at waves 20+. Simulacrum Splinters drop from Delirium-touched monsters."
+    },
+    {
+      "name": "Ritual",
+      "category": "Combat",
+      "how_to_trigger": "Activate a Ritual Altar (glowing circle) to start an offering. Kill all monsters that spawn inside the circle. Repeat for each altar in the zone.",
+      "what_to_do": "Clear all 3–4 ritual circles in a zone. After the last circle, a reward screen appears — spend Tribute (earned by killing ritual monsters) to buy items. Items you skip gain discount. You can defer and return.",
+      "key_rewards": ["Valuable rare/unique items", "Currency orbs", "Reroll option to refresh the shop", "Vessels (reusable ritual items)"],
+      "tips": ["Skip items you don't want — they get cheaper each time.", "Difficult monsters ('Ritual of the Dead') carry more tribute.", "Vessels persist between sessions and can multiply ritual spawns."],
+      "notes": "Tribute is zone-specific. Items you defer are available in the next ritual encounter at a discount."
+    },
+    {
+      "name": "Abyss",
+      "category": "Combat",
+      "how_to_trigger": "Click an Abyss crack on the ground to start a chain of monster spawns. Follow the crack as it extends across the zone.",
+      "what_to_do": "Follow the cracking trail and kill all spawned monsters. The trail ends at either an Abyss Trove (chest) or a Stygian Spire (rare/magic monster). Occasionally opens a portal to a Lightless Shrine.",
+      "key_rewards": ["Abyssal Jewels (up to two sockets — unique sockets for Abyss jewels)", "Stygian Vise belt (has Abyss socket)", "Abyss-socketed gear"],
+      "tips": ["Stygian Vise + two Abysal Jewels is a strong belt setup for many builds.", "Lightless Shrine portals are rare and highly rewarding.", "Abyssal Jewels can have life + damage stats not found on regular jewels."],
+      "notes": "Abyss troves can chain into a second Abyss event. The Lightless Shrine is a bonus dungeon with large rewards."
+    },
+    {
+      "name": "Expedition",
+      "category": "Management",
+      "how_to_trigger": "Place explosives on Expedition remnants in a marked grid. Detonate the chain — each explosion unearths monsters and logbooks.",
+      "what_to_do": "Choose which remnants to hit when placing explosives. Remnant keywords buff and debuff the encounter — plan your chain to include valuable buffs (extra quantity) without fatal debuffs (monsters cannot die). Kill the unearthed monsters for currency and logbooks.",
+      "key_rewards": ["Expedition Logbooks (instanced Expedition areas)", "Reroll currency (Rog's shop)", "Exotic Coinage and Astragali for Tujen's trade", "Expedition-specific unique items"],
+      "tips": ["Read remnant keywords before placing explosives — some combinations are deadly.", "Rog's shop can create near-perfect rare items via crafting sequences.", "Tujen offers bulk currency trades at favourable rates."],
+      "notes": "4 Expedition vendors each specialize in different rewards: Rog (crafting), Tujen (currency), Gwennen (uniques), Dannig (logbooks). See Expedition tab for remnant keyword details."
+    },
+    {
+      "name": "Heist",
+      "category": "Management",
+      "how_to_trigger": "Use a Heist Contract item (obtained from drops) at the Rogue Harbour to begin a job. Blueprints unlock multi-wing heists.",
+      "what_to_do": "Navigate the heist area to the objective. Your rogue opens doors — avoid raising the alarm by not looting until you reach the objective. On the way out, loot everything quickly before the alarm fills and guards overwhelm you.",
+      "key_rewards": ["Replica Unique items", "Alternate Quality gems", "Trinkets (extra life flask slots)", "Enchanted equipment", "Raw currency"],
+      "tips": ["Do not open chests on the way IN — the alarm only triggers while looting.", "Trinkets can only be equipped in Heist areas — they grant powerful bonuses.", "Blueprint reveals are expensive but multiply rewards significantly."],
+      "notes": "11 rogues each have different job skills. Rogues must be levelled and equipped for higher-level contracts. See Rogues tab for rogue details."
+    },
+    {
+      "name": "Betrayal / Syndicate",
+      "category": "Management",
+      "how_to_trigger": "Syndicate encounters spawn randomly in zones. You choose to fight, bargain (execute/betray/interrogate), or skip.",
+      "what_to_do": "Fight or negotiate with Syndicate members. Your choices determine which members hold which division (Transportation, Research, Fortification, Intervention) and unlock Safehouse rewards. Lead a member's intelligence to reveal their Safehouse for a boss fight and guaranteed reward.",
+      "key_rewards": ["Veiled Orbs (for unveiling mods)", "Safehouse rewards (Division-specific crafting)", "Aisling (Research Safehouse) — powerful craft table access", "Jun's special crafting interventions"],
+      "tips": ["Aisling at Research T4 provides the most powerful benchcrafting options in the game.", "Burning enemies (Fortification) is strong for map clear speed.", "Betrayal allows you to move members between divisions — plan your board state."],
+      "notes": "Syndicate board state persists across your league. See Syndicate tab for all 22 members and their best division placements."
+    },
+    {
+      "name": "Harvest",
+      "category": "Management",
+      "how_to_trigger": "Enter the Sacred Grove from a map or campaign zone. Click a Seed Crop to spawn Lifeforce-bearing monsters. Defeat them to harvest crafting options.",
+      "what_to_do": "Kill the Harvest monsters to earn Lifeforce (Wild/Vivid/Primal). Spend Lifeforce on offered craft operations — reforge, augment, remove/add modifiers, or set numeric values on items.",
+      "key_rewards": ["Deterministic crafting operations (reforge keeping prefix/suffix)", "Lifeforce (crafting currency)", "Extremely powerful target mods for rare items"],
+      "tips": ["'Reforge keeping prefix/suffix' is the most valuable Harvest craft.", "'Set a numeric value' allows setting a resistance to its maximum.", "Harvest is the premier method for multi-mod rare crafting."],
+      "notes": "Lifeforce type determines craft category: Wild = physical/attack, Vivid = life/flask, Primal = cold/lightning/fire. See Harvest tab for full craft list."
+    },
+    {
+      "name": "Incursion",
+      "category": "Management",
+      "how_to_trigger": "Alva Valeria appears in zones. Enter the Temporal Incursion to visit the ancient Vaal temple. You have a timed window to kill monsters and an Architect.",
+      "what_to_do": "Kill the Architect of the room you want to KEEP. This upgrades it. Kill the Architect of the room you want to REMOVE. After 11 incursions, the Temple of Atzoatl is revealed as an instanced area with your chosen rooms.",
+      "key_rewards": ["Temple of Atzoatl (unique instance with T3 room rewards)", "Omnitect (temple final boss)", "Vaal-themed uniques", "T3 room rewards (Altar of Sacrifice, Locus of Corruption, etc.)"],
+      "tips": ["Always kill the right architect — killing the wrong one removes a room.", "The Apex of Atzoatl (T3 Apex) adds item quantity to the whole temple.", "Locus of Corruption (T3 Corruption) allows double corruption of items."],
+      "notes": "Each of 18 room chains has a T3 reward. See Incursion tab for room priorities."
+    },
+    {
+      "name": "Bestiary",
+      "category": "Management",
+      "how_to_trigger": "Einhar appears in zones and captures rare monsters automatically if you help kill them. Beasts are stored in your Menagerie.",
+      "what_to_do": "Kill rare beasts that Einhar tags (glowing nets appear). Captured beasts are stored in your Menagerie stash. Trade 4 specific beasts at the Blood Altar to perform a Bestiary craft.",
+      "key_rewards": ["Bestiary crafting (implicit mods, split items, frenzy/endurance charges)", "Craicic Chimeral (adds white socket)", "Elder/Shaper implicits via specific beasts", "Metamorphed Unique beasts (Craicic Spider Crab etc.)"],
+      "tips": ["Craicic Spider Crab = add white socket to item (most valuable Bestiary recipe).", "Split beast recipe = duplicate a rare item (high risk, high reward).", "Bestiary crafts can add implicits, change sockets, or split items."],
+      "notes": "See Bestiary tab for all 25 Bestiary recipes with required beasts."
+    },
+    {
+      "name": "Metamorph",
+      "category": "Combat",
+      "how_to_trigger": "Tane Octavius appears in zones. Collect organs from rare and unique monsters (up to 5 samples per zone). Combine organs to create a Metamorph boss.",
+      "what_to_do": "Click on Tane to assemble the Metamorph from collected organs. Fight the assembled boss — organ combinations affect what mods the boss has and what catalyst it drops.",
+      "key_rewards": ["Catalysts (add quality to specific mod categories on jewellery)", "Ichors and Ichor-themed items", "Splinters of Perfection (Uber trials)"],
+      "tips": ["Liver organ = catalyst type bias.", "Higher rarity organs create more difficult but more rewarding bosses.", "Metamorph organs affect the specific catalyst type dropped."],
+      "notes": "See Metamorph tab for catalyst type details and which organ families drop which catalysts."
+    },
+    {
+      "name": "Delve",
+      "category": "Exploration",
+      "how_to_trigger": "Visit Niko in your hideout or find him in zones. Buy Sulphite (or collect it from nodes in maps). Use Sulphite to power the Crawler in the Azurite Mine.",
+      "what_to_do": "Guide the Crawler through the mine by clicking nodes. The Crawler provides light — stay within its radius or take escalating chaos damage. Break through walls to find hidden rooms and special encounters.",
+      "key_rewards": ["Fossil crafting materials (Hollow Fossils, Enchanted Fossils, etc.)", "Delve-specific unique items", "Resonators (hold fossils for crafting)", "Primordial Remnants (T17+ equivalent depth)"],
+      "tips": ["Hidden rooms contain the best rewards — look for breakable walls.", "Deeper = harder = better rewards. Darkness damage scales with depth.", "Some fossils only drop past certain depths (Faceted at 100+, Hollow at 60+)."],
+      "notes": "Sulphite is the limiting resource. Scarabs and Atlas passives can increase Sulphite capacity and generation. See Fossils tab for fossil details."
+    },
+    {
+      "name": "Blight",
+      "category": "Combat",
+      "how_to_trigger": "Click a Blight pump on the ground (blue/purple glowing plant). A tower-defense wave begins — enemies stream from portals toward the pump.",
+      "what_to_do": "Build oil-purchased towers along the enemy path while also fighting monsters directly. Protect the pump. After the encounter completes, collect Blight rewards and oils.",
+      "key_rewards": ["Oils (used for Blight anoints on amulets/rings)", "Blight-specific unique items (Blighted maps)", "Anointed gear with free notable passives"],
+      "tips": ["Slow and Chilling towers synergize with Frigid Tower.", "Summoner builds with many minions handle Blight well passively.", "Opalescent Oil (most valuable) can anoint very powerful notables."],
+      "notes": "Blighted maps are full tower-defense encounters with much greater rewards. See Blight tab for oil tiers and anoint recipes."
+    },
+    {
+      "name": "Essences",
+      "category": "Combat",
+      "how_to_trigger": "Click a monster crystallized in an Essence (a glowing statue). Three optional upgrades appear — you can upgrade the Essence up to twice for stronger versions before releasing and fighting.",
+      "what_to_do": "Optionally upgrade the Essence up to 2 times (each upgrade increases monster difficulty and Essence tier). Release the monster and kill it. The dropped Essence guarantees a specific mod when used on an item.",
+      "key_rewards": ["Screaming/Shrieking/Deafening Essences (guarantee specific mods)", "Delirium Essences (Hysteria/Horror/Insanity/Delirium — special mods)", "Items with guaranteed high-tier mods"],
+      "tips": ["Upgrading to Deafening Essence is usually worth the extra difficulty.", "Delirium Essences drop from Essence encounters after upgrading the base essence 3×.", "Use Essences as a crafting base to guarantee an otherwise hard-to-roll mod."],
+      "notes": "See Essences tab for which Essence guarantees which mod on which item slot."
+    }
+  ]
+}
