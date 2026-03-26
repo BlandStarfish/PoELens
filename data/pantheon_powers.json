@@ -1,0 +1,240 @@
+{
+  "how_it_works": "The Pantheon is a system of divine powers you equip through the NPC Sin in any town. You unlock Major Gods by defeating them in the campaign. Minor Gods are unlocked automatically as you progress. Upgrade each god's powers by placing a Divine Vessel in the Map Device alongside the specific map, killing the boss, then returning the captured soul to Sin.",
+  "divine_vessel_note": "Divine Vessels are purchased from Sin for 5 Chaos Orbs each. One is consumed per capture. Each upgrade unlocks one additional power for that god. Most gods have 2 upgrade tiers available.",
+  "tips": [
+    "You can only have one Major God and one Minor God active at a time — swap freely for free.",
+    "Soul of Arakaali is the go-to Major God for chaos/bleed/poison defences and life regeneration recovery.",
+    "Soul of Lunaris scales with nearby enemies — powerful in dense maps; weak in boss fights.",
+    "Soul of Solaris is better in boss fights — very strong against single-target with the upgrades.",
+    "Soul of Shakari (Minor) with the Whipping Miscreation upgrade gives 50% chance to avoid Poison — a very strong defensive choice.",
+    "Soul of Tukohama (Minor) gives significant physical damage reduction while stationary — great for totems, miners, and trap builds.",
+    "Soul of Ryslatha (Minor) refills all Life Flasks when they are empty — excellent flask sustain in maps.",
+    "Swap Minor Gods to counter specific mechanics: Yugul vs. Reflect maps, Garukhan vs. degeneration, Ralakesh vs. bleed."
+  ],
+  "major_gods": [
+    {
+      "name": "Soul of the Brine King",
+      "unlock": "Defeat the Brine King (Act 6 — The Tidal Island)",
+      "base_powers": [
+        "You cannot be Frozen if you've been Frozen recently",
+        "25% reduced Effect of Chill on you"
+      ],
+      "upgrades": [
+        {
+          "power": "50% reduced Effect of Chill on you",
+          "capture_target": "Gloom of the Deep",
+          "capture_map": "Reef (or similar water/cold map)"
+        },
+        {
+          "power": "You cannot be Stunned if you've been Stunned recently",
+          "capture_target": "Gorulis, Will-Thief",
+          "capture_map": "Tropical Island"
+        }
+      ],
+      "defensive_use": "Anti-Freeze, Anti-Chill, Anti-Stun",
+      "notes": "The most common choice for general mapping. Prevents chain-freezes and repeated stuns. Upgraded version with stun immunity is especially valuable in HC."
+    },
+    {
+      "name": "Soul of Lunaris",
+      "unlock": "Defeat Lunaris (Act 8 — The Blood Aqueduct or Phase Transition)",
+      "base_powers": [
+        "1% additional Physical Damage Reduction for each nearby Enemy, up to 8%",
+        "1% increased Movement Speed for each nearby Enemy, up to 8%"
+      ],
+      "upgrades": [
+        {
+          "power": "10% chance to avoid Projectiles",
+          "capture_target": "Puruna, the Challenger",
+          "capture_map": "Atoll"
+        },
+        {
+          "power": "8% additional Physical Damage Reduction if you have been Hit Recently",
+          "capture_target": "Skeletal Sniper",
+          "capture_map": "Burial Chambers"
+        }
+      ],
+      "defensive_use": "Physical Reduction, Projectile Avoidance",
+      "notes": "Scales with enemy density — excellent in juiced maps. Weak during boss fights where few enemies are nearby. Best paired with Lunaris for clearing content."
+    },
+    {
+      "name": "Soul of Solaris",
+      "unlock": "Defeat Solaris (Act 8 — The Solaris Concourse)",
+      "base_powers": [
+        "6% additional Physical Damage Reduction while there is only one nearby Enemy",
+        "20% chance to take 50% less Area Damage from Hits"
+      ],
+      "upgrades": [
+        {
+          "power": "6% reduced Elemental Damage taken if you have been Hit by a Unique Enemy Recently",
+          "capture_target": "Mephod, the Earth Scorcher",
+          "capture_map": "Colosseum"
+        },
+        {
+          "power": "50% chance to avoid Ailments while there is only one nearby Enemy",
+          "capture_target": "Guhlen, the Earth Scorcher",
+          "capture_map": "Peninsula"
+        }
+      ],
+      "defensive_use": "Single-target physical reduction, elemental reduction, ailment avoidance",
+      "notes": "Best Major God for boss fights — the 'one nearby enemy' condition is always met during pinnacle encounters. Upgraded Ailment avoidance is very strong against bosses that apply Shock, Chill, or Ignite."
+    },
+    {
+      "name": "Soul of Arakaali",
+      "unlock": "Defeat Arakaali (Act 7 — The Vaal City)",
+      "base_powers": [
+        "5% reduced Damage taken from Damage Over Time",
+        "10% chance to Recover 10% of Maximum Life when you stop taking Damage Over Time"
+      ],
+      "upgrades": [
+        {
+          "power": "Recover 5% of Life when you Block a Chaos Damage Hit",
+          "capture_target": "Spinner of False Hope",
+          "capture_map": "Arachnid Tomb"
+        },
+        {
+          "power": "50% increased Recovery Rate of Life and Energy Shield if you have stopped taking Damage Over Time Recently",
+          "capture_target": "Queen of the Great Tangle",
+          "capture_map": "Jungle Valley"
+        }
+      ],
+      "defensive_use": "Chaos DoT reduction, Life recovery from DoT",
+      "notes": "Excellent for content with heavy DoT threats (Delirium, Blight, Poison bosses). The 50% increased recovery rate upgrade is extremely strong — virtually doubles effective recovery when DoT is cleared."
+    }
+  ],
+  "minor_gods": [
+    {
+      "name": "Soul of Abberath",
+      "unlock": "Defeat Abberath (Act 2 — The Cannibal's Lair)",
+      "base_powers": [
+        "Unaffected by Burning Ground",
+        "5% reduced Fire Damage taken"
+      ],
+      "upgrades": [
+        {
+          "power": "60% less Duration of Ignite on you",
+          "capture_target": "Abberath the Cloven",
+          "capture_map": "Acid Caverns"
+        }
+      ],
+      "defensive_use": "Fire DoT immunity, Ignite duration reduction",
+      "notes": "Burning Ground immunity makes certain map mods trivial. Useful on fire-resistant builds but rarely the best overall Minor God."
+    },
+    {
+      "name": "Soul of Gruthkul",
+      "unlock": "Defeat Gruthkul (Act 6 — The Mud Flats)",
+      "base_powers": [
+        "1% additional Physical Damage Reduction for each Hit you've taken Recently, up to 5%"
+      ],
+      "upgrades": [
+        {
+          "power": "Melee Attackers take 10 Physical Damage on Hit",
+          "capture_target": "Erebix, Light's Bane",
+          "capture_map": "Fungal Hollow"
+        }
+      ],
+      "defensive_use": "Physical Damage Reduction scaling with incoming hits",
+      "notes": "Provides up to 5% physical reduction that stacks with Lunaris. Good for melee builds or builds that take many small hits."
+    },
+    {
+      "name": "Soul of Yugul",
+      "unlock": "Defeat Yugul (Act 8 — The Lunaris Concourse)",
+      "base_powers": [
+        "You take 50% reduced Reflected Damage",
+        "Enemies Reflected Damage is Unlucky"
+      ],
+      "upgrades": [
+        {
+          "power": "25% reduced Chill Duration on you",
+          "capture_target": "Lycius, Midnight's Howl",
+          "capture_map": "Polar Fields"
+        }
+      ],
+      "defensive_use": "Reflect immunity, Chill duration reduction",
+      "notes": "Essential for any build running Reflect maps that still can reflect to the character. The base power effectively makes reflect non-lethal on properly geared characters."
+    },
+    {
+      "name": "Soul of Shakari",
+      "unlock": "Defeat Shakari (Act 9 — The Vastiri Desert)",
+      "base_powers": [
+        "You cannot be Poisoned while there are at least 3 Poisons on you",
+        "20% less Chaos Damage taken over Time"
+      ],
+      "upgrades": [
+        {
+          "power": "50% chance to Avoid being Poisoned",
+          "capture_target": "Whipping Miscreation",
+          "capture_map": "Desert Spring"
+        }
+      ],
+      "defensive_use": "Poison immunity, Chaos DoT reduction",
+      "notes": "One of the most powerful defensive Minor Gods. The 50% avoid Poison upgrade (Whipping Miscreation capture) makes Poison maps and chaos environments much safer. Popular in Hardcore."
+    },
+    {
+      "name": "Soul of Tukohama",
+      "unlock": "Defeat Tukohama (Act 6 — The Coast)",
+      "base_powers": [
+        "While Stationary, gain 3% additional Physical Damage Reduction every second, up to 9%"
+      ],
+      "upgrades": [
+        {
+          "power": "While Stationary, Regenerate 0.5% of Life per second",
+          "capture_target": "Ancient Architects",
+          "capture_map": "Vault"
+        }
+      ],
+      "defensive_use": "Stationary physical reduction and life regen",
+      "notes": "Strong for builds that stand still: Totems, Mines, Traps, and some Spellcaster builds using cast-while-channelling. Up to 9% physical reduction is very meaningful at high armour values."
+    },
+    {
+      "name": "Soul of Garukhan",
+      "unlock": "Defeat Garukhan (Act 9 — The Boiling Lake)",
+      "base_powers": [
+        "6% increased Movement Speed if you haven't been Hit Recently",
+        "20% chance to Evade Attacks if you haven't been Hit Recently"
+      ],
+      "upgrades": [
+        {
+          "power": "+5% to maximum Chance to Evade",
+          "capture_target": "Wilorin Demontamer",
+          "capture_map": "Racecourse"
+        }
+      ],
+      "defensive_use": "Evasion and movement speed when not recently hit",
+      "notes": "Good for Evasion builds that successfully avoid hits. The movement bonus is a quality-of-life upgrade for fast-moving builds. Synergizes with Elusive and Phase Acrobatics."
+    },
+    {
+      "name": "Soul of Ralakesh",
+      "unlock": "Defeat Ralakesh (Act 7 — The Ashen Fields)",
+      "base_powers": [
+        "Moving while Bleeding doesn't cause you to take extra Damage",
+        "25% reduced Physical Damage over Time taken while moving"
+      ],
+      "upgrades": [
+        {
+          "power": "25% chance to Avoid Bleeding",
+          "capture_target": "Kofem, Wandering Blade",
+          "capture_map": "Cells"
+        }
+      ],
+      "defensive_use": "Bleed safety while moving, bleed avoidance",
+      "notes": "Essential for fast-moving builds in Bleed-heavy content. The base power alone removes a major danger (moving while bleeding normally triples bleed damage). The avoidance upgrade is a bonus."
+    },
+    {
+      "name": "Soul of Ryslatha",
+      "unlock": "Defeat Ryslatha (Act 6 — The Wetlands)",
+      "base_powers": [
+        "Life Flasks gain 3 Charges every 3 seconds if you haven't used a Life Flask Recently",
+        "40% increased Life Flask Effect Duration"
+      ],
+      "upgrades": [
+        {
+          "power": "Life Flasks are refilled when they run out if you haven't been refilled this way in the past 3 seconds",
+          "capture_target": "Spindle Watcher",
+          "capture_map": "Spider Forest"
+        }
+      ],
+      "defensive_use": "Flask charge sustain and emergency refill",
+      "notes": "One of the strongest defensive Minor Gods for life-based builds. The upgrade provides an automatic Life Flask emergency refill — effectively a free panic button once every 3 seconds."
+    }
+  ]
+}

@@ -301,6 +301,39 @@ These features were auto-approved after all J1–J3 items reached 9+/10 completi
 
 ---
 
+## Expansion Roadmap Round 8 (Auto-Approved 2026-03-25)
+
+These features were auto-approved after all K1–K3 items reached 9+/10 completion. Implement in priority order listed.
+
+### L1. Essence Reference ✅ IMPLEMENTED (Session 31)
+- Static reference for all 20 Essence types with stat focus, guaranteed mod, best slots, and crafting use
+- Standard Essences (Weeping through Deafening) plus 4 Delirium Essences (Horror/Hysteria/Insanity/Delirium)
+- Category filter (Life/Physical/Cold/Fire/Lightning/Chaos/Utility/Defense/Delirium) + full-text search
+- Cards show: stat category, tier range, key mod, primary slots, best_for, and notes
+- Data source: data/essences.json (20 essences, curated)
+- ui/widgets/essence_panel.py; added to Info group as "Essences" tab
+- **Rationale:** Essence crafting requires knowing which Essence guarantees which mod on which slot. "Which Essence gives movement speed on boots?" is a frequent question. In-overlay reference prevents wiki lookups during active crafting sessions.
+
+### L2. Fragment Sets Reference ✅ IMPLEMENTED (Session 31)
+- Static reference for all major Vaal/Shaper/Elder/Breach/Pantheon fragment sets
+- Each entry shows: boss name, fragment list, area level, how to obtain fragments, notable drops, and notes
+- Type filter (Vaal/Shaper/Elder/Breach/Pantheon) + full-text search
+- Includes: Apex of Sacrifice, The Alluring Abyss, The Shaper's Realm, Elder, all 5 Breach lords, Divine Vessel
+- Data source: data/fragment_sets.json (10 sets, curated)
+- ui/widgets/fragment_panel.py; added to Info group as "Fragments" tab
+- **Rationale:** Fragment combinations for endgame encounters are complex and easily forgotten between leagues. Players frequently need "which 4 fragments open Shaper?" or "how many Chayula splinters?" during active play.
+
+### L3. Pantheon Powers Reference ✅ IMPLEMENTED (Session 31)
+- Static reference for all 4 Major Gods and 8 Minor Gods with base powers, upgrade requirements, and defensive use cases
+- Each god shows: unlock method, defensive speciality, base powers, upgrade powers with capture target + map name, and notes
+- Section toggle (Both/Major/Minor) + full-text search across names, powers, and capture targets
+- Footer swap tip ("swap freely from any town")
+- Data source: data/pantheon_powers.json (4 major, 8 minor, curated)
+- ui/widgets/pantheon_panel.py; added to Info group as "Pantheon" tab
+- **Rationale:** The Pantheon capture system requires killing specific map bosses with a Divine Vessel. Players frequently ask "which Minor God counters Poison?" or "which map do I capture Shakari's upgrade from?" An in-overlay reference eliminates wiki trips and reminds players to swap defensively for specific encounters.
+
+---
+
 ## Expansion Roadmap Round 4 (Auto-Approved 2026-03-25)
 
 These features were auto-approved after all G1–G3 items reached 9+/10 completion. Implement in priority order listed.

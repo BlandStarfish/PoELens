@@ -1,0 +1,155 @@
+{
+  "how_it_works": "Certain endgame boss fights require combining specific Vaal Fragments or other items in the Map Device. Place the required set of fragments alongside a map in the Map Device to open the boss arena. Fragments are dropped from the corresponding guardian/boss fights or found in endgame content.",
+  "tips": [
+    "Sacrifice fragments (Atziri) are common — check vendors like Zana weekly for them.",
+    "Guardian fragments (Shaper) drop from the Shaper Guardian maps: Chimera, Hydra, Minotaur, Phoenix.",
+    "Mortal fragments (Uber Atziri) are rare — all four must be assembled before the encounter can be opened.",
+    "The Alluring Abyss (Uber Atziri) is one of the most rewarding endgame bosses for currency.",
+    "Conqueror Citadels don't require fragments — they appear naturally after 3 encounters with each Conqueror.",
+    "Breachstone Upgrades: upgrade Normal → Charged → Enriched → Pure → Flawless using Breach Blessing items."
+  ],
+  "fragment_sets": [
+    {
+      "name": "Apex of Sacrifice",
+      "boss": "Atziri, Queen of the Vaal",
+      "type": "Vaal",
+      "tier": "Normal",
+      "fragments": [
+        "Sacrifice at Dusk",
+        "Sacrifice at Dawn",
+        "Sacrifice at Noon",
+        "Sacrifice at Midnight"
+      ],
+      "area_level": 68,
+      "how_to_get": "Fragments drop from map bosses in Vaal-influenced maps, Vaal side areas, and can be purchased from Zana.",
+      "notable_drops": "Atziri's Promise (flask), Atziri's Acuity (gloves), Atziri's Splendour (body armour), Atziri's Step (boots), Atziri's Foible (amulet), Atziri's Disfavour (axe)",
+      "notes": "Classic mid-game farming destination. The four fragments are commonly found and relatively cheap on trade. A68 requirement means any developed character can access it."
+    },
+    {
+      "name": "The Alluring Abyss",
+      "boss": "Uber Atziri (Atziri, Queen of the Vaal — Merciless)",
+      "type": "Vaal",
+      "tier": "Uber",
+      "fragments": [
+        "Mortal Grief",
+        "Mortal Hope",
+        "Mortal Rage",
+        "Mortal Ignorance"
+      ],
+      "area_level": 80,
+      "how_to_get": "Mortal fragments drop from Atziri herself in the Apex of Sacrifice. Each normal Atziri kill can drop one fragment.",
+      "notable_drops": "Vessel of Vinktar (flask), Atziri's Acuity (gloves), Doryani's Catalyst (sceptre), Volkuur's Guidance (gloves), Uul-Netol's Vow (shield)",
+      "notes": "Challenging A80 endgame encounter. Requires careful build — Uber Atziri's reflect phases are lethal for unprepared builds. All four Mortal fragments must be assembled."
+    },
+    {
+      "name": "The Shaper's Realm",
+      "boss": "The Shaper",
+      "type": "Shaper",
+      "tier": "Endgame",
+      "fragments": [
+        "Fragment of the Chimera",
+        "Fragment of the Hydra",
+        "Fragment of the Minotaur",
+        "Fragment of the Phoenix"
+      ],
+      "area_level": 84,
+      "how_to_get": "Each fragment drops from the corresponding Shaper Guardian map boss: Chimera (Minotaur map), Hydra (Hydra map), Minotaur (Minotaur map), Phoenix (Phoenix map). Guardian maps are found via Atlas completion.",
+      "notable_drops": "Shaper-exclusive uniques: Shavronne's Revelation (ring), Presence of Chayula (amulet), The Shaper's Touch (gloves), Starforge (sword), Reach of the Council (bow), The Surrender (shield)",
+      "notes": "The Shaper is one of PoE's endgame pinnacle bosses. Running all four Guardian maps yields one complete fragment set. Shaper drops Shaper-exclusive unique items and Exalted Shards."
+    },
+    {
+      "name": "The Elder Slayer's Realm",
+      "boss": "The Elder (with Shaper)",
+      "type": "Elder",
+      "tier": "Endgame",
+      "fragments": [
+        "Fragment of Knowledge",
+        "Fragment of Shape",
+        "Fragment of Terror",
+        "Fragment of the Chimera (or Hydra/Minotaur/Phoenix)"
+      ],
+      "area_level": 84,
+      "how_to_get": "Obtain by having both The Shaper and The Elder present on your Atlas simultaneously. The Elder fight appears on an Atlas map when Elder influence spreads to a map containing both bosses.",
+      "notable_drops": "Elder-exclusive uniques: Mark of the Elder (ring), Cyclopean Coil (belt), Watcher's Eye (jewel — only with Elder present), Convoking Wand, Essence Worm (ring)",
+      "notes": "Uber Elder requires defeating the Elder while the Shaper is also present, producing The Shaper's Realm + Elder encounter. Watcher's Eye jewels with Vaal Aura mods only drop here."
+    },
+    {
+      "name": "Xoph's Domain",
+      "boss": "Xoph, Dark Embers (Fire Breach Lord)",
+      "type": "Breach",
+      "tier": "Breachstone",
+      "fragments": [
+        "Xoph's Breachstone (Normal / Charged / Enriched / Pure / Flawless)"
+      ],
+      "area_level": 70,
+      "how_to_get": "Xoph's Splinters drop from Fire Breach encounters in maps. Collect 100 splinters to form a Breachstone. Upgrade with Xoph's Blessing.",
+      "notable_drops": "Xoph's Blood (amulet), Xoph's Nurture (bow), Xoph's Heart (splinter unique jewel at Flawless tier)",
+      "notes": "Fire Breach Lord. Xoph's Blood amulet ('Avatar of Fire' notable) is a popular Ignite build enabler. Flawless Xoph's Breachstone drops Xoph's Heart."
+    },
+    {
+      "name": "Tul's Domain",
+      "boss": "Tul, Creeping Avalanche (Cold Breach Lord)",
+      "type": "Breach",
+      "tier": "Breachstone",
+      "fragments": [
+        "Tul's Breachstone (Normal / Charged / Enriched / Pure / Flawless)"
+      ],
+      "area_level": 70,
+      "how_to_get": "Tul's Splinters drop from Cold Breach encounters. Collect 100 splinters for a Breachstone. Upgrade with Tul's Blessing.",
+      "notable_drops": "Tulfall (sword), Tul's unique jewel at Flawless tier",
+      "notes": "Cold Breach Lord. Tul's unique items are less sought-after than Xoph's or Chayula's, making the Breachstones generally cheaper."
+    },
+    {
+      "name": "Esh's Domain",
+      "boss": "Esh, Forked Thought (Lightning Breach Lord)",
+      "type": "Breach",
+      "tier": "Breachstone",
+      "fragments": [
+        "Esh's Breachstone (Normal / Charged / Enriched / Pure / Flawless)"
+      ],
+      "area_level": 70,
+      "how_to_get": "Esh's Splinters drop from Lightning Breach encounters. Collect 100 splinters for a Breachstone. Upgrade with Esh's Blessing.",
+      "notable_drops": "Esh's Mirror (shield), Esh's unique jewel at Flawless tier",
+      "notes": "Lightning Breach Lord. Esh's Mirror is used in reflect-immune builds. Lightning breachstones are commonly run for bulk splinter farming."
+    },
+    {
+      "name": "Uul-Netol's Domain",
+      "boss": "Uul-Netol, Unbowed (Physical Breach Lord)",
+      "type": "Breach",
+      "tier": "Breachstone",
+      "fragments": [
+        "Uul-Netol's Breachstone (Normal / Charged / Enriched / Pure / Flawless)"
+      ],
+      "area_level": 70,
+      "how_to_get": "Uul-Netol's Splinters drop from Physical Breach encounters. Collect 100 splinters. Upgrade with Uul-Netol's Blessing.",
+      "notable_drops": "Uul-Netol's Vow (shield), Uul-Netol's unique jewel at Flawless tier",
+      "notes": "Physical Breach Lord. Uul-Netol's Vow provides an Elder-style shield with Vaal Detonate Mines skill. Physical breachstones are notably harder to farm than other elements."
+    },
+    {
+      "name": "Chayula's Domain",
+      "boss": "Chayula, Who Dreamt (Chaos Breach Lord)",
+      "type": "Breach",
+      "tier": "Breachstone",
+      "fragments": [
+        "Chayula's Breachstone (Normal / Charged / Enriched / Pure / Flawless)"
+      ],
+      "area_level": 80,
+      "how_to_get": "Chayula's Splinters drop from Chaos Breach encounters. Collect 300 splinters for a Breachstone (3× the other lords). Upgrade with Chayula's Blessing.",
+      "notable_drops": "Presence of Chayula (amulet), Chayula's unique jewel at Flawless tier",
+      "notes": "Chaos Breach Lord. Requires 300 splinters (not 100) — significantly harder to farm. Presence of Chayula is a powerful amulet for Chaos Inoculation builds. The A80 area level makes this the hardest Breach encounter."
+    },
+    {
+      "name": "Divine Vessel (Pantheon Capture)",
+      "boss": "Map Boss (Pantheon Upgrade)",
+      "type": "Pantheon",
+      "tier": "Utility",
+      "fragments": [
+        "Divine Vessel (one per boss capture)"
+      ],
+      "area_level": 1,
+      "how_to_get": "Divine Vessels are purchased from Sin (Act 6 NPC) for 5 Chaos Orbs each. Place one in the Map Device alongside the map of the boss you want to capture.",
+      "notable_drops": "Captured Soul upgrades the corresponding Major or Minor Pantheon power when delivered to Sin.",
+      "notes": "Not a boss fight — the Vessel captures the boss soul to upgrade your Pantheon powers. Required once per Pantheon upgrade. See the Pantheon tab for which boss upgrades which power."
+    }
+  ]
+}

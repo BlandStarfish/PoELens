@@ -49,6 +49,9 @@ from ui.widgets.heist_rogues_panel import HeistRoguesPanel
 from ui.widgets.sanctum_panel import SanctumPanel
 from ui.widgets.rare_mods_panel import RareModsPanel
 from ui.widgets.blight_panel import BlightPanel
+from ui.widgets.essence_panel import EssencePanel
+from ui.widgets.fragment_panel import FragmentPanel
+from ui.widgets.pantheon_panel import PantheonPanel
 
 
 DARK_BG = "#1a1a2e"
@@ -100,7 +103,10 @@ _INFO_HEIST_ROGUES    = 13
 _INFO_SANCTUM         = 14
 _INFO_RARE_MODS       = 15
 _INFO_BLIGHT          = 16
-_INFO_SETTINGS        = 17
+_INFO_ESSENCE         = 17
+_INFO_FRAGMENTS       = 18
+_INFO_PANTHEON        = 19
+_INFO_SETTINGS        = 20
 
 
 class HUD(QMainWindow):
@@ -260,6 +266,9 @@ class HUD(QMainWindow):
         self._sanctum_panel          = SanctumPanel()
         self._rare_mods_panel        = RareModsPanel()
         self._blight_panel           = BlightPanel()
+        self._essence_panel          = EssencePanel()
+        self._fragment_panel         = FragmentPanel()
+        self._pantheon_panel         = PantheonPanel()
         self._currency_flip_panel    = CurrencyFlipPanel(currency_flip) if currency_flip else QWidget()
         self._lab_panel              = LabPanel(lab_tracker) if lab_tracker else QWidget()
 
@@ -310,7 +319,7 @@ class HUD(QMainWindow):
         self._inner_tabs.append(end_tabs)
         outer_tabs.addTab(end_tabs, "Endgame")             # _GRP_ENDGAME   = 2
 
-        # Info group: Bestiary · Expedition · Syndicate · Vendor · Scarabs · Breach · Delirium · Currency · Incursion · Fossils · Maven · Metamorph · Harvest · Rogues · Sanctum · Rare Mods · Blight · Settings
+        # Info group: Bestiary · Expedition · Syndicate · Vendor · Scarabs · Breach · Delirium · Currency · Incursion · Fossils · Maven · Metamorph · Harvest · Rogues · Sanctum · Rare Mods · Blight · Essences · Fragments · Pantheon · Settings
         info_tabs = _make_inner()
         info_tabs.addTab(self._bestiary_panel,       "Bestiary")   # _INFO_BESTIARY       = 0
         info_tabs.addTab(self._expedition_panel,     "Expedition") # _INFO_EXPEDITION     = 1
@@ -329,7 +338,10 @@ class HUD(QMainWindow):
         info_tabs.addTab(self._sanctum_panel,        "Sanctum")    # _INFO_SANCTUM        = 14
         info_tabs.addTab(self._rare_mods_panel,      "Rare Mods")  # _INFO_RARE_MODS      = 15
         info_tabs.addTab(self._blight_panel,         "Blight")     # _INFO_BLIGHT         = 16
-        info_tabs.addTab(self._settings_panel,       "Settings")   # _INFO_SETTINGS       = 17
+        info_tabs.addTab(self._essence_panel,        "Essences")   # _INFO_ESSENCE        = 17
+        info_tabs.addTab(self._fragment_panel,       "Fragments")  # _INFO_FRAGMENTS      = 18
+        info_tabs.addTab(self._pantheon_panel,       "Pantheon")   # _INFO_PANTHEON       = 19
+        info_tabs.addTab(self._settings_panel,       "Settings")   # _INFO_SETTINGS       = 20
         self._inner_tabs.append(info_tabs)
         outer_tabs.addTab(info_tabs, "Info")                       # _GRP_INFO            = 3
 

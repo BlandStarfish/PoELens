@@ -4694,3 +4694,131 @@ Asana session summary: Status GID 1213813313325805, HUMAN INBOX project 12137238
 ## PROJECT HEALTH
 Overall grade: 10/10. ~100% complete (original + E1-E6 + F1-F3 + G1-G3 + H1-H3 + I1-I3 + J1-J3 + K1-K3). 438 tests pass. No technical debt. No regressions. Info group 18 tabs. Only blocker: PoE2 passive tree (no GGG ETA).
 ═══════════════════════════════════════════════════════════════
+
+═══════════════════════════════════════════════════════════════
+SESSION: 2026-03-25  (Session 31)
+═══════════════════════════════════════════════════════════════
+
+## ORIENTATION SUMMARY
+Session 30 left off after implementing K1-K3 (Sanctum Affliction/Boon, Rare Mod, Blight Oil references). All at 9+/10. Test count 438. Info group 18 tabs. Primary suggestion: Phase 4 Round 8 — generate and implement L1-L3. Candidates: Essence Reference, Vaal Fragment/Map Device Reference, Atlas Passive Cluster Keystone Reference.
+
+## ASSESSMENT GRADES
+All prior modules unchanged from Session 30 (all 9-10/10 across axes).
+New modules:
+  Essence Reference        9/10  9/10  10/10  (new L1)
+  Fragment Sets Reference  9/10  9/10  10/10  (new L2)
+  Pantheon Powers Ref      9/10  9/10  10/10  (new L3)
+  Test Suite              10/10  9/10   9/10
+
+## SMOKE TEST FINDINGS
+Phase 1B/1C: None found. All 438 pre-session tests pass.
+
+## MAINTENANCE LOG
+No maintenance fixes required this session.
+
+## DEVELOPMENT LOG
+
+### Phase 4 Round 8 -- L1-L3 Auto-Approved
+K1-K3 all at 9+/10. Regenerated 3 new expansion features.
+Atlas Passive Keystone Reference replaced by Pantheon Powers — keystone data would require
+more uncertain atlas tree specifics, while Pantheon data is well-defined and highly practical.
+
+### L1: Essence Reference
+
+data/essences.json: 20 essence entries
+  Standard Essences (15): Greed, Contempt, Hatred, Anger, Spite, Rage, Loathing, Doubt,
+    Woe, Misery, Scorn, Envy, Torment, Sorrow, Suffering, Fear
+  Delirium Essences (4): Horror, Hysteria, Insanity, Delirium
+  Schema: {name, tiers[], stat_category, stat_focus, primary_slots, key_mod, best_for, notes}
+  Root-level: how_it_works, tier_order, tier_note, special_note, tips[], stat_categories[]
+  Stat categories: Life, Physical, Cold, Fire, Lightning, Chaos, Utility, Defense, Delirium
+  Tier range: Weeping < Wailing < Screaming < Shrieking < Deafening
+  Delirium Essences start at Screaming tier only (via Remnant of Corruption)
+
+ui/widgets/essence_panel.py: EssencePanel
+  Category filter buttons (9 stat types, color-coded)
+  Cards: name "Essence of X" (gold), category badge, tier range badge, stat focus (teal),
+         key mod (dim), slots, best_for (green), notes (dim italic)
+  Full-text search across name, stat_focus, primary_slots, best_for, key_mod, notes, category
+tests/test_essence_panel.py: 21 tests
+
+hud.py: _INFO_ESSENCE=17, "Essences" tab added
+
+### L2: Fragment Sets Reference
+
+data/fragment_sets.json: 10 fragment set entries
+  Types: Vaal (Apex of Sacrifice, Alluring Abyss), Shaper (Shaper's Realm), Elder,
+         Breach (Xoph/Tul/Esh/Uul-Netol/Chayula), Pantheon (Divine Vessel)
+  Schema: {name, boss, type, tier, fragments[], area_level, how_to_get, notable_drops, notes}
+  Root-level: how_it_works, tips[]
+  Notable: Chayula requires 300 splinters (vs 100 for other Breach lords), area level 80
+
+ui/widgets/fragment_panel.py: FragmentPanel
+  Type filter buttons: All/Vaal/Shaper/Elder/Breach/Pantheon (color-coded per type)
+  Cards: name (gold), type badge, tier badge, boss (teal), fragment list (colored),
+         area_level, how_to_get (green), notable_drops (yellow), notes (dim italic)
+  Full-text search across name, boss, fragments, drops, notes, how_to_get
+tests/test_fragment_panel.py: 18 tests
+
+hud.py: _INFO_FRAGMENTS=18, "Fragments" tab added
+
+### L3: Pantheon Powers Reference
+
+data/pantheon_powers.json: 4 major gods + 8 minor gods
+  Major Gods: Soul of the Brine King, Lunaris, Solaris, Arakaali
+  Minor Gods: Abberath, Gruthkul, Yugul, Shakari, Tukohama, Garukhan, Ralakesh, Ryslatha
+  Schema: {name, unlock, base_powers[], upgrades[], defensive_use, notes}
+  Upgrade schema: {power, capture_target, capture_map}
+  Root-level: how_it_works, divine_vessel_note, tips[]
+  Key detail: Shakari's Whipping Miscreation upgrade = 50% avoid Poison (most popular Minor God)
+
+ui/widgets/pantheon_panel.py: PantheonPanel
+  Section toggle (Both/Major/Minor) with gold/teal color coding
+  Cards: god name (gold=major, teal=minor), Major/Minor badge, unlock, defensive_use (yellow),
+         base powers list, upgrades with capture target + map name (green+dim), notes
+  Footer swap reminder
+  Full-text search across name, powers, defensive_use, upgrade details, notes
+tests/test_pantheon_panel.py: 24 tests
+
+hud.py: _INFO_PANTHEON=19, "Pantheon" tab added; _INFO_SETTINGS shifted to 20
+
+Test count: 438 -> 501 (+63 new, all pass)
+
+## TECHNICAL NOTES
+
+Info group now 21 tabs (0-20): Bestiary/Expedition/Syndicate/Vendor/Scarabs/Breach/Delirium/
+  Currency/Incursion/Fossils/Maven/Metamorph/Harvest/Rogues/Sanctum/Rare Mods/Blight/
+  Essences/Fragments/Pantheon/Settings. _INFO_SETTINGS=20.
+
+Essence Delirium tier handling:
+  Delirium Essences (Horror/Hysteria/Insanity/Delirium) only appear in Screaming/Shrieking/
+  Deafening tiers — they come from Remnant of Corruption applied to standard essences.
+  The data correctly marks their tiers starting from "Screaming" with no "Weeping" or "Wailing".
+
+Fragment set for Elder:
+  Elder fight mechanics are complex (requires Shaper + Elder both on Atlas simultaneously).
+  The fragment_sets.json entry for Elder notes the nuance rather than providing a simple
+  4-fragment list. This is accurate to how the fight actually works.
+
+Pantheon swap mechanics:
+  The panel includes a footer noting that swapping Major/Minor Gods is free and instant.
+  This is a commonly forgotten convenience that players should swap to counter specific content.
+
+## SUGGESTIONS FOR NEXT SESSION
+
+1. Phase 4 Round 9 (HIGH): L1-L3 all at 9+/10. Run Phase 4 -- generate M1-M3. Candidates:
+   - Atlas Passive Keystone Reference (revisit with more research if needed)
+   - Unique Flask Reference (each unique flask, when to use, which builds)
+   - Vaal Skill Reference (all Vaal skills, soul requirements, effects, when to socket)
+
+2. PoE2 passive tree (BLOCKED): No official GGG skilltree-export for PoE2.
+   Check grindinggear/skilltree-export for new branches.
+
+3. Currency Reference live price column (LOW, deferred from Session 26):
+   Would require passing ninja instance. Evaluate if value justifies coupling.
+
+## PROJECT HEALTH
+Overall grade: 10/10. ~100% complete (original + E1-E6 + F1-F3 + G1-G3 + H1-H3 + I1-I3 +
+J1-J3 + K1-K3 + L1-L3). 501 tests pass. No technical debt. No regressions.
+Info group 21 tabs. Only blocker: PoE2 passive tree (no GGG ETA).
+═══════════════════════════════════════════════════════════════

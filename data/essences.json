@@ -1,0 +1,217 @@
+{
+  "how_it_works": "Using an Essence on an item rerolls it like an Orb of Alteration (magic) or Chaos Orb (rare), but guarantees one specific mod determined by the Essence type and item slot. Higher-tier Essences guarantee a stronger version of the same mod. All other affixes remain random. Only use Essences on white (normal) or freshly wiped items.",
+  "tier_order": ["Weeping", "Wailing", "Screaming", "Shrieking", "Deafening"],
+  "tier_note": "Tiers scale from Weeping (weakest) to Deafening (strongest). Screaming and above are the endgame crafting tiers. Deafening Essences are rare but produce near-maximum rolls. Some Essence types only appear at Screaming tier or above.",
+  "special_note": "Remnant of Corruption (found in Essence encounters) can upgrade a Weeping/Wailing Essence to the next tier, or (rarely) transform any Essence into one of the four Delirium Essences: Horror, Hysteria, Insanity, or Delirium. Delirium Essences embed a Support Gem mod into the item — a unique effect not otherwise craftable.",
+  "tips": [
+    "Essences guarantee one affix slot. The remaining slots are rolled randomly — you could get 1–2 additional strong mods on top of the guarantee.",
+    "Screaming Essence of Greed is a budget way to guarantee a flat life prefix on ring or amulet before metacrafting the rest.",
+    "Use Essences on white item bases, not magic/rare — the Essence re-rolls all mods from scratch.",
+    "Delirium Essences (Horror/Hysteria/Insanity/Delirium) embed Support Gems as extra affixes, which cannot be obtained through any other crafting method.",
+    "Essences can be used on Influenced (Shaper/Elder/etc.) items, but the influence modifiers are cleared and re-rolled along with everything else.",
+    "Remnant of Corruption does not always upgrade — it may do nothing, upgrade tier, or transform to a Delirium Essence at random."
+  ],
+  "stat_categories": ["Life", "Physical", "Cold", "Fire", "Lightning", "Chaos", "Utility", "Defense", "Delirium"],
+  "essences": [
+    {
+      "name": "Greed",
+      "tiers": ["Weeping", "Wailing", "Screaming", "Shrieking", "Deafening"],
+      "stat_category": "Life",
+      "stat_focus": "Maximum Life",
+      "primary_slots": "All armour slots, Ring, Amulet, Belt",
+      "key_mod": "+(N to M) to maximum Life on all equipment slots",
+      "best_for": "Life-stacking builds — guarantees a flat life roll on any item base",
+      "notes": "The most universally useful Essence. Screaming Greed on rings and amulets is a staple leveling investment. Deafening Greed produces very high life rolls comparable to high-tier crafted prefixes."
+    },
+    {
+      "name": "Contempt",
+      "tiers": ["Weeping", "Wailing", "Screaming", "Shrieking", "Deafening"],
+      "stat_category": "Physical",
+      "stat_focus": "Physical Damage",
+      "primary_slots": "Weapon, Ring, Body Armour",
+      "key_mod": "Adds (N–M) Physical Damage to Attacks (weapon/ring); Physical Damage Reduction (armour)",
+      "best_for": "Physical melee and ranged builds locking a physical damage roll on weapon or rings",
+      "notes": "On weapons, guarantees an added physical damage prefix — very powerful for physical attack builds. On body armour, gives a physical damage reduction mod useful for tanky builds."
+    },
+    {
+      "name": "Hatred",
+      "tiers": ["Weeping", "Wailing", "Screaming", "Shrieking", "Deafening"],
+      "stat_category": "Cold",
+      "stat_focus": "Cold Damage",
+      "primary_slots": "Weapon, Ring, Gloves",
+      "key_mod": "Adds (N–M) Cold Damage to Attacks (weapon/ring); Adds (N–M) Cold Damage to Spells (wand/staff/sceptre)",
+      "best_for": "Cold attack and cold spell builds wanting a guaranteed cold damage roll",
+      "notes": "Used in cold bow builds, cold casters, and any build running the Hatred aura. The spell version appears on caster weapons. Screaming+ relevant for endgame."
+    },
+    {
+      "name": "Anger",
+      "tiers": ["Weeping", "Wailing", "Screaming", "Shrieking", "Deafening"],
+      "stat_category": "Fire",
+      "stat_focus": "Fire Damage",
+      "primary_slots": "Weapon, Ring, Gloves",
+      "key_mod": "Adds (N–M) Fire Damage to Attacks (weapon/ring); Adds (N–M) Fire Damage to Spells (wand/staff/sceptre)",
+      "best_for": "Fire attack and ignite builds locking a fire damage prefix on weapon or rings",
+      "notes": "Mirrors Hatred but for fire. Used in fire bow builds, Righteous Fire, and ignite/burn builds. Screaming Anger on a bow is a common budget starter."
+    },
+    {
+      "name": "Spite",
+      "tiers": ["Weeping", "Wailing", "Screaming", "Shrieking", "Deafening"],
+      "stat_category": "Lightning",
+      "stat_focus": "Lightning Damage",
+      "primary_slots": "Weapon, Ring, Gloves",
+      "key_mod": "Adds (N–M) Lightning Damage to Attacks (weapon/ring); Adds (N–M) Lightning Damage to Spells (wand/staff/sceptre)",
+      "best_for": "Lightning attack and lightning spell builds guaranteeing a lightning damage roll",
+      "notes": "Mirrors Anger/Hatred for lightning. Used in Lightning Arrow, Spark, and storm call builds. Wrath (aura) synergy."
+    },
+    {
+      "name": "Rage",
+      "tiers": ["Weeping", "Wailing", "Screaming", "Shrieking", "Deafening"],
+      "stat_category": "Physical",
+      "stat_focus": "Attack Speed",
+      "primary_slots": "Weapon, Gloves",
+      "key_mod": "X% increased Attack Speed (weapon); X% increased Attack Speed (gloves)",
+      "best_for": "Attack builds locking an attack speed roll on weapon or gloves",
+      "notes": "Attack speed on a weapon is one of the most impactful mods for DPS. Screaming Rage on a good weapon base is a strong crafting starter for physical or elemental attack builds."
+    },
+    {
+      "name": "Loathing",
+      "tiers": ["Weeping", "Wailing", "Screaming", "Shrieking", "Deafening"],
+      "stat_category": "Utility",
+      "stat_focus": "Movement Speed",
+      "primary_slots": "Boots",
+      "key_mod": "X% increased Movement Speed (boots only)",
+      "best_for": "Any build guaranteeing movement speed on boots before metacrafting life and resistances",
+      "notes": "Movement speed is near-mandatory on boots. Using Essence of Loathing locks the movement speed prefix, then you can metacraft 'Prefixes Cannot Be Changed' and reforge suffixes for resistances/life."
+    },
+    {
+      "name": "Doubt",
+      "tiers": ["Weeping", "Wailing", "Screaming", "Shrieking", "Deafening"],
+      "stat_category": "Utility",
+      "stat_focus": "Accuracy Rating",
+      "primary_slots": "Helmet, Gloves, Ring, Amulet, Boots",
+      "key_mod": "+(N) to Accuracy Rating (most slots)",
+      "best_for": "Attack builds short on accuracy to reach cap, especially Marauder/Witch class starts",
+      "notes": "Useful in early game or on builds with low base dexterity. Becomes less necessary with Precision gem, Tailwind, or if using high-dexterity bases. Screaming Doubt gives a significant accuracy boost."
+    },
+    {
+      "name": "Woe",
+      "tiers": ["Weeping", "Wailing", "Screaming", "Shrieking", "Deafening"],
+      "stat_category": "Utility",
+      "stat_focus": "Elemental Damage to Attacks",
+      "primary_slots": "Weapon, Ring",
+      "key_mod": "Adds (N–M) Elemental Damage to Attacks (mixed fire/cold/lightning)",
+      "best_for": "Elemental attack builds wanting a mixed elemental damage prefix without committing to one element",
+      "notes": "Less synergistic than Anger/Hatred/Spite for mono-element builds. Good for Avatar of Fire builds or builds stacking all three elements."
+    },
+    {
+      "name": "Misery",
+      "tiers": ["Weeping", "Wailing", "Screaming", "Shrieking", "Deafening"],
+      "stat_category": "Utility",
+      "stat_focus": "Elemental Damage with Spell Skills",
+      "primary_slots": "Weapon, Ring, Amulet",
+      "key_mod": "X% increased Elemental Damage with Spell Skills (weapon/ring/amulet)",
+      "best_for": "Budget elemental spellcasters locking a percentage elemental spell damage mod",
+      "notes": "Percentage increased elemental spell damage is a valuable prefix. Screaming Misery on a wand or sceptre is a solid crafting base for elemental spellcasters."
+    },
+    {
+      "name": "Scorn",
+      "tiers": ["Screaming", "Shrieking", "Deafening"],
+      "stat_category": "Physical",
+      "stat_focus": "Critical Strike Multiplier",
+      "primary_slots": "Weapon, Amulet",
+      "key_mod": "+(N)% to Critical Strike Multiplier (weapon, global on amulet)",
+      "best_for": "Crit builds locking a critical strike multiplier on weapon or amulet",
+      "notes": "Only available from Screaming tier upward. Screaming Scorn on a dagger, claw, or wand is a core budget crit build strategy. Multiplier on weapon is local (affects that weapon only); amulet is global."
+    },
+    {
+      "name": "Envy",
+      "tiers": ["Screaming", "Shrieking", "Deafening"],
+      "stat_category": "Chaos",
+      "stat_focus": "Chaos Damage",
+      "primary_slots": "Weapon, Ring, Gloves",
+      "key_mod": "Adds (N–M) Chaos Damage to Attacks (weapon/ring); Chaos Damage to Spells (caster weapon)",
+      "best_for": "Chaos attack and chaos spell builds guaranteeing a chaos damage prefix",
+      "notes": "Screaming tier only. Used in Toxic Rain, Caustic Arrow, Poisonbloom, and chaos attack builds. Screaming Envy on a bow or claw locks the chaos prefix for poison builds."
+    },
+    {
+      "name": "Torment",
+      "tiers": ["Weeping", "Wailing", "Screaming", "Shrieking", "Deafening"],
+      "stat_category": "Life",
+      "stat_focus": "Life Leech",
+      "primary_slots": "Weapon, Ring",
+      "key_mod": "X% of Physical Damage Leeched as Life (weapon)",
+      "best_for": "Slayer and leech-reliant attack builds guaranteeing a leech roll on weapon",
+      "notes": "The weapon mod provides percentage physical leech, which is very strong for Slayer (capped leech) builds and any build relying on leech for sustain."
+    },
+    {
+      "name": "Sorrow",
+      "tiers": ["Weeping", "Wailing", "Screaming", "Shrieking", "Deafening"],
+      "stat_category": "Defense",
+      "stat_focus": "Cold Resistance",
+      "primary_slots": "Helmet, Gloves, Boots, Belt, Ring, Amulet",
+      "key_mod": "+(N)% to Cold Resistance (all equipment slots)",
+      "best_for": "Builds short on cold resistance, or leveling when resistances are not yet capped",
+      "notes": "Rarely used for endgame crafting — the resistance mod takes a valuable affix slot. Most useful for leveling characters to quickly cap cold resistance."
+    },
+    {
+      "name": "Suffering",
+      "tiers": ["Weeping", "Wailing", "Screaming", "Shrieking", "Deafening"],
+      "stat_category": "Cold",
+      "stat_focus": "Cold Damage / Freeze Chance",
+      "primary_slots": "Weapon, Gloves",
+      "key_mod": "Adds (N–M) Cold Damage + chance to Freeze enemies (weapon/gloves)",
+      "best_for": "Freeze builds wanting a guaranteed Freeze chance component on weapons or gloves",
+      "notes": "Provides both cold damage and a freeze chance, making it useful in dedicated freeze/shatter builds. Less popular than Hatred for raw cold DPS builds."
+    },
+    {
+      "name": "Fear",
+      "tiers": ["Weeping", "Wailing", "Screaming", "Shrieking", "Deafening"],
+      "stat_category": "Defense",
+      "stat_focus": "Chaos Resistance / Intelligence",
+      "primary_slots": "Helmet, Amulet, Ring, Body Armour",
+      "key_mod": "+(N)% Chaos Resistance (most slots); +(N) to Intelligence (helmet/amulet)",
+      "best_for": "Chaos-resistance-starved builds, or Intelligence requirement builds",
+      "notes": "Dual-purpose Essence. Chaos resistance on most pieces; Intelligence on helmet and amulet. Not a meta crafting choice, but useful for specific gear requirements."
+    },
+    {
+      "name": "Horror",
+      "tiers": ["Screaming", "Shrieking", "Deafening"],
+      "stat_category": "Delirium",
+      "stat_focus": "Embedded Support Gem (Arcane Surge / Bonechill)",
+      "primary_slots": "Weapon, Off-hand",
+      "key_mod": "Weapon: Supported by Level N Arcane Surge. Off-hand/Shield: Supported by Level N Bonechill.",
+      "best_for": "Arcane Surge proc on weapon hit for attack-based trigger setups; Bonechill for cold DoT builds",
+      "notes": "Delirium Essence — only from Remnant of Corruption. Arcane Surge on a weapon is powerful for builds that trigger spells on attack hits. Bonechill on an off-hand provides free cold exposure and enhanced chill."
+    },
+    {
+      "name": "Hysteria",
+      "tiers": ["Screaming", "Shrieking", "Deafening"],
+      "stat_category": "Delirium",
+      "stat_focus": "Embedded Support Gem (Combustion / Fortify)",
+      "primary_slots": "Weapon, Body Armour",
+      "key_mod": "Weapon: Supported by Level N Combustion. Body Armour: Supported by Level N Fortify.",
+      "best_for": "Combustion for automatic Fire Exposure on fire builds; Fortify on body armour for melee builds",
+      "notes": "Delirium Essence. Combustion on a weapon provides free Fire Exposure (-10% fire resistance) without dedicating a gem socket. Fortify on body armour is strong for melee builds that want the Fortify buff without an off-hand."
+    },
+    {
+      "name": "Insanity",
+      "tiers": ["Screaming", "Shrieking", "Deafening"],
+      "stat_category": "Delirium",
+      "stat_focus": "Embedded Support Gem (Faster Attacks / Unbound Ailments)",
+      "primary_slots": "Weapon, Gloves",
+      "key_mod": "Weapon: Supported by Level N Faster Attacks. Gloves: Supported by Level N Unbound Ailments.",
+      "best_for": "Faster Attacks on weapon for attack speed DPS; Unbound Ailments on gloves for DoT ailment builds",
+      "notes": "Delirium Essence. Faster Attacks embedded in a weapon is exceptionally strong — it frees a gem socket and scales with weapon quality. Unbound Ailments on gloves is highly sought by Poison and Bleed builds."
+    },
+    {
+      "name": "Delirium",
+      "tiers": ["Screaming", "Shrieking", "Deafening"],
+      "stat_category": "Delirium",
+      "stat_focus": "Embedded Support Gem (Decay / Concentrated Effect)",
+      "primary_slots": "Weapon, Helmet",
+      "key_mod": "Weapon: Supported by Level N Decay. Helmet: Supported by Level N Concentrated Effect.",
+      "best_for": "Decay chaos degeneration on hit for chaos DoT builds; Concentrated Effect on helmet for AoE skills",
+      "notes": "Delirium Essence. Decay provides chaos degeneration per hit — powerful for Bane, Chaos DoT, and Poison builds stacking multiple DoT sources. Concentrated Effect on a helmet is notable for skills like Scorching Ray or Bane that benefit from the AoE reduction tradeoff."
+    }
+  ]
+}
