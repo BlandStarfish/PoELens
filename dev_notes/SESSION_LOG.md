@@ -4965,3 +4965,144 @@ Overall grade: 10/10. ~100% complete (original + E1-E6 + F1-F3 + G1-G3 + H1-H3 +
 J1-J3 + K1-K3 + L1-L3 + M1-M3). 559 tests pass. No technical debt. No regressions.
 Info group 24 tabs. Only blocker: PoE2 passive tree (no GGG ETA).
 ═══════════════════════════════════════════════════════════════
+
+
+═══════════════════════════════════════════════════════════════
+SESSION: 2026-03-25  (Session 33)
+═══════════════════════════════════════════════════════════════
+
+## ORIENTATION SUMMARY
+Session 32 left off after implementing M1-M3 (Unique Flask Reference, Vaal Skill Reference, Item Corruption Reference). All at 9+/10. Test count 559. Info group 24 tabs. Primary suggestion: Phase 4 Round 10 — generate and implement N1-N3. Candidates: Ascendancy Class Reference (HIGH), Keystone Passive Reference (MEDIUM), Map Boss Quick Reference (LOW).
+
+## ASSESSMENT GRADES
+All prior modules unchanged from Session 32 (all 9-10/10 across axes).
+New modules:
+  Ascendancy Class Ref  9/10  9/10  10/10  (new N1)
+  Keystone Passive Ref  9/10  9/10  10/10  (new N2)
+  Map Boss Quick Ref    9/10  9/10  10/10  (new N3)
+  Test Suite           10/10  9/10   9/10
+
+## SMOKE TEST FINDINGS
+Phase 1B/1C: None found. All 559 pre-session tests pass.
+
+## MAINTENANCE LOG
+No maintenance fixes required this session.
+
+## DEVELOPMENT LOG
+
+### Phase 4 Round 10 -- N1-N3 Implementation
+M1-M3 all at 9+/10. N1-N3 were the queued suggestions from Session 32. All three implemented this session.
+
+### N1: Ascendancy Class Reference
+
+data/ascendancy_classes.json: 19 Ascendancy class entries
+  Base classes: Marauder (3), Ranger (3), Witch (3), Duelist (3), Templar (3), Shadow (3), Scion (1)
+  Schema: {name, base_class, playstyle, key_notables[], primary_defence, top_builds[], notes}
+  Root-level: how_it_works, respec_note (20 Regrets cost), tips[], base_classes[]
+  Notable: Ascendant (Scion) has flexible sub-class selection mechanic documented
+  All 19 classes: Juggernaut/Berserker/Chieftain, Deadeye/Raider/Pathfinder,
+    Necromancer/Elementalist/Occultist, Slayer/Gladiator/Champion,
+    Inquisitor/Hierophant/Guardian, Assassin/Saboteur/Trickster, Ascendant
+
+ui/widgets/ascendancy_panel.py: AscendancyPanel
+  Base class filter buttons (8 buttons including All), color-coded per base class
+  Colors: Marauder=RED, Ranger=GREEN, Witch=PURPLE, Duelist=YELLOW, Templar=TEAL, Shadow=BLUE, Scion=ACCENT
+  Cards: name (gold) + base_class badge (color-coded)
+         playstyle (text), key notables (teal), defence (yellow), top builds (green), notes (dim)
+  Full-text search across name, base_class, playstyle, defence, notes, notables, builds
+
+tests/test_ascendancy_panel.py: 27 tests
+
+hud.py: _INFO_ASCENDANCY=23, "Ascend" tab added to Info group
+
+### N2: Keystone Passive Reference
+
+data/keystones.json: 20 keystone entries
+  Major keystones: Resolute Technique, Iron Reflexes, Chaos Inoculation, Eldritch Battery,
+    Blood Magic, Elemental Equilibrium, Elemental Overload, Pain Attunement, Acrobatics,
+    Phase Acrobatics, Unwavering Stance, Ghost Reaver, Vaal Pact, Ancestral Bond,
+    Iron Will, The Agnostic, Perfect Agony, Crimson Dance, Imbalanced Guard
+  Note: Mindless Aggression included as a clarification entry (Ascendancy notable, not tree keystone)
+  Schema: {name, effect, trade_off, builds_that_need[], breaks_for[], location, notes}
+  Root-level: how_it_works, tips[]
+
+ui/widgets/keystones_panel.py: KeystonesPanel
+  No category filter (all keystones shown by default — search-only filtering)
+  Cards: name (gold) + location (dim italic)
+         effect (green), trade-off (red), builds_that_need (teal), breaks_for (orange), notes (dim)
+  Full-text search across name, effect, trade_off, location, notes, builds
+
+tests/test_keystones_panel.py: 18 tests
+
+hud.py: _INFO_KEYSTONES=24, "Keystones" tab added to Info group
+
+### N3: Map Boss Quick Reference
+
+data/map_bosses.json: 16 boss entries
+  Categories: Shaper Guardian (4), Elder Guardian (4), Conqueror (4), Pinnacle (4)
+  Shaper Guardians: Chimera, Hydra, Minotaur, Phoenix
+  Elder Guardians: Constrictor, Enslaver, Eradicator, Purifier
+  Conquerors: Baran (lightning), Veritania (cold), Al-Hezmin (chaos), Drox (physical)
+  Pinnacle: Sirus, Maven, Shaper, Elder
+  Schema: {name, map, category, key_mechanics, dangerous_abilities[], recommended_prep, notes}
+  Root-level: how_it_works, tips[], categories[]
+
+ui/widgets/map_boss_panel.py: MapBossPanel
+  Category filter buttons: All/Shaper Guardian/Elder Guardian/Conqueror/Pinnacle (color-coded)
+  Colors: Shaper Guardian=BLUE, Elder Guardian=PURPLE, Conqueror=TEAL, Pinnacle=ACCENT
+  Cards: name (gold) + category badge (color-coded) + map (dim italic)
+         key_mechanics (text), dangerous_abilities (red), recommended_prep (green), notes (dim)
+  Full-text search across name, map, category, mechanics, abilities, prep, notes
+
+tests/test_map_boss_panel.py: 21 tests
+
+hud.py: _INFO_MAP_BOSSES=25, "Bosses" tab added; _INFO_SETTINGS shifted to 26
+
+Test count: 559 -> 625 (+66 new, all pass)
+Info group now 27 tabs (0-26): [prior 23] + Ascend/Keystones/Bosses/Settings. _INFO_SETTINGS=26.
+
+## TECHNICAL NOTES
+
+Ascendancy filter color scheme:
+  Each base class has a distinct color for its filter button AND its card left-border.
+  Marauder=RED (melee/tanky), Ranger=GREEN (dex/speed), Witch=PURPLE (magic/ES),
+  Duelist=YELLOW (balanced), Templar=TEAL (faith/support), Shadow=BLUE (cunning),
+  Scion=ACCENT (gold, central/flexible). Colors chosen for visual distinctiveness.
+
+Keystones panel design choice:
+  Unlike other Info panels, Keystones has no category filter — all keystones are visible by default.
+  Rationale: keystones don't map cleanly to categories (they're tree-location-based, not theme-based).
+  Search covers effect, trade-off, and build types which is the primary lookup pattern.
+  Mindless Aggression included as a clarification entry since it's often confused with a keystone.
+
+Map boss grouping:
+  The 4-boss-per-category structure (4 Shaper Guardians, 4 Elder Guardians, 4 Conquerors, 4 Pinnacle)
+  maps cleanly to filter buttons. Pinnacle group covers the four highest-prestige fights.
+  Guardian of Chimera mapped to "Pit of the Chimera" map (common naming confusion corrected).
+  Elder fight notes the complex Atlas setup requirement (cannot just run a map — needs Atlas state).
+
+_INFO_SETTINGS shifting:
+  Every time a new Info tab is added before Settings, the Settings index must increment.
+  Session history: Settings started at 0 (Session 1), now at index 26 (Session 33).
+  This is expected — Settings is always the last Info tab by design.
+
+## SUGGESTIONS FOR NEXT SESSION
+
+1. Phase 4 Round 11 (HIGH): N1-N3 all at 9+/10. Run Phase 4 -- generate O1-O3. Remaining
+   design space for Info group: PoE2-specific content (if GGG publishes data), league-specific
+   references, or deeper character-building tools. Candidates:
+   - Atlas Passive Cluster Reference (if a version-stable framing can be found)
+   - League Mechanic Checklist (Ritual, Delirium, Blight, etc. — quick "how does this work" reference)
+   - Build Archetype Primer (attack vs spell vs minion vs DoT — foundational concepts)
+
+2. PoE2 passive tree (BLOCKED): No official GGG skilltree-export for PoE2.
+   Check grindinggear/skilltree-export for new branches.
+
+3. Currency Reference live price column (LOW, deferred from Session 26):
+   Would require passing ninja instance. Evaluate if value justifies coupling.
+
+## PROJECT HEALTH
+Overall grade: 10/10. ~100% complete (original + E1-E6 + F1-F3 + G1-G3 + H1-H3 + I1-I3 +
+J1-J3 + K1-K3 + L1-L3 + M1-M3 + N1-N3). 625 tests pass. No technical debt. No regressions.
+Info group 27 tabs. Only blocker: PoE2 passive tree (no GGG ETA).
+═══════════════════════════════════════════════════════════════

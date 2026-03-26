@@ -1,0 +1,155 @@
+{
+  "how_it_works": "Endgame bosses guard key content milestones. Each has distinct mechanics that reward preparation. Elder/Shaper Guardians drop their respective fragments. Conquerors drop Watchstones and eventually Sirus. Maven Invitations require witnessing multiple bosses.",
+  "tips": [
+    "Most deaths to map bosses come from unrecognised telegraphs — reading the mechanic once saves more runs than one extra DPS node.",
+    "Conqueror order matters: kill in the same region multiple times to force the Conqueror encounter.",
+    "Sirus, Awakener of Worlds has a soft DPS check — his rotating beams reset if you take too long on each phase."
+  ],
+  "categories": ["Shaper Guardian", "Elder Guardian", "Conqueror", "Pinnacle"],
+  "bosses": [
+    {
+      "name": "Guardian of the Chimera",
+      "map": "Pit of the Chimera",
+      "category": "Shaper Guardian",
+      "key_mechanics": "Three-phase with adds: Gorilla adds (stun), Rhino ads (charge), Spider adds (chaos ground). Chimera teleports between phases.",
+      "dangerous_abilities": ["Chaos smoke clouds on ground (deal large chaos damage)", "Leap slam onto player", "Adds overwhelm if DPS is low"],
+      "recommended_prep": "Chaos resistance is important. Clear adds quickly before they stack up. Use movement skill to dodge leap slam.",
+      "notes": "Considered the hardest Shaper Guardian due to chaos clouds. Bring flasks to counter chaos damage."
+    },
+    {
+      "name": "Guardian of the Hydra",
+      "map": "Maze of the Minotaur",
+      "category": "Shaper Guardian",
+      "key_mechanics": "Ice storm barrage, homing missiles, and tentacle slap. Second phase (50% life) adds ice novas.",
+      "dangerous_abilities": ["Homing ice missiles (significant cold damage)", "Ice storm on ground", "Cold snap on entrance"],
+      "recommended_prep": "High cold resistance and freeze immunity (from Pantheon or boots). Movement skill to sidestep missile salvos.",
+      "notes": "Hydra is often the easiest Shaper Guardian. Cold resist cap is the main preparation needed."
+    },
+    {
+      "name": "Guardian of the Minotaur",
+      "map": "Forge of the Phoenix",
+      "category": "Shaper Guardian",
+      "key_mechanics": "Underground dig phase (untargetable), boulder rolls, and slam. Boulders create ground patches on impact.",
+      "dangerous_abilities": ["Underground dig then slam (massive AOE)", "Boulder roll (can one-shot squishy builds)", "Physical slam"],
+      "recommended_prep": "High physical mitigation (armour or end charges). Run when boulders start rolling. Move during underground phase.",
+      "notes": "Watch for the dig animation — stand away from the nearest boulder trail direction. Pure physical damage makes armour/endurance charges very effective."
+    },
+    {
+      "name": "Guardian of the Phoenix",
+      "map": "Lair of the Hydra",
+      "category": "Shaper Guardian",
+      "key_mechanics": "Fire-based: raining fireballs, fire nova, and periodic resurrection mechanic (regains life if not killed within window).",
+      "dangerous_abilities": ["Rain of fire from above (high fire damage)", "Fire nova eruption", "Life regeneration shield at ~20% life"],
+      "recommended_prep": "Fire resistance cap. Freeze immunity. High burst damage to kill through the regen shield phase.",
+      "notes": "The regen window requires high burst DPS — if your damage is too low, Phoenix will fully restore life. Ensure flask charges are saved for this phase."
+    },
+    {
+      "name": "The Constrictor",
+      "map": "Absence of Mercy and Empathy (Shaper's Realm variant)",
+      "category": "Elder Guardian",
+      "key_mechanics": "Chaos-themed: chaos puddles on ground, tentacle slam, and periodic Elder realm overlay (changes floor layout).",
+      "dangerous_abilities": ["Chaos puddle ground effects (stay mobile)", "Constrict tentacle slam", "Elder realm transformation (disorienting)"],
+      "recommended_prep": "Chaos resistance is crucial. Movement speed and quick reflexes to avoid puddles. Chaos immunity makes the fight trivial.",
+      "notes": "The chaos puddle denial mechanic punishes stationary builds. Keep moving constantly during the fight."
+    },
+    {
+      "name": "The Enslaver",
+      "map": "Absence of Mercy and Empathy",
+      "category": "Elder Guardian",
+      "key_mechanics": "Fire-based Elder Guardian: fire balls, fire ground, and whirlwind spin that creates fire patches.",
+      "dangerous_abilities": ["Fire whirlwind creating ground fire", "Fireball barrage", "Periodic fire nova"],
+      "recommended_prep": "Fire resistance cap. Freeze immunity (Pantheon). Movement skill to exit fire ground zones.",
+      "notes": "Similar feel to Phoenix — fire is the primary threat. Ground fire patches can stack quickly in a small arena."
+    },
+    {
+      "name": "The Eradicator",
+      "map": "Absence of Mercy and Empathy",
+      "category": "Elder Guardian",
+      "key_mechanics": "Lightning-based Elder Guardian: ball lightning, arc, and energy blade slices. Very fast projectiles.",
+      "dangerous_abilities": ["Ball lightning walls (can hit many times)", "Arc chain to player", "Homing lightning blades"],
+      "recommended_prep": "Lightning resistance cap. Dodge or Evade to avoid blade hits. Consider Vaal Grace for dodge chance.",
+      "notes": "The lightning blades home in and can be hard to dodge without movement speed. Keeping distance reduces the number of simultaneous threats."
+    },
+    {
+      "name": "The Purifier",
+      "map": "Absence of Mercy and Empathy",
+      "category": "Elder Guardian",
+      "key_mechanics": "Cold-based Elder Guardian: ice spears, frost nova, and cold ground patches. Periodic freeze attempt.",
+      "dangerous_abilities": ["Ice spear barrage (piercing)", "Frost nova freeze", "Cold ground slow/freeze"],
+      "recommended_prep": "Cold resistance cap. Freeze immunity (Pantheon or Boots). Move perpendicular to ice spear direction.",
+      "notes": "Freeze immunity makes this fight straightforward. The ice spears fire in a predictable arc pattern — side-step timing is learnable quickly."
+    },
+    {
+      "name": "Baran, the Crusader",
+      "map": "Crusader-influenced maps (T6+)",
+      "category": "Conqueror",
+      "key_mechanics": "Lightning and spell-based: lightning beam, mana drain, and Crusader decree (random map modifier). Arena slowly fills with lightning.",
+      "dangerous_abilities": ["Mana drain nova (drains flask and mana)", "Lightning beam rotation", "Decree nova (empowers arena mechanic)"],
+      "recommended_prep": "Lightning resistance. Mana flasks or Blood Magic to avoid mana drain. Dodge the rotating lightning beam.",
+      "notes": "Baran's mana drain can strand mana-dependent builds. Blood Magic or high mana pool helps. The arena shrinks over time — focus on DPS."
+    },
+    {
+      "name": "Veritania, the Redeemer",
+      "map": "Redeemer-influenced maps (T6+)",
+      "category": "Conqueror",
+      "key_mechanics": "Cold and speed-based: cold snap, ice storm, and rush charges across the arena. Periodic invulnerability phases.",
+      "dangerous_abilities": ["Cold snap freeze (can one-shot cold builds without freeze immunity)", "Rush charge across arena", "Periodic invulnerability + ice storm while immune"],
+      "recommended_prep": "Cold resistance cap. Freeze immunity mandatory. Movement skill to dodge rush path.",
+      "notes": "Freeze immunity is the number one priority for this fight. Without it, cold snap can instakill. Her invulnerability phases have predictable timing."
+    },
+    {
+      "name": "Al-Hezmin, the Hunter",
+      "map": "Hunter-influenced maps (T6+)",
+      "category": "Conqueror",
+      "key_mechanics": "Chaos and poison-based: snake adds, poison nova, and chaos cloud spit. Snake adds can overwhelm with low DPS.",
+      "dangerous_abilities": ["Poison nova (huge chaos damage)", "Chaos cloud ground patches", "Snake adds (each poisons)"],
+      "recommended_prep": "Chaos resistance cap and Immunity (if possible). Clear snake adds immediately. Antidote or Sulphur flask to counter poison stacks.",
+      "notes": "The most chaos-damage-heavy Conqueror. Chaos resistance is more important here than for the other three. Maintain flask charges for the nova."
+    },
+    {
+      "name": "Drox, the Warlord",
+      "map": "Warlord-influenced maps (T6+)",
+      "category": "Conqueror",
+      "key_mechanics": "Physical and bleed-based: slam, leap slam, and whirlwind. Arena adds bleed ground zones. Rage mechanic: Drox enrages if you don't deal enough DPS.",
+      "dangerous_abilities": ["Slam AOE (heavy physical)", "Whirlwind (physical + bleed)", "Enrage phase (damage spike if DPS is too low)"],
+      "recommended_prep": "Armour, endurance charges, or high evasion. Bleed immunity or instant remove bleed flask. Maintain steady DPS to avoid enrage.",
+      "notes": "Drox's enrage is a soft DPS check. Any bleed or physical build removal flask is highly recommended. Armour reduces slam damage significantly."
+    },
+    {
+      "name": "Sirus, Awakener of Worlds",
+      "map": "Eye of the Storm (T16, Atlas centre)",
+      "category": "Pinnacle",
+      "key_mechanics": "Four-phase pinnacle fight. Each phase adds mechanics. Phase 3+ adds rotating death beams. Final phase: Meteor shower + die beam + Corridor of Degen.",
+      "dangerous_abilities": ["Rotating laser beams (phase 3+)", "Meteor shower (phase 4)", "Desolation corridor (tracking ground degen)", "Clouds that teleport you"],
+      "recommended_prep": "Fast movement speed to dodge beams. Strong single-target DPS (phases go faster). Freeze or stun immunity. Keep portals open between phases.",
+      "notes": "Sirus has a DPS check in phase 4 — low damage makes the meteor and beam overlap lethal. Run toward the edge of the arena to find gaps in beam patterns. Never stand in clouds."
+    },
+    {
+      "name": "The Maven",
+      "map": "The Maven's Crucible (after completing Maven Invitations)",
+      "category": "Pinnacle",
+      "key_mechanics": "Memory game phase, add phases, and continuous environmental hazard creation. The Memory Game has instant-death consequence.",
+      "dangerous_abilities": ["Memory game failure = instant death", "Add phase (multiple conquerors simultaneously)", "Brain void (targeted ground degen)", "Shockwave arena-wide"],
+      "recommended_prep": "Strong AoE clear for add phase. Very high DPS for enrage check. Careful spatial awareness for memory game pattern.",
+      "notes": "The memory game is a 3-safe-zone pattern you must memorise in seconds. The add phase requires either AOE dominance or excellent positioning. High investment fight."
+    },
+    {
+      "name": "The Shaper",
+      "map": "The Shaper's Realm (via 4-fragment key)",
+      "category": "Pinnacle",
+      "key_mechanics": "Ball lightning, slam, and three mini-boss phases. Zana portals must be entered for safe DPS windows.",
+      "dangerous_abilities": ["Ball lightning walls (multi-hit)", "Slam AOE", "Beam sweep", "Bullet hell cold projectiles in phase portals"],
+      "recommended_prep": "Cold and lightning resistance. Dodge flasks or Acrobatics. Potion charges to survive portal phases. Strong single-target DPS.",
+      "notes": "Shaper is one of the original pinnacle bosses — his mechanics are learnable but punishing. The bullet hell portal phase requires good movement. Save flasks for the DPS windows."
+    },
+    {
+      "name": "The Elder",
+      "map": "Requires Shaper and Elder present simultaneously on Atlas (complex setup)",
+      "category": "Pinnacle",
+      "key_mechanics": "Elder spawns with four Guardian adds simultaneously. Periodic slam and ground-degen. Guardians assist Elder and must be managed.",
+      "dangerous_abilities": ["Guardian assists (can chain mechanics)", "Slam AOE", "Ground degen orbs", "Elder's void tentacle attack"],
+      "recommended_prep": "Kill Guardians quickly to reduce simultaneous threats. Chaos and cold resistance. High clear speed to manage add pressure.",
+      "notes": "The Elder fight requires managing 4 mini-bosses at once. Prioritise the most dangerous Guardian (Constrictor for chaos damage) first. Area of the map matters — arena can be tight."
+    }
+  ]
+}

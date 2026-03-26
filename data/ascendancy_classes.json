@@ -1,0 +1,183 @@
+{
+  "how_it_works": "Each base class has 3 Ascendancy classes (except Scion: 1). Complete Labyrinth trials and run Normal/Cruel/Merciless/Eternal Lab to earn all 8 Ascendancy points. You can respec your Ascendancy for 20 Orbs of Regret.",
+  "respec_note": "Respeccing Ascendancy costs 20 Orbs of Regret and grants 2 Refund Points per reset.",
+  "tips": [
+    "Each Lab difficulty awards 2 Ascendancy points — run all 4 Labs per character for the full 8.",
+    "Ascendancy choice is the most impactful single decision for a build's viability.",
+    "Scion's Ascendant lets you borrow notable passives from other Ascendancies — extremely flexible for hybrid builds."
+  ],
+  "base_classes": ["Marauder", "Ranger", "Witch", "Duelist", "Templar", "Shadow", "Scion"],
+  "classes": [
+    {
+      "name": "Juggernaut",
+      "base_class": "Marauder",
+      "playstyle": "Unstoppable melee tank — high armour, stun immunity, slow but relentless.",
+      "key_notables": ["Unbreakable (armour mitigates all hits)", "Unflinching (endurance charges on stun)", "Unstoppable (cannot be slowed below base)", "Unrelenting (endurance charges reduce damage)"],
+      "primary_defence": "Armour + Endurance Charges",
+      "top_builds": ["Earthquake Jugg", "Hollow Palm Jugg", "Molten Strike Jugg", "Any tanky melee"],
+      "notes": "The quintessential unkillable melee class. Trades damage ceiling for extreme survivability. Stun immunity makes dangerous map mods trivial."
+    },
+    {
+      "name": "Berserker",
+      "base_class": "Marauder",
+      "playstyle": "Glass-cannon melee — trades life for massive damage bonuses via Rage and life cost.",
+      "key_notables": ["Rite of Ruin (Rage bonus doubled)", "Crave the Slaughter (free Berserk)", "Aspect of Carnage (+40% damage, take +10% damage)", "War Bringer (warcries cost life, generate endurance charges)"],
+      "primary_defence": "Life recovery on kill / High life pool",
+      "top_builds": ["Blade Flurry Berserker", "Cyclone Berserker", "Warcry Berserker", "Tectonic Slam Berserker"],
+      "notes": "Aspect of Carnage is one of the highest flat damage bonuses in the game. Requires sustain — works best with strong life on hit or leech."
+    },
+    {
+      "name": "Chieftain",
+      "base_class": "Marauder",
+      "playstyle": "Fire-focused melee/caster with strong totems and life/mana sustain via fire damage.",
+      "key_notables": ["Ngamahu (fire pen + life regen on kill)", "Tawhoa (totems gain your buffs)", "Ramako (sun's punishment — fire exposure)", "Hinekora (death's fury — kill chain leech)"],
+      "primary_defence": "Life regeneration + Totems as meat shields",
+      "top_builds": ["Ancestral Warchief Chieftain", "Cyclone Chieftain", "Lava Lash Chieftain", "SRS Chieftain"],
+      "notes": "Best Ascendancy for totem builds requiring fire conversion. Provides consistent fire resistance penetration and strong leech-based sustain."
+    },
+    {
+      "name": "Deadeye",
+      "base_class": "Ranger",
+      "playstyle": "Fast, high-range projectile attacker — emphasises clear speed, pierce, and chain.",
+      "key_notables": ["Gathering Winds (Tailwind on kill — +10% action speed)", "Focal Point (mark target takes extra damage)", "Far Shot (damage increases with distance)", "Ricochet (extra projectile + chain on kill)"],
+      "primary_defence": "Evasion + killing before being hit",
+      "top_builds": ["Tornado Shot Deadeye", "Lightning Arrow Deadeye", "Ice Shot Deadeye", "Toxic Rain Deadeye"],
+      "notes": "The premier bow-attack Ascendancy for mapping. Tailwind stacks are extremely powerful for both clear speed and boss DPS. Far Shot rewards staying at maximum range."
+    },
+    {
+      "name": "Raider",
+      "base_class": "Ranger",
+      "playstyle": "Frenzy-charge stacker — very high attack speed, Phasing, and on-kill bonuses.",
+      "key_notables": ["Way of the Poacher (Frenzy charges on kill)", "Rapid Assault (Onslaught on kill)", "Quartz Infusion (Phasing + flat dodge)", "Avatar of the Veil (extra evasion, ele ailment immunity)"],
+      "primary_defence": "Evasion + Dodge (Phasing)",
+      "top_builds": ["Spectral Throw Raider", "Flicker Strike Raider", "Blade Vortex Raider", "Any frenzy stacker"],
+      "notes": "Flicker Strike requires Raider for reliable frenzy charge generation. Phasing is one of the best defensive bonuses for dodging telegraphed attacks."
+    },
+    {
+      "name": "Pathfinder",
+      "base_class": "Ranger",
+      "playstyle": "Flask-focused — maximises flask uptime, effects, and gains powerful poison/damage from flasks.",
+      "key_notables": ["Nature's Reprisal (flask charges on kill)", "Master Surgeon (flask charges on critical)", "Nature's Adrenaline (full flasks on kill)", "Master Alchemist (ailment immunity during flasks)"],
+      "primary_defence": "Evasion + Permanent flask buffs",
+      "top_builds": ["Poisonous Concoction Pathfinder", "Caustic Arrow Pathfinder", "Toxic Rain Pathfinder", "Any poison build"],
+      "notes": "Best Ascendancy for poison-based builds and flask-dependent builds. Ailment immunity from flasks simplifies defensive requirements significantly."
+    },
+    {
+      "name": "Necromancer",
+      "base_class": "Witch",
+      "playstyle": "Summon-based caster — raises and buffs powerful minions, shares auras with minions.",
+      "key_notables": ["Commander of Darkness (auras affect minions, +elemental resists)", "Bone Sculptor (spectres gain your charges)", "Invoker (on kill effects trigger for minions)", "Mindless Aggression (minions gain flat damage + attack/cast speed)"],
+      "primary_defence": "Minions as damage sponges + Chaos res (CI or life)",
+      "top_builds": ["Summon Spectre Necromancer", "Raise Zombie Necromancer", "Animate Guardian Necromancer", "Summon Skeletons Necromancer"],
+      "notes": "The best Ascendancy for any minion build. Commune with minion AI — position minions well to avoid single-target targeting."
+    },
+    {
+      "name": "Elementalist",
+      "base_class": "Witch",
+      "playstyle": "Elemental damage amplifier — powerful golem buffs, ailment scaling, and elemental exposure.",
+      "key_notables": ["Liege of the Primordial (golem buffs doubled, extra golem slot)", "Shaper of Storms (shock effect + guaranteed shock)", "Mastermind of Discord (exposure stacking)", "Paragon of Calamity (leech from ele hits)"],
+      "primary_defence": "Energy Shield (most common) or Life with Chaos Inoculation",
+      "top_builds": ["Golemancer Elementalist", "Ball Lightning Elementalist", "Arc Elementalist", "Creeping Frost Elementalist"],
+      "notes": "Golems from Liege of the Primordial can provide enormous damage bonuses. Shaper of Storms enables shock-stacking for any lightning or multi-element build."
+    },
+    {
+      "name": "Occultist",
+      "base_class": "Witch",
+      "playstyle": "Chaos damage and curse specialist — powerful ES recovery, curse proliferation, and Void damage.",
+      "key_notables": ["Malediction (-1 enemy curse limit raised)", "Void Beacon (nearby enemies take increased chaos damage)", "Profane Bloom (cursed enemies explode on kill)", "Vile Bastion (ES regen per kill)"],
+      "primary_defence": "Energy Shield + Chaos Inoculation",
+      "top_builds": ["Bane Occultist", "Essence Drain Occultist", "Hexblast Occultist", "Vortex CI Occultist"],
+      "notes": "Profane Bloom explosions provide unparalleled mapping clear with cursed-enemy proliferation. Best Ascendancy for curse-stacking builds."
+    },
+    {
+      "name": "Slayer",
+      "base_class": "Duelist",
+      "playstyle": "Powerful melee attacker — culling, leech bonuses, overkill mechanics, and bleed/physical damage.",
+      "key_notables": ["Headsman (culling strike + 20% overkill damage)", "Brutal Fervour (leech cap doubled, leech continues during full life)", "Impact (extra melee range)", "Bane of Legends (kill pinnacle bosses 20% faster, gain soul eater on rare/unique kill)"],
+      "primary_defence": "Life + Overpowered leech sustain",
+      "top_builds": ["Cyclone Slayer", "Lacerate Slayer", "Blade Flurry Slayer", "Earthquake Slayer"],
+      "notes": "Brutal Fervour makes leech mechanics extremely forgiving. Headsman's culling effectively gives a free 20% life bonus against bosses."
+    },
+    {
+      "name": "Gladiator",
+      "base_class": "Duelist",
+      "playstyle": "Bleed and block specialist — maximises ailment damage, attack block, and bleed explosions.",
+      "key_notables": ["Gratuitous Violence (bleeding enemies explode on kill)", "Outmatch and Outlast (frenzy/endurance charges + dual wield/shield bonuses)", "Blood in the Eyes (blinds enemies on bleed)", "Painforged (chance to bleed on block, max block cap raised)"],
+      "primary_defence": "Maximum Block Chance + Dodge",
+      "top_builds": ["Lacerate Gladiator", "Splitting Steel Gladiator", "Blade Flurry Gladiator", "Block Gladiator"],
+      "notes": "Gratuitous Violence is the best map-clear mechanic for bleed builds. Block + Dodge makes Gladiator one of the tankiest Ascendancies when correctly built."
+    },
+    {
+      "name": "Champion",
+      "base_class": "Duelist",
+      "playstyle": "Balanced melee fighter — strong Fortify, Intimidation, taunt mechanics, and high armour.",
+      "key_notables": ["Inspirational (banner bonuses doubled + nearby allies get bonuses)", "Master of Metal (Impale lasts longer, impale stacks doubled)", "Conqueror (taunt on hit, taunted enemies deal reduced damage)", "Unstoppable Hero (permanent Fortify + max fortify stacks doubled)"],
+      "primary_defence": "Fortify + Armour (tankiest Duelist option)",
+      "top_builds": ["Impale Champion", "Lancing Steel Champion", "Frost Blades Champion", "Lacerate Champion"],
+      "notes": "Unstoppable Hero permanent Fortify is an enormous quality-of-life improvement. Master of Metal makes Impale the primary damage source."
+    },
+    {
+      "name": "Inquisitor",
+      "base_class": "Templar",
+      "playstyle": "Critical-strike caster — ignores elemental resistance with Inevitable Judgement, scales with crits.",
+      "key_notables": ["Inevitable Judgement (crits ignore ele resists)", "Righteous Providence (high crit multi for spells)", "Augury of Penitence (enemies take extra ele damage)", "Pious Path (consecrated ground bonuses + immune to crit reduction)"],
+      "primary_defence": "Life or Energy Shield depending on build",
+      "top_builds": ["Arc Inquisitor", "Blade Vortex Inquisitor", "Freezing Pulse Inquisitor", "Divine Ire Inquisitor"],
+      "notes": "Inevitable Judgement is the reason most critical-strike elemental builds choose Inquisitor — resistance ignore is worth more than raw damage multipliers at high resistance targets."
+    },
+    {
+      "name": "Hierophant",
+      "base_class": "Templar",
+      "playstyle": "Totem and mana specialist — up to 4 totems, mana reservation reduction, arcane surge buffs.",
+      "key_notables": ["Ritual of Awakening (3rd totem + mana regen)", "Pursuit of Faith (4th totem + totem damage/placement speed)", "Sanctuary of Thought (mana reservation efficiency)", "Divine Guidance (massive mana pool + ES from mana)"],
+      "primary_defence": "Energy Shield from mana (with Divine Guidance) or Life",
+      "top_builds": ["Spark Hierophant", "Freezing Pulse Totems Hierophant", "Glacial Cascade Totems", "Discharge Hierophant"],
+      "notes": "4 totems with Pursuit of Faith is the strongest totem Ascendancy. Divine Guidance enables ES builds without traditional ES gear by converting mana to ES."
+    },
+    {
+      "name": "Guardian",
+      "base_class": "Templar",
+      "playstyle": "Support and aura specialist — maximum aura reservation efficiency, sharing charges, powerful buffs to allies.",
+      "key_notables": ["Radiate (auras affect nearby allies without the gem)", "Harmony of Purpose (all allies gain charges on kill)", "Unwavering Faith (aura effect + mana reservation for warcries)", "Time of Need (aura reservation reduced, periodic heals)"],
+      "primary_defence": "Energy Shield or Life + strong aura buffs",
+      "top_builds": ["Aura Support Guardian", "HoT/HoI Cyclone Guardian", "SRS Guardian", "Smite Guardian"],
+      "notes": "Best Ascendancy for group play. Radiate's free aura-sharing makes Guardian mandatory in serious party content. Solo: still strong for aura-stacking builds."
+    },
+    {
+      "name": "Assassin",
+      "base_class": "Shadow",
+      "playstyle": "Critical strike poison specialist — high crit chance, powerful poison from crits, fast assassin gameplay.",
+      "key_notables": ["Noxious Strike (poison on crit, extra poison chance)", "Deadly Infusion (crit multi per poison on enemy)", "Mistwalker (Elusive on kill, attack/cast speed)", "Ambush and Assassinate (crit multiplier vs full life/low life enemies)"],
+      "primary_defence": "Evasion + Elusive (Mistwalker)",
+      "top_builds": ["Caustic Arrow Assassin", "Blade Vortex Poison Assassin", "Viper Strike Assassin", "Cobra Lash Assassin"],
+      "notes": "Deadly Infusion makes Assassin the premier poison Ascendancy when combined with Mistwalker's Elusive for defence. Best for attack-based poison."
+    },
+    {
+      "name": "Saboteur",
+      "base_class": "Shadow",
+      "playstyle": "Trap and mine specialist — maximum trap/mine damage, automatic trigger chains, and AOE ignite.",
+      "key_notables": ["Born in the Shadows (blind enemies near traps/mines)", "Bomb Specialist (trap throws 1 additional mine-adjacent)", "Pyromaniac (life/mana on trap trigger, fire res + extra ignite)", "Explosives Expert (trap/mine damage + critical)"],
+      "primary_defence": "Evasion + traps keep enemies at range",
+      "top_builds": ["Seismic Trap Saboteur", "Fire Trap Saboteur", "Charged Mines Saboteur", "Lightning Trap Saboteur"],
+      "notes": "Saboteur is the only Ascendancy that meaningfully empowers Trap and Mine skills. Traps are one of the safest playstyles as they deal damage from a distance."
+    },
+    {
+      "name": "Trickster",
+      "base_class": "Shadow",
+      "playstyle": "Fast ES/Dodge caster or attacker — high ES, dodge, and on-kill recovery mechanics.",
+      "key_notables": ["Ghost Dance (ES gained on dodge + Elusive stacks)", "Escape Artist (ES from evasion, evasion from ES)", "Harness the Void (chaos damage bonus scaling with ES/life)", "Swift Killer (frenzy charges on kill, charges on dodge)"],
+      "primary_defence": "Evasion + Dodge + Energy Shield",
+      "top_builds": ["Essence Drain Trickster", "Bane Trickster", "Ball Lightning Mines Trickster", "Blade Vortex Trickster"],
+      "notes": "One of the best defensive Ascendancies — Escape Artist synergy with Ghost Dance gives high ES and dodge simultaneously. Best for CI or hybrid ES/life builds."
+    },
+    {
+      "name": "Ascendant",
+      "base_class": "Scion",
+      "playstyle": "Hybrid flexible archetype — borrows 2 Ascendancy notable-like passives from other Ascendancies.",
+      "key_notables": ["Any 2 Ascendancy sub-class nodes (e.g. Slayer + Champion, Necromancer + Guardian, etc.)", "Pathfinder start (flask effect)", "Ranger start (movement speed)", "Juggernaut start (endurance charge generation)"],
+      "primary_defence": "Depends on chosen sub-classes",
+      "top_builds": ["Minion Ascendant (Necro+Guardian)", "Frenzy Stacker Ascendant", "Block Ascendant (Slayer+Champion)", "Wander Ascendant"],
+      "notes": "Scion starts near the centre of the tree — exceptional for builds needing nodes from multiple tree areas. Ascendant gives less power than a dedicated Ascendancy but unmatched flexibility."
+    }
+  ]
+}

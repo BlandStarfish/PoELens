@@ -369,27 +369,27 @@ These features were auto-approved after all L1–L3 items reached 9+/10 completi
 
 These features were auto-approved after all M1–M3 items reached 9+/10 completion. Implement in priority order listed.
 
-### N1. Ascendancy Class Reference (HIGH)
+### N1. Ascendancy Class Reference ✅ IMPLEMENTED (Session 33)
 - Static reference for all 19 Ascendancy classes across 7 base classes (Marauder/Ranger/Witch/Duelist/Templar/Shadow/Scion)
 - Each entry shows: base class, playstyle description, key notable passives, primary defence layer, and top builds
-- Base class filter buttons + full-text search
+- Base class filter buttons (color-coded per base class) + full-text search
 - Data source: data/ascendancy_classes.json (19 classes, curated)
 - ui/widgets/ascendancy_panel.py; added to Info group as "Ascend" tab
 - **Rationale:** Ascendancy choice is the most impactful character decision. New and returning players frequently ask "which Ascendancy for Summons?" or "is Elementalist or Occultist better for poison?" Having it in the overlay prevents wiki trips during character creation and league planning.
 
-### N2. Keystone Passive Reference (MEDIUM)
-- Static reference for all major Keystone passives on the main skill tree
+### N2. Keystone Passive Reference ✅ IMPLEMENTED (Session 33)
+- Static reference for 20 major Keystone passives on the main skill tree
 - Each entry shows: keystone name, effect (positive + trade-off), which builds require it, which builds are broken by it, and location on tree
-- Full-text search across name, effect, and build types
-- Data source: data/keystones.json (~20 keystones, curated)
+- Full-text search across name, effect, trade-off, and build types
+- Data source: data/keystones.json (20 keystones, curated)
 - ui/widgets/keystones_panel.py; added to Info group as "Keystones" tab
 - **Rationale:** Keystones fundamentally change how a build works. "What does Eldritch Battery do?" and "does Iron Reflexes work with evasion builds?" are common questions. An in-overlay reference makes keystones understandable without leaving the game.
 
-### N3. Map Boss Quick Reference (LOW)
-- Static reference for key endgame map bosses — Elder Guardians, Shaper Guardians, Conquerors, and notable T16 map bosses
-- Each entry shows: boss name, map, key mechanics, dangerous abilities, and recommended preparation
-- Full-text search across boss name, map, and mechanics
-- Data source: data/map_bosses.json (~16 bosses, curated)
+### N3. Map Boss Quick Reference ✅ IMPLEMENTED (Session 33)
+- Static reference for 16 key endgame map bosses — 4 Shaper Guardians, 4 Elder Guardians, 4 Conquerors, 4 Pinnacle bosses (Sirus, Maven, Shaper, Elder)
+- Each entry shows: boss name, map, key mechanics, dangerous abilities, recommended preparation, and notes
+- Category filter (Shaper Guardian/Elder Guardian/Conqueror/Pinnacle) + full-text search
+- Data source: data/map_bosses.json (16 bosses, curated)
 - ui/widgets/map_boss_panel.py; added to Info group as "Bosses" tab
 - **Rationale:** Many players are unfamiliar with mechanics for specific map bosses, especially after returning from a break. A quick "what does this boss do and how do I prepare?" reference reduces unnecessary deaths to mechanics that could have been anticipated.
 

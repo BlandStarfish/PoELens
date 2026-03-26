@@ -55,6 +55,9 @@ from ui.widgets.pantheon_panel import PantheonPanel
 from ui.widgets.unique_flask_panel import UniqueFlaskPanel
 from ui.widgets.vaal_skill_panel import VaalSkillPanel
 from ui.widgets.corruption_panel import CorruptionPanel
+from ui.widgets.ascendancy_panel import AscendancyPanel
+from ui.widgets.keystones_panel import KeystonesPanel
+from ui.widgets.map_boss_panel import MapBossPanel
 from ui.widgets.atlas_tree_panel import AtlasTreePanel
 
 
@@ -114,7 +117,10 @@ _INFO_PANTHEON        = 19
 _INFO_UNIQUE_FLASKS   = 20
 _INFO_VAAL_SKILLS     = 21
 _INFO_CORRUPTION      = 22
-_INFO_SETTINGS        = 23
+_INFO_ASCENDANCY      = 23
+_INFO_KEYSTONES       = 24
+_INFO_MAP_BOSSES      = 25
+_INFO_SETTINGS        = 26
 
 
 class HUD(QMainWindow):
@@ -280,6 +286,9 @@ class HUD(QMainWindow):
         self._unique_flask_panel     = UniqueFlaskPanel()
         self._vaal_skill_panel       = VaalSkillPanel()
         self._corruption_panel       = CorruptionPanel()
+        self._ascendancy_panel       = AscendancyPanel()
+        self._keystones_panel        = KeystonesPanel()
+        self._map_boss_panel         = MapBossPanel()
         self._currency_flip_panel    = CurrencyFlipPanel(currency_flip) if currency_flip else QWidget()
         self._lab_panel              = LabPanel(lab_tracker) if lab_tracker else QWidget()
         self._atlas_tree_panel       = AtlasTreePanel()
@@ -332,7 +341,7 @@ class HUD(QMainWindow):
         self._inner_tabs.append(end_tabs)
         outer_tabs.addTab(end_tabs, "Endgame")             # _GRP_ENDGAME   = 2
 
-        # Info group: Bestiary · Expedition · Syndicate · Vendor · Scarabs · Breach · Delirium · Currency · Incursion · Fossils · Maven · Metamorph · Harvest · Rogues · Sanctum · Rare Mods · Blight · Essences · Fragments · Pantheon · Flasks · Vaal · Corrupt · Settings
+        # Info group: Bestiary · Expedition · Syndicate · Vendor · Scarabs · Breach · Delirium · Currency · Incursion · Fossils · Maven · Metamorph · Harvest · Rogues · Sanctum · Rare Mods · Blight · Essences · Fragments · Pantheon · Flasks · Vaal · Corrupt · Ascend · Keystones · Bosses · Settings
         info_tabs = _make_inner()
         info_tabs.addTab(self._bestiary_panel,       "Bestiary")   # _INFO_BESTIARY       = 0
         info_tabs.addTab(self._expedition_panel,     "Expedition") # _INFO_EXPEDITION     = 1
@@ -357,7 +366,10 @@ class HUD(QMainWindow):
         info_tabs.addTab(self._unique_flask_panel,   "Flasks")     # _INFO_UNIQUE_FLASKS  = 20
         info_tabs.addTab(self._vaal_skill_panel,     "Vaal")       # _INFO_VAAL_SKILLS    = 21
         info_tabs.addTab(self._corruption_panel,     "Corrupt")    # _INFO_CORRUPTION     = 22
-        info_tabs.addTab(self._settings_panel,       "Settings")   # _INFO_SETTINGS       = 23
+        info_tabs.addTab(self._ascendancy_panel,     "Ascend")     # _INFO_ASCENDANCY     = 23
+        info_tabs.addTab(self._keystones_panel,      "Keystones")  # _INFO_KEYSTONES      = 24
+        info_tabs.addTab(self._map_boss_panel,       "Bosses")     # _INFO_MAP_BOSSES     = 25
+        info_tabs.addTab(self._settings_panel,       "Settings")   # _INFO_SETTINGS       = 26
         self._inner_tabs.append(info_tabs)
         outer_tabs.addTab(info_tabs, "Info")                       # _GRP_INFO            = 3
 

@@ -1,0 +1,190 @@
+{
+  "how_it_works": "Keystone passives fundamentally change how a build works — each has a powerful positive effect paired with a significant trade-off. Some builds require specific keystones to function; others are completely broken by them.",
+  "tips": [
+    "Read both the effect AND the trade-off before taking a keystone — the trade-off can kill a poorly-prepared build.",
+    "Some keystones are available via unique items (e.g. Resolute Technique via Lycosidae shield) — you don't always need to path to them.",
+    "Eldritch Battery and Blood Magic together are incompatible — EB converts ES to mana, BM converts mana to life."
+  ],
+  "keystones": [
+    {
+      "name": "Resolute Technique",
+      "effect": "Your attacks never miss.",
+      "trade_off": "Cannot deal critical strikes with attacks.",
+      "builds_that_need": ["High base damage builds that don't scale crits", "Cyclone (low accuracy bases)", "Slayer (Headsman synergy)"],
+      "breaks_for": ["Any crit-based attack build", "Inquisitor physical crits"],
+      "location": "Duelist area (lower left of tree)",
+      "notes": "Worth taking when your attack accuracy would be low or crit scaling is impractical. Some builds access it via unique items (Lycosidae)."
+    },
+    {
+      "name": "Iron Reflexes",
+      "effect": "Converts all Evasion Rating to Armour. Dexterity no longer provides bonus Evasion Rating.",
+      "trade_off": "Cannot Evade enemy attacks. Dexterity bonus to Evasion Rating lost.",
+      "builds_that_need": ["Armour-stacking builds needing evasion nodes for Armour", "Molten Shell-focused builds"],
+      "breaks_for": ["Evasion builds", "Dodge + Evasion hybrid builds", "Raider (Phasing relies on Evade chance)"],
+      "location": "Ranger area (lower right of tree)",
+      "notes": "Converts the entire Evasion Rating stat pool into Armour — useful when you have both evasion and armour nodes but want to maximise one mitigation type."
+    },
+    {
+      "name": "Chaos Inoculation",
+      "effect": "Maximum Life becomes 1. Immune to Chaos Damage.",
+      "trade_off": "1 maximum life — instant death from any physical hit if ES drops.",
+      "builds_that_need": ["Energy Shield builds wanting Chaos immunity", "Occultist", "Trickster", "Elementalist CI"],
+      "breaks_for": ["Any life-based build", "Hybrid ES/life builds"],
+      "location": "Witch area (upper left of tree)",
+      "notes": "Requires 5000+ ES to play safely. Paired with Ghost Reaver and Vaal Pact for ES on hit/leech. CI completely removes the Chaos damage threat in PoE endgame."
+    },
+    {
+      "name": "Eldritch Battery",
+      "effect": "Spend Energy Shield before Mana for Skill Costs. Energy Shield does not recharge while this is in effect.",
+      "trade_off": "ES does not recharge while you have mana. ES protects mana, not ES pool directly.",
+      "builds_that_need": ["High-cost skill builds that drain mana (e.g. Spark)", "Hierophant mana builds", "Builds with Mind over Matter + EB combo"],
+      "breaks_for": ["CI builds (you lose the ES buffer)", "ES-based defensive builds relying on recharge"],
+      "location": "Witch area — central upper section",
+      "notes": "Often combined with Mind Over Matter for a triple-layered defence: Life → Mana (from MoM) → ES (from EB). Complex but powerful mana sustain."
+    },
+    {
+      "name": "Blood Magic",
+      "effect": "Skills cost Life instead of Mana. Removes the Mana pool.",
+      "trade_off": "No mana pool — all skill costs come from life. Cannot use mana or mana-based mechanics.",
+      "builds_that_need": ["High-leech builds that sustain life easily", "Warcry Berserker (life cost warcries)"],
+      "breaks_for": ["CI builds", "MoM builds", "Any build relying on mana flask recovery"],
+      "location": "Left side of tree between Marauder/Witch",
+      "notes": "Berserker's Warbringer notable works specifically with Blood Magic. Very rare as a tree-taken keystone — most builds don't want to drain life for skill costs."
+    },
+    {
+      "name": "Elemental Equilibrium",
+      "effect": "Enemies you hit with elemental damage receive a debuff: +25% resistance to that element but -50% resistance to other elements.",
+      "trade_off": "Your hits must avoid dealing the same element as your main damage type, or you BUFF enemy resistance.",
+      "builds_that_need": ["Ignite builds using Herald of Ice + Orb of Storms to apply cold/lightning first", "EE-designed builds that alternate elements"],
+      "breaks_for": ["Any build that deals mixed elements without careful setup", "Builds using multiple elemental damage types"],
+      "location": "Centre of tree (between Witch/Ranger/Shadow)",
+      "notes": "Requires careful gem setup — triggers only work with the right element ordering. Most commonly used in ignite builds with non-fire triggerers."
+    },
+    {
+      "name": "Elemental Overload",
+      "effect": "40% more Elemental Damage if you've dealt a Critical Strike in the past 8 seconds.",
+      "trade_off": "Elemental ailments (ignite, shock, freeze, chill) have no effect from your hits.",
+      "builds_that_need": ["Elemental builds that want damage but don't scale ignite/shock/freeze", "Arc/Storm Brand Inquisitor", "Freezing Pulse builds that don't need chill value"],
+      "breaks_for": ["Ignite builds", "Shock-stacking builds", "Freeze/shatter builds relying on ailment damage"],
+      "location": "Centre area — Duelist/Ranger/Shadow junction",
+      "notes": "Easy to maintain with any crit chance — just needs 1 crit in 8 seconds. Useful when you want elemental damage bonuses without committing to full crit scaling."
+    },
+    {
+      "name": "Pain Attunement",
+      "effect": "30% more Spell Damage when on Low Life (below 35% life).",
+      "trade_off": "Must stay at low life — inherently dangerous, requires careful management.",
+      "builds_that_need": ["Lowlife spell builds with Shavronne's Wrappings", "CI + LL combo (theoretical)", "Glass cannon builds accepting the risk"],
+      "breaks_for": ["Any build that wants to maintain full life for damage bonuses", "Juggernaut (high life pool is the point)"],
+      "location": "Left side — Templar area",
+      "notes": "Historically paired with Shavronne's Wrappings (chaos damage doesn't bypass ES) for safe low-life operation. 30% more spell damage is a very large bonus."
+    },
+    {
+      "name": "Acrobatics",
+      "effect": "30% chance to Dodge Attack Hits. 50% less Armour and Energy Shield.",
+      "trade_off": "Halves Armour and ES — heavily penalises hybrid defences.",
+      "builds_that_need": ["Evasion-primary builds (Raider, Deadeye, Ranger)", "Any build taking Phase Acrobatics"],
+      "breaks_for": ["Armour builds", "Energy Shield builds", "Any hybrid defence build"],
+      "location": "Ranger/Shadow area (lower right of tree)",
+      "notes": "Dodge chance is powerful but inconsistent — works against all attacks uniformly. Must commit to evasion as primary layer since armour and ES are gutted."
+    },
+    {
+      "name": "Phase Acrobatics",
+      "effect": "30% chance to Dodge Spell Hits.",
+      "trade_off": "Requires Acrobatics — inherits its -50% Armour and ES penalty.",
+      "builds_that_need": ["Evasion + Dodge builds wanting full attack and spell dodge", "Raider (Quartz Infusion adds dodge)", "Trickster (Ghost Dance adds dodge stacks)"],
+      "breaks_for": ["Any build not already using Acrobatics"],
+      "location": "Adjacent to Acrobatics (Ranger/Shadow area)",
+      "notes": "Always taken alongside Acrobatics. Together they provide 30% attack dodge + 30% spell dodge, which is a strong layer when combined with Evasion base."
+    },
+    {
+      "name": "Unwavering Stance",
+      "effect": "Cannot be stunned.",
+      "trade_off": "Cannot Evade attacks.",
+      "builds_that_need": ["Slow-hitting melee builds vulnerable to stun lock", "Juggernaut has this built-in via Unstoppable"],
+      "breaks_for": ["Evasion builds that rely on Evade chance"],
+      "location": "Marauder area (lower left)",
+      "notes": "Stun immunity is extremely valuable for melee builds. Most often outclassed by Juggernaut's Unstoppable notable, which doesn't require pathing to this keystone."
+    },
+    {
+      "name": "Ghost Reaver",
+      "effect": "Leech applies to Energy Shield instead of Life. 50% reduced ES recharge rate.",
+      "trade_off": "Reduced ES recharge rate means ES recovery is entirely leech-dependent.",
+      "builds_that_need": ["CI + Vaal Pact builds (ES leech)", "Occultist or Trickster with ES leech on gear"],
+      "breaks_for": ["ES builds relying on fast ES recharge (e.g. Trickster's Ghost Dance)"],
+      "location": "Shadow area (upper right)",
+      "notes": "Essential for CI builds that want active leech sustain rather than waiting for ES recharge. Pairs with Vaal Pact for instant ES leech."
+    },
+    {
+      "name": "Vaal Pact",
+      "effect": "Life Leech is instant. Life regeneration has no effect.",
+      "trade_off": "No life regeneration — poisons, burning ground, and degens cannot be outlasted via regen.",
+      "builds_that_need": ["High-leech melee builds needing instant recovery under pressure", "Slayer (Brutal Fervour already has strong leech)", "Berserker (Aspect of Carnage damage trades need leech)"],
+      "breaks_for": ["Builds using Immortal Call + regen cycling", "Low-leech builds that rely on regen for sustain", "Any build with important regen mechanics (The Agnostic)"],
+      "location": "Shadow area",
+      "notes": "Instant leech is among the strongest defensive mechanics in the game under heavy sustained damage. Regen loss is a significant downside — ensure alternate sustain exists."
+    },
+    {
+      "name": "Ancestral Bond",
+      "effect": "Can have 1 additional Totem. Cannot deal damage with skills yourself.",
+      "trade_off": "You personally deal zero damage — all DPS must come from totems.",
+      "builds_that_need": ["Totem builds (Hierophant + Ancestral Bond for 5 totems)", "Warchief/Ballista totem builds", "Any build fully committing to totems"],
+      "breaks_for": ["Any non-totem build", "Hybrid melee + totem builds"],
+      "location": "Templar area (upper left)",
+      "notes": "Hierophant + Ancestral Bond = 4 totems from Ascendancy + 1 from this keystone = 5 simultaneous totems. The ultimate totem damage multiplier."
+    },
+    {
+      "name": "Iron Will",
+      "effect": "Strength's Damage Bonus applies to Spell Damage.",
+      "trade_off": "No trade-off — purely additive. Requires high Strength.",
+      "builds_that_need": ["High-Strength spell builds (Templar, Scion with Strength focus)", "SRS builds (Strength often stacked for minion bonuses)", "Glacial Hammer or Sunder builds adding spell overlap"],
+      "breaks_for": ["Nothing directly — but opportunity cost of pathing here vs other nodes"],
+      "location": "Templar area",
+      "notes": "Strength gives 0.2% increased spell damage per point, so 300 Strength = +60% spell damage. Very strong if Strength is already high for other reasons."
+    },
+    {
+      "name": "Mindless Aggression",
+      "effect": "N/A — this is a Necromancer Ascendancy notable, not a keystone.",
+      "trade_off": "N/A",
+      "builds_that_need": ["Necromancer minion builds"],
+      "breaks_for": [],
+      "location": "Necromancer Ascendancy",
+      "notes": "Listed here for reference — not a passive tree keystone but frequently confused as one."
+    },
+    {
+      "name": "The Agnostic",
+      "effect": "While not at maximum Mana, continuously recover Life equal to 2% of your Mana Regeneration Rate.",
+      "trade_off": "Cannot Recover Mana over time (no regen, no flask recovery, no mana leech — only instant mana gain).",
+      "builds_that_need": ["High mana pool + regen builds wanting permanent life sustain", "Inquisitor or Hierophant with Sanctuary of Thought (huge mana regen)"],
+      "breaks_for": ["Any build relying on mana flasks or leech for mana recovery", "Builds with Eldritch Battery (EB prevents mana regen from restoring mana normally)"],
+      "location": "Centre of tree — near Witch/Shadow junction",
+      "notes": "Translates mana regeneration into life regeneration. With 3000+ mana regen, provides 60+ life per second. Extremely powerful with high mana investments."
+    },
+    {
+      "name": "Perfect Agony",
+      "effect": "Modifiers to Critical Strike Multiplier also apply to Damage over Time Multiplier (at 30% of value). Ailments only deal damage based on the base damage of the skill.",
+      "trade_off": "Ailments (ignite, bleed, poison) deal damage only from base damage, not total modifiers — ignores most added damage.",
+      "builds_that_need": ["Crit multi stacking DOT builds", "Poison Assassin + crit multi stacking", "Ignite builds that stack crit multi as DoT multi"],
+      "breaks_for": ["Non-crit ailment builds that rely on total added damage for ignite/bleed/poison"],
+      "location": "Shadow area (upper right)",
+      "notes": "Difficult keystone to evaluate — crit multi translates to DoT multi at 30% efficiency. Most worthwhile in dedicated crit + ailment builds that already stack crit multi heavily."
+    },
+    {
+      "name": "Crimson Dance",
+      "effect": "You can inflict Bleeding on an enemy up to 8 times. 50% less damage with Bleeding.",
+      "trade_off": "Each bleed stack does 50% less damage — requires 8 stacks to equal 4x base bleed damage.",
+      "builds_that_need": ["Multi-hit bleed builds (Flicker Strike Bleed, Reave Bleed)", "Gladiator builds with rapid multi-hit skills"],
+      "breaks_for": ["Single-stack bleed builds relying on maximum damage from one application"],
+      "location": "Between Duelist and Shadow areas",
+      "notes": "8-stack bleed requires rapid multi-hit skills to reach full value. Not commonly taken — most bleed builds prefer single-stack approach with Gratuitous Violence."
+    },
+    {
+      "name": "Imbalanced Guard",
+      "effect": "Maximum Damage Reduction for Hits is 90% (up from standard 75%). 50% less Armour.",
+      "trade_off": "Halves your armour rating — you need much more base armour to reach the 90% cap.",
+      "builds_that_need": ["Extreme armour-stacking builds (Determination + Molten Shell)", "Juggernaut Unbreakable + Imbalanced Guard combo"],
+      "breaks_for": ["Standard armour builds not reaching the 90% threshold even with the boost"],
+      "location": "Marauder area",
+      "notes": "Reaching 90% damage reduction requires enormous armour investment (hundreds of thousands). Extremely powerful for dedicated armour stacking but impractical for most builds."
+    }
+  ]
+}

@@ -720,3 +720,24 @@ _INFO_SETTINGS shifted from 2 to 3 in hud.py.
   12 tabs after I1-I3 addition (Bestiary/Expedition/Syndicate/Vendor/Scarabs/Breach/
   Delirium/Currency/Incursion/Fossils/Maven/Settings).
   _INFO_SETTINGS is now index 11.
+
+### Info group tab count (Session 33)
+  27 tabs after N1-N3 addition:
+  Bestiary/Expedition/Syndicate/Vendor/Scarabs/Breach/Delirium/Currency/Incursion/Fossils/
+  Maven/Metamorph/Harvest/Rogues/Sanctum/Rare Mods/Blight/Essences/Fragments/Pantheon/
+  Flasks/Vaal/Corrupt/Ascend/Keystones/Bosses/Settings
+  _INFO_SETTINGS is now index 26.
+
+### Ascendancy panel base-class color scheme (Session 33)
+  Base class colors serve dual purpose: filter button active color AND card left-border color.
+  Marauder=RED, Ranger=GREEN, Witch=PURPLE, Duelist=YELLOW, Templar=TEAL, Shadow=BLUE, Scion=ACCENT.
+  Pattern consistent with category-filtered panels (unique_flask, map_boss, etc.).
+
+### Keystones panel no-category-filter design (Session 33)
+  Keystones don't have meaningful categories (unlike flask DPS/Defense/Utility or boss Guardian/Conqueror).
+  Search-only filtering is appropriate because the primary lookup pattern is by name or effect keyword.
+  20 entries is a manageable number to scroll without category subdivision.
+
+### Map boss category colors (Session 33)
+  Shaper Guardian=BLUE (cold/ethereal), Elder Guardian=PURPLE (void/chaos), Conqueror=TEAL,
+  Pinnacle=ACCENT (gold/prestige). Color choices reinforce the thematic identity of each group.
