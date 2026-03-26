@@ -1,0 +1,240 @@
+{
+  "categories": ["Avoid", "Dangerous", "Situational", "Beneficial"],
+  "how_it_works": "Map mods appear on magic (blue), rare (yellow), and corrupted maps. You can roll mods using Orbs of Alteration, Cartographer's Chisels, and Blessed Orbs. More mods = more quantity/rarity bonus but higher risk. Some mods are build-defining dangers — know which ones to avoid before entering.",
+  "tips": [
+    "No Regen maps require a mana or life flask — always run one when you see this mod.",
+    "Reflect mods (Elemental/Physical) are build-specific dangers — check before entering."
+  ],
+  "mods": [
+    {
+      "name": "Players cannot Regenerate Life, Mana or Energy Shield",
+      "category": "Dangerous",
+      "short_name": "No Regen",
+      "effect": "All regeneration is disabled. Life, Mana, and ES recovery via regeneration do not work.",
+      "danger_level": "High",
+      "who_is_affected": "All builds",
+      "counter": "Use instant life flasks. Mana flasks for mana. Leech-based recovery still works.",
+      "notes": "One of the most common dangerous mods. Always run a life flask before entering."
+    },
+    {
+      "name": "Monsters reflect X% of Elemental Damage",
+      "category": "Avoid",
+      "short_name": "Elemental Reflect",
+      "effect": "A percentage of elemental damage you deal to monsters is reflected back to you.",
+      "danger_level": "Fatal",
+      "who_is_affected": "Elemental damage builds",
+      "counter": "Avoid if playing an elemental skill. Some Ascendancies (Inquisitor) have reflect immunity.",
+      "notes": "Can one-shot high-damage builds instantly. Physical-only builds are unaffected."
+    },
+    {
+      "name": "Monsters reflect X% of Physical Damage",
+      "category": "Avoid",
+      "short_name": "Physical Reflect",
+      "effect": "A percentage of physical damage you deal is reflected back to you.",
+      "danger_level": "Fatal",
+      "who_is_affected": "Physical damage builds",
+      "counter": "Avoid if playing a physical skill. Pure spell builds (non-physical) are unaffected.",
+      "notes": "Berserkers with Rite of Ruin are especially vulnerable. Slayer has reflect immunity."
+    },
+    {
+      "name": "Players are Cursed with Temporal Chains",
+      "category": "Dangerous",
+      "short_name": "Temp Chains",
+      "effect": "All of your action speeds (move, attack, cast) are slowed significantly. Buff durations reduced.",
+      "danger_level": "High",
+      "who_is_affected": "All builds (especially fast builds)",
+      "counter": "Flasks with 'Remove Curses' suffix or the Cleansing suffix. Curse immunity helps.",
+      "notes": "Stacks with other slows. Flask durations are reduced, making flasks less effective."
+    },
+    {
+      "name": "Players are Cursed with Enfeeble",
+      "category": "Dangerous",
+      "short_name": "Enfeeble",
+      "effect": "Reduces your accuracy, critical strike chance, and damage dealt.",
+      "danger_level": "Medium",
+      "who_is_affected": "Attack builds, crit builds",
+      "counter": "Curse immune flasks. Spell builds are less affected than attack builds.",
+      "notes": "Significantly reduces effective DPS and accuracy. Less dangerous than reflect but noticeable."
+    },
+    {
+      "name": "Players are Cursed with Vulnerability",
+      "category": "Dangerous",
+      "short_name": "Vulnerability",
+      "effect": "You take increased physical damage and have increased chance to be affected by bleed/maim.",
+      "danger_level": "Medium",
+      "who_is_affected": "All builds",
+      "counter": "Curse immune flasks. High armour helps reduce the physical damage.",
+      "notes": "Dangerous in maps with many phys-damage monsters. Most dangerous in combination with other mods."
+    },
+    {
+      "name": "Area contains two Unique Bosses",
+      "category": "Dangerous",
+      "short_name": "Twin Bosses",
+      "effect": "The map boss spawns as two copies simultaneously.",
+      "danger_level": "Medium",
+      "who_is_affected": "All builds",
+      "counter": "Kill one quickly; control spacing to avoid double-boss overlap attacks.",
+      "notes": "Very common on maps. Bosses die individually. Quantity bonus is high — worth running."
+    },
+    {
+      "name": "Monsters have X% increased Critical Strike Chance",
+      "category": "Dangerous",
+      "short_name": "Monster Crit",
+      "effect": "All monsters have significantly higher critical strike chance.",
+      "danger_level": "Medium",
+      "who_is_affected": "Low-mitigation builds",
+      "counter": "High armour, Fortify, Basalt flask reduce crit damage. Blind and evasion help.",
+      "notes": "Especially dangerous on maps with already-hard-hitting unique enemies."
+    },
+    {
+      "name": "Monsters have a X% chance to Avoid Elemental Ailments",
+      "category": "Situational",
+      "short_name": "Ailment Avoidance",
+      "effect": "Monsters have a chance to resist being ignited, chilled, frozen, shocked, etc.",
+      "danger_level": "Medium",
+      "who_is_affected": "Ailment-based builds (ignite, chill/freeze chains, shock)",
+      "counter": "Avoid for pure ailment builds (e.g. freeze chain). Damage builds that just apply occasionally are OK.",
+      "notes": "Freeze-based clear can break down entirely. Ignite prolif builds should avoid."
+    },
+    {
+      "name": "Monsters are Hexproof",
+      "category": "Situational",
+      "short_name": "Hexproof",
+      "effect": "Monsters cannot be affected by curses.",
+      "danger_level": "High",
+      "who_is_affected": "Curse-dependent builds",
+      "counter": "Avoid if curses are core to your damage (Hexblast, curse aura builds). Fine for non-curse builds.",
+      "notes": "Does not block Impending Doom (it triggers on the curse, not after). Check your build's curse reliance."
+    },
+    {
+      "name": "Monsters Immune to Elemental Damage",
+      "category": "Avoid",
+      "short_name": "Elemental Immune",
+      "effect": "Monsters cannot be damaged by fire, cold, or lightning damage.",
+      "danger_level": "Fatal",
+      "who_is_affected": "Elemental damage builds",
+      "counter": "Avoid entirely if your skill deals elemental damage. Physical or chaos builds are unaffected.",
+      "notes": "Extremely rare but completely disabling for elemental builds."
+    },
+    {
+      "name": "Monsters have X% more Life",
+      "category": "Situational",
+      "short_name": "More Monster Life",
+      "effect": "All monsters have more total health.",
+      "danger_level": "Low",
+      "who_is_affected": "Low-damage builds (slower clear)",
+      "counter": "Accept the slower pace or reroll. Common on higher-tier maps.",
+      "notes": "Not dangerous, just slower. Combined with other mods increases IIQ, worth running."
+    },
+    {
+      "name": "Monsters deal X% extra Physical Damage as Fire/Cold/Lightning",
+      "category": "Dangerous",
+      "short_name": "Extra Elemental as Phys",
+      "effect": "All monster hits deal extra elemental damage on top of their physical damage.",
+      "danger_level": "Medium",
+      "who_is_affected": "Builds without elemental resistance capped",
+      "counter": "Ensure elemental resistances are capped at 75%. Elemental flasks help.",
+      "notes": "Extremely common. Always keep resistances capped — this mod highlights the danger of uncapped res."
+    },
+    {
+      "name": "Monsters have Onslaught",
+      "category": "Dangerous",
+      "short_name": "Onslaught Monsters",
+      "effect": "All monsters move, attack, and cast 20% faster.",
+      "danger_level": "Medium",
+      "who_is_affected": "Melee builds, low-health builds",
+      "counter": "Increase vigilance. Kite when possible. Better armor/evasion required.",
+      "notes": "Makes fast monsters significantly more threatening. Combines badly with monster crit."
+    },
+    {
+      "name": "Monsters cannot be Slowed below base speed",
+      "category": "Situational",
+      "short_name": "Cannot Slow Monsters",
+      "effect": "Your slowing effects (chill, temporal chains on enemies) have no effect.",
+      "danger_level": "Medium",
+      "who_is_affected": "Builds relying on chill/freeze control",
+      "counter": "Avoid for chill-based kiting builds. Damage builds are barely affected.",
+      "notes": "Chill from Hatred or Herald of Ice won't slow. Boss fights become more demanding."
+    },
+    {
+      "name": "Area has increased Monster Density",
+      "category": "Beneficial",
+      "short_name": "Extra Monsters",
+      "effect": "More monsters spawn throughout the map.",
+      "danger_level": "None",
+      "who_is_affected": "N/A — this is a bonus",
+      "counter": "No counter needed. Farm this mod actively.",
+      "notes": "Best possible quantity mod. Extra monsters = more loot and XP. Prioritize maps with this."
+    },
+    {
+      "name": "Monsters drop X% increased Quantity of Items",
+      "category": "Beneficial",
+      "short_name": "IIQ",
+      "effect": "All monsters drop more items. Increases the number of items found.",
+      "danger_level": "None",
+      "who_is_affected": "N/A — this is a bonus",
+      "counter": "No counter needed.",
+      "notes": "Stacks multiplicatively with character IIQ and other quantity sources."
+    },
+    {
+      "name": "Players have -X% to maximum Resistances",
+      "category": "Avoid",
+      "short_name": "Reduced Max Res",
+      "effect": "Your maximum elemental resistance is reduced (normally 75%, becomes 70% or lower).",
+      "danger_level": "High",
+      "who_is_affected": "All builds",
+      "counter": "Very hard to counter. Requires higher total resistance to maintain near-max.",
+      "notes": "Combined with elemental conversion mods, this can be fatal. Reroll if below T15."
+    },
+    {
+      "name": "Monsters have X% chance to Avoid Poison, Blind and Bleeding",
+      "category": "Situational",
+      "short_name": "Avoid Ailments (Phys)",
+      "effect": "Monsters resist being poisoned, blinded, or made to bleed.",
+      "danger_level": "Medium",
+      "who_is_affected": "Poison builds, bleed builds",
+      "counter": "Avoid for poison or bleed DoT builds. Blind-based evasion builds lose defensive value.",
+      "notes": "Poison builds should reroll this mod. The chance means some procs still land."
+    },
+    {
+      "name": "Monsters are Immune to Knockback",
+      "category": "Situational",
+      "short_name": "No Knockback",
+      "effect": "Knockback effects from your skills and items have no effect on monsters.",
+      "danger_level": "Low",
+      "who_is_affected": "Knockback-reliant builds",
+      "counter": "Minor inconvenience for most builds. Reroll if your safety relies on knockback.",
+      "notes": "Rare to see builds truly reliant on knockback. Usually a cosmetic change."
+    },
+    {
+      "name": "Unique Boss has X% increased Life and Damage",
+      "category": "Dangerous",
+      "short_name": "Boss Buffed",
+      "effect": "The map's unique boss has significantly higher health and deals more damage.",
+      "danger_level": "Medium",
+      "who_is_affected": "All builds on harder maps",
+      "counter": "Bring more DPS and defensive flasks. Consider avoiding on maps with already-deadly bosses.",
+      "notes": "Very common mod. The IIQ bonus it contributes makes it worth fighting on most maps."
+    },
+    {
+      "name": "Monsters gain an Endurance/Frenzy/Power Charge on Hit",
+      "category": "Dangerous",
+      "short_name": "Monsters Gain Charges",
+      "effect": "Monsters build up charges when they hit you, gaining power quickly.",
+      "danger_level": "Medium",
+      "who_is_affected": "Slow-clearing builds, tanky builds that take many hits",
+      "counter": "Kill fast. Do not facetank packs for extended periods.",
+      "notes": "Frenzy charges on monsters increase their attack/cast speed — especially dangerous."
+    },
+    {
+      "name": "Monsters Hinder Players",
+      "category": "Dangerous",
+      "short_name": "Players Hindered",
+      "effect": "Players are slowed (movement speed reduced) when hit by monsters.",
+      "danger_level": "Medium",
+      "who_is_affected": "Kiting builds, fast builds",
+      "counter": "Movement speed flasks. Keep distance from monster packs.",
+      "notes": "Hinder and Chill stack. Combined with Temporal Chains, movement can become extremely slow."
+    }
+  ]
+}

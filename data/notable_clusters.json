@@ -1,0 +1,210 @@
+{
+  "categories": ["Offense", "Defense", "Utility", "Keystones"],
+  "how_it_works": "Notable clusters are groups of notable passive nodes that synergize and are worth pathing to together. They define build archetypes. Many keystones radically change how a build functions and require specific gear/skill choices to be effective.",
+  "tips": [
+    "Pathing between clusters efficiently is as important as the clusters themselves — minimize wasted points.",
+    "Many keystones change fundamental mechanics — read carefully before taking (e.g. Chaos Inoculation sets life to 1)."
+  ],
+  "clusters": [
+    {
+      "name": "Iron Reflexes",
+      "category": "Keystones",
+      "location": "Right side (between Ranger and Duelist)",
+      "notables": ["Iron Reflexes"],
+      "effect": "Converts all Evasion Rating to Armour. Dexterity no longer provides Evasion.",
+      "build_types": ["Armour/Evasion hybrid builds", "Gladiator", "Champion"],
+      "point_cost": "4–6 from Ranger or Duelist start",
+      "notes": "Enables very high armour totals when combined with high evasion gear. Dex still required for gem requirements."
+    },
+    {
+      "name": "Acrobatics + Phase Acrobatics",
+      "category": "Keystones",
+      "location": "Bottom-left (Duelist/Ranger border)",
+      "notables": ["Acrobatics", "Phase Acrobatics"],
+      "effect": "30% chance to dodge attack hits, 30% to dodge spell hits. 50% less Armour/ES, no shield block.",
+      "build_types": ["Evasion builds", "Deadeye", "Raider"],
+      "point_cost": "4 from Ranger start",
+      "notes": "Powerful but mutually exclusive with armour or ES layers. Works best with high evasion rating."
+    },
+    {
+      "name": "Resolute Technique",
+      "category": "Keystones",
+      "location": "Left side (Marauder/Duelist border)",
+      "notables": ["Resolute Technique"],
+      "effect": "Your hits cannot be evaded. You never deal critical strikes.",
+      "build_types": ["Attack builds with no crit investment", "Impale builds"],
+      "point_cost": "5–7 from Marauder or Duelist start",
+      "notes": "Removes the need for accuracy investment entirely. Avoid if build scales crit chance."
+    },
+    {
+      "name": "Elemental Overload",
+      "category": "Keystones",
+      "location": "Top-right (Shadow/Witch border)",
+      "notables": ["Elemental Overload"],
+      "effect": "40% more Elemental Damage if you've dealt a critical strike recently. 0% base critical strike multiplier.",
+      "build_types": ["Elemental builds with some crit chance", "CoC builds"],
+      "point_cost": "6–8 from Witch or Shadow start",
+      "notes": "Just needs some crit chance to maintain uptime — no need for high crit multiplier. Pairs with crit chance on rings/passives."
+    },
+    {
+      "name": "Vaal Pact",
+      "category": "Keystones",
+      "location": "Left side (near Slayer/Berserker clusters)",
+      "notables": ["Vaal Pact"],
+      "effect": "Life Leech is instant but Life Regeneration has no effect.",
+      "build_types": ["Life leech builds", "Slayer", "Berserker"],
+      "point_cost": "6–10 depending on start",
+      "notes": "Prevents regen but leech heals instantly — massive sustain for attack builds. Incompatible with regen-based recovery."
+    },
+    {
+      "name": "Chaos Inoculation",
+      "category": "Keystones",
+      "location": "Top (Witch area)",
+      "notables": ["Chaos Inoculation"],
+      "effect": "Maximum Life becomes 1. Immune to Chaos Damage.",
+      "build_types": ["ES builds", "Occultist", "Trickster"],
+      "point_cost": "10–14 from Witch start",
+      "notes": "All-in on Energy Shield. No life pool, no life recovery. Requires substantial ES to be survivable."
+    },
+    {
+      "name": "Mind Over Matter",
+      "category": "Keystones",
+      "location": "Top-center (Templar area)",
+      "notables": ["Mind Over Matter"],
+      "effect": "40% of damage is taken from Mana before Life.",
+      "build_types": ["Archmage builds", "Templar", "high-mana builds"],
+      "point_cost": "6–9 from Templar start",
+      "notes": "Requires high mana pool and mana recovery. Pairs with mana flasks and mana recharge."
+    },
+    {
+      "name": "Blood Magic",
+      "category": "Keystones",
+      "location": "Left (Marauder area)",
+      "notables": ["Blood Magic"],
+      "effect": "Spend Life instead of Mana for skills. Removes all mana.",
+      "build_types": ["Berserker", "Gladiator", "life-stacking builds"],
+      "point_cost": "10–14 from Marauder start",
+      "notes": "Eliminates mana but requires very high life pool. Life flasks cover both recovery and sustain."
+    },
+    {
+      "name": "Point Blank",
+      "category": "Keystones",
+      "location": "Ranger start area",
+      "notables": ["Point Blank"],
+      "effect": "Projectile attacks deal up to 50% more damage at close range, scaling to 50% less at long range.",
+      "build_types": ["Melee projectile builds", "Kinetic Blast", "Rain of Arrows"],
+      "point_cost": "2–4 from Ranger start",
+      "notes": "Best with skills that fire many projectiles at close range (Kinetic Blast + Power Siphon)."
+    },
+    {
+      "name": "Whispers of Doom",
+      "category": "Utility",
+      "location": "Left side (Shadow start)",
+      "notables": ["Whispers of Doom"],
+      "effect": "You can apply one additional Curse.",
+      "build_types": ["Curse builds", "Occultist", "Hexblast"],
+      "point_cost": "6–8 from Shadow start",
+      "notes": "Occultist can curse without this via Ascendancy; other classes need it to run 2 curses."
+    },
+    {
+      "name": "Aspect of the Lynx / Force of Will",
+      "category": "Offense",
+      "location": "Top-left (between Shadow and Witch)",
+      "notables": ["Aspect of the Lynx", "Force of Will"],
+      "effect": "Significant crit multiplier and crit chance for spells. High area near the Witch crit cluster.",
+      "build_types": ["Spell crit builds", "Elementalist", "Inquisitor"],
+      "point_cost": "4–6 from Witch or Shadow",
+      "notes": "One of the most efficient crit nodes for spell damage. Often pathed on the way to Elemental Overload or other crit keystones."
+    },
+    {
+      "name": "Throatseeker + Coordination",
+      "category": "Offense",
+      "location": "Top-right (near Templar/Witch border)",
+      "notables": ["Throatseeker", "Coordination"],
+      "effect": "High physical damage and life area. Good path for melee builds on top of tree.",
+      "build_types": ["Melee builds", "Gladiator", "Champion"],
+      "point_cost": "5–8 from Marauder or Templar",
+      "notes": "Popular multi-notable stop for melee builds that start Marauder and path upward."
+    },
+    {
+      "name": "Constitution + Juggernaut",
+      "category": "Defense",
+      "location": "Left (Marauder area)",
+      "notables": ["Constitution", "Juggernaut"],
+      "effect": "Large life totals and physical damage reduction. High HP area for tanky builds.",
+      "build_types": ["Juggernaut Ascendancy", "life builds", "RF builds"],
+      "point_cost": "3–5 from Marauder start",
+      "notes": "Core life/defense cluster for Marauder-based builds. Pairs with armour and endurance charges."
+    },
+    {
+      "name": "Elemental Equilibrium",
+      "category": "Utility",
+      "location": "Right side (Witch/Shadow area)",
+      "notables": ["Elemental Equilibrium"],
+      "effect": "Enemies you hit have their resistances reduced by 25% to element types you didn't hit them with, and gain +25% res to the element you did hit with.",
+      "build_types": ["Single-element builds triggering a non-damage hit", "Shaper of Flames builds"],
+      "point_cost": "6–9 from Witch or Shadow",
+      "notes": "Complex setup: must deal one element via a proc (e.g. Added Lightning to Attacks Support) while main DPS skill deals a different element."
+    },
+    {
+      "name": "Pain Attunement",
+      "category": "Offense",
+      "location": "Top-right (near Templar/Witch)",
+      "notables": ["Pain Attunement"],
+      "effect": "30% more Spell Damage when on Low Life (below 35%).",
+      "build_types": ["Low life builds", "Shav's Wrappings users", "LL Occultist"],
+      "point_cost": "8–12 from Witch or Templar",
+      "notes": "Requires running at low life constantly — typically via Shav's Wrappings ES-on-full-life shield. Very high damage payoff."
+    },
+    {
+      "name": "Ghost Reaver",
+      "category": "Defense",
+      "location": "Top-center (Templar area)",
+      "notables": ["Ghost Reaver"],
+      "effect": "Leech applies to Energy Shield instead of Life. Cannot Leech Life.",
+      "build_types": ["ES leech builds", "Slayer/Occultist hybrids"],
+      "point_cost": "8–12 depending on start",
+      "notes": "Converts all leech to ES. Must have sufficient ES and leech rate. Pairs well with Vaal Pact for instant ES leech."
+    },
+    {
+      "name": "Doom Cast",
+      "category": "Offense",
+      "location": "Shadow area",
+      "notables": ["Doom Cast", "Hex Master"],
+      "effect": "Curses gain Doom faster and deal more damage at max doom. Strong curse scaling area.",
+      "build_types": ["Hexblast", "Impending Doom", "Occultist"],
+      "point_cost": "4–6 from Shadow start",
+      "notes": "Primary destination for curse-based builds. Often combined with Whispers of Doom."
+    },
+    {
+      "name": "Unwavering Stance",
+      "category": "Keystones",
+      "location": "Center (between Marauder and Duelist)",
+      "notables": ["Unwavering Stance"],
+      "effect": "Cannot be Stunned. Cannot Evade enemy Attacks.",
+      "build_types": ["Armour/life builds", "Juggernaut"],
+      "point_cost": "4–6 from Marauder or Duelist",
+      "notes": "Trades evasion for stun immunity. Juggernaut Ascendancy typically makes this redundant."
+    },
+    {
+      "name": "Wicked Ward",
+      "category": "Defense",
+      "location": "Top (Witch/Shadow area)",
+      "notables": ["Wicked Ward"],
+      "effect": "Energy Shield Recharge cannot be interrupted. ES Recharge delay reset on pause.",
+      "build_types": ["ES builds without leech", "Occultist"],
+      "point_cost": "6–8 from Witch or Shadow",
+      "notes": "Pairs with Zealot's Oath (regen applies to ES) for ES regen recovery strategy."
+    },
+    {
+      "name": "Zealot's Oath",
+      "category": "Keystones",
+      "location": "Top-left (Witch area)",
+      "notables": ["Zealot's Oath"],
+      "effect": "Life Regeneration applies to Energy Shield instead of Life.",
+      "build_types": ["ES regen builds", "Occultist", "high-regen ES hybrids"],
+      "point_cost": "6–8 from Witch start",
+      "notes": "Requires high regen from passives/flasks/armour. Often combined with Wicked Ward for strong ES recovery."
+    }
+  ]
+}

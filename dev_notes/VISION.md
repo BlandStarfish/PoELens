@@ -425,6 +425,36 @@ These features were auto-approved after all O1–O3 items reached 9+/10 completi
 
 ---
 
+## Expansion Roadmap Round 13 (Auto-Approved 2026-03-26)
+
+These features were auto-approved after all P1–P3 items reached 9+/10 completion. Implement in priority order listed.
+
+### Q1. Gem Quality & Awakened Gem Reference ✅ IMPLEMENTED (Session 36)
+- Reference for 30 notable skill and support gems covering quality effects and Awakened gem improvements
+- Each entry shows: category (Active/Support/Awakened), quality bonus per 1%, Awakened version (if applicable) with max level and key improvement, sell value guidance, and notes
+- Category filter (Active Skill / Support / Awakened) + full-text search
+- Data source: data/gem_quality.json (30 gems, curated)
+- ui/widgets/gem_quality_panel.py; added to Info group as "Gem Qual" tab
+- **Rationale:** Gem quality effects changed dramatically in 3.15 and players frequently don't know what quality does on a given gem, or whether the Awakened version is worth the price. An in-overlay reference prevents wiki trips during gear or gem planning.
+
+### Q2. Passive Tree Notable Cluster Reference ✅ IMPLEMENTED (Session 36)
+- Reference for 20 notable passive clusters and keystones worth pathing to, organized by category
+- Each entry shows: category (Offense/Defense/Utility/Keystones), location on tree, effect, build types, approximate point cost, and strategic notes
+- Category filter + full-text search across name, effect, build type, and notes
+- Data source: data/notable_clusters.json (20 clusters, curated)
+- ui/widgets/notable_clusters_panel.py; added to Info group as "Notables" tab
+- **Rationale:** The passive tree has thousands of nodes; knowing which clusters are worth pathing to for a given build archetype is non-obvious. A curated reference ("I'm playing an ES build, where do I go?") significantly speeds up build planning for new players.
+
+### Q3. Mapping Mod Reference ✅ IMPLEMENTED (Session 36)
+- Reference for 23 common map mods — what they do, danger level, which builds are affected, and how to counter them
+- Each entry shows: danger level badge (Fatal/High/Medium/Low), category (Avoid/Dangerous/Situational/Beneficial), full and short mod names, effect, affected builds, counter strategy, and notes
+- Category filter + full-text search
+- Data source: data/map_mods.json (23 mods, curated)
+- ui/widgets/map_mods_panel.py; added to Info group as "Map Mods" tab
+- **Rationale:** Rolling maps without knowing which mods are dangerous causes avoidable deaths. "Is No Regen dangerous?" and "can I run Elemental Reflect?" are questions players ask every session. An in-overlay reference makes informed map rolling instant.
+
+---
+
 ## Expansion Roadmap Round 10 (Auto-Approved 2026-03-25)
 
 These features were auto-approved after all M1–M3 items reached 9+/10 completion. Implement in priority order listed.

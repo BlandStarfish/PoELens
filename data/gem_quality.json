@@ -1,0 +1,311 @@
+{
+  "categories": ["Active Skill", "Support", "Awakened"],
+  "how_it_works": "Since 3.15, quality on most skill gems grants a secondary effect rather than flat damage. 20/20 gems (level 20, 20% quality) can be vendored with a Gemcutter's Prism to reset to level 1 with 20% quality. Awakened gems drop in endgame (from Sirus, Maven, etc.) and have a max level of 5, granting stronger effects than the base version.",
+  "tips": [
+    "Sell 20/20 gems of popular skills for good profit — check poe.ninja for current values.",
+    "Awakened Empower/Enhance/Enlighten level 4+ are extremely valuable — worth keeping.",
+    "Alternate quality (Anomalous, Divergent, Phantasmal) gems can be acquired via Tempering Orbs."
+  ],
+  "gems": [
+    {
+      "name": "Empower Support",
+      "category": "Support",
+      "quality_effect": "+0.5% chance to gain a Power Charge when Supported Skill is used per 1% quality",
+      "sell_value": "Low (base). High at level 4+.",
+      "awakened_name": "Awakened Empower Support",
+      "awakened_max_level": 5,
+      "awakened_improvement": "Level 4+ grants +2 to gem level (vs +1 for base levels 2-3). Level 5 grants +3.",
+      "notes": "Core support for any skill where high gem level matters (Arc, Fireball, minion skills)."
+    },
+    {
+      "name": "Enlighten Support",
+      "category": "Support",
+      "quality_effect": "+0.5% mana reservation efficiency per 1% quality",
+      "sell_value": "Low (base). Very high at level 3+.",
+      "awakened_name": null,
+      "awakened_max_level": null,
+      "awakened_improvement": null,
+      "notes": "Level 3 reduces reservation by an extra 9%. Used in aura builds stacking multiple auras."
+    },
+    {
+      "name": "Enhance Support",
+      "category": "Support",
+      "quality_effect": "+0.5% quality bonus per 1% quality (multiplicative)",
+      "sell_value": "Low (base). Very high at level 4+.",
+      "awakened_name": null,
+      "awakened_max_level": null,
+      "awakened_improvement": null,
+      "notes": "Level 4 grants +24% quality bonus. Best used on gems that scale with quality (e.g. Cyclone)."
+    },
+    {
+      "name": "Faster Attacks Support",
+      "category": "Support",
+      "quality_effect": "Supported skills have 0.5% increased attack speed per 1% quality",
+      "sell_value": "Low",
+      "awakened_name": "Awakened Faster Attacks Support",
+      "awakened_max_level": 5,
+      "awakened_improvement": "Level 5: +9% increased attack speed bonus vs +8% for base gem at level 20.",
+      "notes": "Workhorse support for attack builds."
+    },
+    {
+      "name": "Faster Casting Support",
+      "category": "Support",
+      "quality_effect": "Supported skills have 0.5% increased cast speed per 1% quality",
+      "sell_value": "Low",
+      "awakened_name": "Awakened Faster Casting Support",
+      "awakened_max_level": 5,
+      "awakened_improvement": "Level 5: +9% increased cast speed bonus vs +8% for base.",
+      "notes": "Core support for most spell builds."
+    },
+    {
+      "name": "Added Cold Damage Support",
+      "category": "Support",
+      "quality_effect": "+0.5% chance to freeze per 1% quality",
+      "sell_value": "Low",
+      "awakened_name": "Awakened Added Cold Damage Support",
+      "awakened_max_level": 5,
+      "awakened_improvement": "Level 5: adds more cold damage than base gem + grants chill effect on top.",
+      "notes": "Used in cold skill builds and for freeze-chaining."
+    },
+    {
+      "name": "Added Fire Damage Support",
+      "category": "Support",
+      "quality_effect": "+0.5% chance to ignite per 1% quality",
+      "sell_value": "Low",
+      "awakened_name": "Awakened Added Fire Damage Support",
+      "awakened_max_level": 5,
+      "awakened_improvement": "Level 5: adds substantially more fire damage than base gem.",
+      "notes": "Core support for fire builds; good for ignite prolif via quality."
+    },
+    {
+      "name": "Added Lightning Damage Support",
+      "category": "Support",
+      "quality_effect": "+0.5% chance to shock per 1% quality",
+      "sell_value": "Low",
+      "awakened_name": "Awakened Added Lightning Damage Support",
+      "awakened_max_level": 5,
+      "awakened_improvement": "Level 5: significantly more lightning damage than base.",
+      "notes": "Used in lightning builds and shock-stacking strategies."
+    },
+    {
+      "name": "Brutality Support",
+      "category": "Support",
+      "quality_effect": "+0.25% chance to deal Double Damage per 1% quality",
+      "sell_value": "Low",
+      "awakened_name": "Awakened Brutality Support",
+      "awakened_max_level": 5,
+      "awakened_improvement": "Level 5: 15% more physical damage (vs 10% at base level 20).",
+      "notes": "Prevents all elemental/chaos damage from supported skills — physical-only builds."
+    },
+    {
+      "name": "Vicious Projectiles Support",
+      "category": "Support",
+      "quality_effect": "Supported skills have 0.5% increased projectile speed per 1% quality",
+      "sell_value": "Low",
+      "awakened_name": "Awakened Vicious Projectiles Support",
+      "awakened_max_level": 5,
+      "awakened_improvement": "Level 5: stronger more physical damage bonus than base gem.",
+      "notes": "Physical projectile builds (Tornado Shot, Kinetic Blast, etc.)."
+    },
+    {
+      "name": "Burning Damage Support",
+      "category": "Support",
+      "quality_effect": "+0.5% increased burning damage per 1% quality",
+      "sell_value": "Low",
+      "awakened_name": "Awakened Burning Damage Support",
+      "awakened_max_level": 5,
+      "awakened_improvement": "Level 5: significantly more burning damage; supported skills also grant Cannot be Frozen.",
+      "notes": "Ignite and burning builds. The Cannot be Frozen bonus at level 5 is a notable defensive perk."
+    },
+    {
+      "name": "Deadly Ailments Support",
+      "category": "Support",
+      "quality_effect": "+0.5% increased duration of ailments on enemies per 1% quality",
+      "sell_value": "Low",
+      "awakened_name": "Awakened Deadly Ailments Support",
+      "awakened_max_level": 5,
+      "awakened_improvement": "Level 5: stronger ailment damage bonus than base.",
+      "notes": "Best-in-slot for ignite, bleed, and poison builds. Reduces hit damage."
+    },
+    {
+      "name": "Unbound Ailments Support",
+      "category": "Support",
+      "quality_effect": "+0.5% increased duration of ailments on enemies per 1% quality",
+      "sell_value": "Low",
+      "awakened_name": "Awakened Unbound Ailments Support",
+      "awakened_max_level": 5,
+      "awakened_improvement": "Level 5: increases effect of non-damaging ailments by more than base.",
+      "notes": "Key for chill/freeze magnitude stacking and shock effect maximization."
+    },
+    {
+      "name": "Multistrike Support",
+      "category": "Support",
+      "quality_effect": "Supported skills have 0.5% increased attack speed per 1% quality",
+      "sell_value": "Low",
+      "awakened_name": "Awakened Multistrike Support",
+      "awakened_max_level": 5,
+      "awakened_improvement": "Level 5: more repeat damage than base gem.",
+      "notes": "Mandatory for most melee attack builds. 3 repeats at increasing damage multipliers."
+    },
+    {
+      "name": "Fork Support",
+      "category": "Support",
+      "quality_effect": "Supported skills have 0.5% increased projectile speed per 1% quality",
+      "sell_value": "Low",
+      "awakened_name": "Awakened Fork Support",
+      "awakened_max_level": 5,
+      "awakened_improvement": "Level 5: projectiles fork twice instead of once.",
+      "notes": "Great for clear when combined with chain or pierce."
+    },
+    {
+      "name": "Cyclone",
+      "category": "Active Skill",
+      "quality_effect": "+0.5% chance to deal Double Damage per 1% quality",
+      "sell_value": "Medium at 20/20",
+      "awakened_name": null,
+      "awakened_max_level": null,
+      "awakened_improvement": null,
+      "notes": "Double damage quality is strong. Popular melee skill — 20/20 has consistent market value."
+    },
+    {
+      "name": "Raise Spectre",
+      "category": "Active Skill",
+      "quality_effect": "+1% to maximum number of Raised Spectres per 50% quality",
+      "sell_value": "Medium at 21/20",
+      "awakened_name": null,
+      "awakened_max_level": null,
+      "awakened_improvement": null,
+      "notes": "Level 21 grants a 5th spectre slot — extremely valuable for spectre builds. Vendor 20/20 + GCP to get."
+    },
+    {
+      "name": "Summon Skeletons",
+      "category": "Active Skill",
+      "quality_effect": "+0.5% increased Skeleton Movement Speed per 1% quality",
+      "sell_value": "Low",
+      "awakened_name": null,
+      "awakened_max_level": null,
+      "awakened_improvement": null,
+      "notes": "Movement speed quality is a minor QoL. Main value is level for skeleton count."
+    },
+    {
+      "name": "Arc",
+      "category": "Active Skill",
+      "quality_effect": "+0.5% increased chaining range per 1% quality",
+      "sell_value": "Low",
+      "awakened_name": null,
+      "awakened_max_level": null,
+      "awakened_improvement": null,
+      "notes": "Quality widens the chaining radius, improving clear. Level matters more than quality."
+    },
+    {
+      "name": "Fireball",
+      "category": "Active Skill",
+      "quality_effect": "+1% chance to ignite per 2% quality",
+      "sell_value": "Low",
+      "awakened_name": null,
+      "awakened_max_level": null,
+      "awakened_improvement": null,
+      "notes": "Ignite chance quality useful for ignite prolif builds."
+    },
+    {
+      "name": "Minefield Support",
+      "category": "Support",
+      "quality_effect": "+0.5% increased Mine Throwing Speed per 1% quality",
+      "sell_value": "Low",
+      "awakened_name": "Awakened Minefield Support",
+      "awakened_max_level": 5,
+      "awakened_improvement": "Level 5: throws one additional mine per use vs base.",
+      "notes": "Core support for mine builds (Pyroclast, Blastchain, etc.)."
+    },
+    {
+      "name": "Spell Echo Support",
+      "category": "Support",
+      "quality_effect": "+0.5% increased cast speed per 1% quality",
+      "sell_value": "Low",
+      "awakened_name": "Awakened Spell Echo Support",
+      "awakened_max_level": 5,
+      "awakened_improvement": "Level 5: stronger cast speed bonus plus copies deal more damage than base.",
+      "notes": "Standard double-cast support for spell skills."
+    },
+    {
+      "name": "Greater Multiple Projectiles Support",
+      "category": "Support",
+      "quality_effect": "+0.5% increased projectile speed per 1% quality",
+      "sell_value": "Low",
+      "awakened_name": "Awakened Greater Multiple Projectiles Support",
+      "awakened_max_level": 5,
+      "awakened_improvement": "Level 5: reduced damage penalty vs base gem.",
+      "notes": "GMP is standard for projectile clear. Use with chain/fork for full clear coverage."
+    },
+    {
+      "name": "Elemental Damage with Attacks Support",
+      "category": "Support",
+      "quality_effect": "+0.5% increased elemental damage per 1% quality",
+      "sell_value": "Low",
+      "awakened_name": "Awakened Elemental Damage with Attacks Support",
+      "awakened_max_level": 5,
+      "awakened_improvement": "Level 5: more elemental damage than base gem.",
+      "notes": "Best-in-slot for elemental attack builds (Tornado Shot, Barrage, etc.)."
+    },
+    {
+      "name": "Cast When Damage Taken Support",
+      "category": "Support",
+      "quality_effect": "+1% to damage taken threshold per 1% quality (less triggering)",
+      "sell_value": "Low",
+      "awakened_name": "Awakened Cast When Damage Taken Support",
+      "awakened_max_level": 5,
+      "awakened_improvement": "Level 5: can support higher-level gems than base CWDT.",
+      "notes": "Quality raises the damage threshold, making it trigger less often. Level caps supported gem level."
+    },
+    {
+      "name": "Inspiration Support",
+      "category": "Support",
+      "quality_effect": "+0.25% chance to gain Inspiration Charge per 1% quality",
+      "sell_value": "Low",
+      "awakened_name": null,
+      "awakened_max_level": null,
+      "awakened_improvement": null,
+      "notes": "Reduces mana cost and grants occasional elemental damage bonus charge."
+    },
+    {
+      "name": "Hypothermia Support",
+      "category": "Support",
+      "quality_effect": "+0.5% chance to freeze per 1% quality",
+      "sell_value": "Low",
+      "awakened_name": "Awakened Hypothermia Support",
+      "awakened_max_level": 5,
+      "awakened_improvement": "Level 5: stronger more cold damage against chilled/frozen enemies.",
+      "notes": "Requires enemy to be chilled or frozen. Pairs with Added Cold Damage or Frost Bomb."
+    },
+    {
+      "name": "Trinity Support",
+      "category": "Support",
+      "quality_effect": "+0.5% increased resonance gain rate per 1% quality",
+      "sell_value": "Medium",
+      "awakened_name": null,
+      "awakened_max_level": null,
+      "awakened_improvement": null,
+      "notes": "Requires dealing all three elemental damage types to stack resonance for damage bonus."
+    },
+    {
+      "name": "Pinpoint Support",
+      "category": "Support",
+      "quality_effect": "+0.25% chance to gain a Preparation per 1% quality",
+      "sell_value": "Low",
+      "awakened_name": null,
+      "awakened_max_level": null,
+      "awakened_improvement": null,
+      "notes": "Builds up Preparation stacks for a powerful Concentrated Effect bonus. Projectile spells."
+    },
+    {
+      "name": "Impending Doom Support",
+      "category": "Support",
+      "quality_effect": "+0.5% increased doom gain rate per 1% quality",
+      "sell_value": "Medium",
+      "awakened_name": null,
+      "awakened_max_level": null,
+      "awakened_improvement": null,
+      "notes": "Triggers a damaging explosion when the curse reaches max doom. Curse builds."
+    }
+  ]
+}
