@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "strategies": [
+    {
+      "id": "breach_farming",
+      "name": "Breach Farming",
+      "description": "Maximize Breach encounters — splinters, upgrades, and domain access",
+      "color": "#7a30c0",
+      "search_terms": ["breach", "splinter", "domain"],
+      "total_points": 100
+    },
+    {
+      "id": "expedition_farming",
+      "name": "Expedition Farming",
+      "description": "Optimize Expedition for Tujen's currency exchange",
+      "color": "#e08030",
+      "search_terms": ["expedition", "remnant", "logbook"],
+      "total_points": 100
+    },
+    {
+      "id": "delirium_farming",
+      "name": "Delirium Farming",
+      "description": "Stack Delirium for rewarding mirror-depth maps",
+      "color": "#8080c0",
+      "search_terms": ["delirium", "simulacrum", "fog"],
+      "total_points": 100
+    },
+    {
+      "id": "harvest_farming",
+      "name": "Harvest Farming",
+      "description": "Prioritize Harvest encounters for Sacred Orbs and lifeforce",
+      "color": "#40c060",
+      "search_terms": ["harvest", "seed", "lifeforce"],
+      "total_points": 100
+    },
+    {
+      "id": "essence_farming",
+      "name": "Essence Farming",
+      "description": "Maximize Essence encounters for guaranteed mod crafting",
+      "color": "#60a0e0",
+      "search_terms": ["essence", "delirium", "tormented"],
+      "total_points": 100
+    },
+    {
+      "id": "heist_farming",
+      "name": "Heist Farming",
+      "description": "Optimize Heist for unique items and alternate quality gems",
+      "color": "#c09030",
+      "search_terms": ["heist", "rogue", "contract", "blueprint"],
+      "total_points": 100
+    },
+    {
+      "id": "map_sustain",
+      "name": "Map Sustain / Quantity",
+      "description": "General map sustain, IIQ/IIR, and map bonus drops",
+      "color": "#e0c050",
+      "search_terms": ["quantity", "rarity", "map", "bonus", "beyond"],
+      "total_points": 100
+    },
+    {
+      "id": "boss_farming",
+      "name": "Boss / Pinnacle Farming",
+      "description": "Optimize for Maven, Sirus, Shaper, Elder, and pinnacle boss encounters",
+      "color": "#e05050",
+      "search_terms": ["maven", "guardian", "conqueror", "elderslayer", "pinnacle", "boss"],
+      "total_points": 100
+    }
+  ]
+}

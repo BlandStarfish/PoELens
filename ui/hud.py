@@ -55,6 +55,7 @@ from ui.widgets.pantheon_panel import PantheonPanel
 from ui.widgets.unique_flask_panel import UniqueFlaskPanel
 from ui.widgets.vaal_skill_panel import VaalSkillPanel
 from ui.widgets.corruption_panel import CorruptionPanel
+from ui.widgets.atlas_tree_panel import AtlasTreePanel
 
 
 DARK_BG = "#1a1a2e"
@@ -82,12 +83,13 @@ _LOOT_RECIPE   = 2
 _LOOT_DIVS     = 3
 _LOOT_FLIP     = 4
 
-_END_MAP       = 0
-_END_ATLAS     = 1
-_END_CRAFT     = 2
-_END_HEIST     = 3
-_END_GEMS      = 4
-_END_MAP_STASH = 5
+_END_MAP        = 0
+_END_ATLAS      = 1
+_END_CRAFT      = 2
+_END_HEIST      = 3
+_END_GEMS       = 4
+_END_MAP_STASH  = 5
+_END_ATLAS_TREE = 6
 
 _INFO_BESTIARY        = 0
 _INFO_EXPEDITION      = 1
@@ -280,6 +282,7 @@ class HUD(QMainWindow):
         self._corruption_panel       = CorruptionPanel()
         self._currency_flip_panel    = CurrencyFlipPanel(currency_flip) if currency_flip else QWidget()
         self._lab_panel              = LabPanel(lab_tracker) if lab_tracker else QWidget()
+        self._atlas_tree_panel       = AtlasTreePanel()
 
         # ── Outer tab widget (4 categories, evenly spaced) ─────────────
         outer_tabs = QTabWidget()
@@ -319,12 +322,13 @@ class HUD(QMainWindow):
 
         # Endgame group: Map · Atlas · Crafting · Heist · Gems
         end_tabs = _make_inner()
-        end_tabs.addTab(self._map_panel,        "Map")       # _END_MAP       = 0
-        end_tabs.addTab(self._atlas_panel,      "Atlas")     # _END_ATLAS     = 1
-        end_tabs.addTab(self._crafting_panel,   "Crafting")  # _END_CRAFT     = 2
-        end_tabs.addTab(self._heist_panel,      "Heist")     # _END_HEIST     = 3
-        end_tabs.addTab(self._gem_panel,        "Gems")      # _END_GEMS      = 4
-        end_tabs.addTab(self._map_stash_panel,  "MapStash")  # _END_MAP_STASH = 5
+        end_tabs.addTab(self._map_panel,         "Map")        # _END_MAP        = 0
+        end_tabs.addTab(self._atlas_panel,       "Atlas")      # _END_ATLAS      = 1
+        end_tabs.addTab(self._crafting_panel,    "Crafting")   # _END_CRAFT      = 2
+        end_tabs.addTab(self._heist_panel,       "Heist")      # _END_HEIST      = 3
+        end_tabs.addTab(self._gem_panel,         "Gems")       # _END_GEMS       = 4
+        end_tabs.addTab(self._map_stash_panel,   "MapStash")   # _END_MAP_STASH  = 5
+        end_tabs.addTab(self._atlas_tree_panel,  "Atlas Tree") # _END_ATLAS_TREE = 6
         self._inner_tabs.append(end_tabs)
         outer_tabs.addTab(end_tabs, "Endgame")             # _GRP_ENDGAME   = 2
 
